@@ -1,0 +1,20 @@
+# Channel Parameters
+Ts: 0.00000005
+num_subcarriers: 64
+Nt: 4
+Nr: 2
+B: 10
+
+# Simulation Parameters
+number_simulations: 100 # time equivalent
+feedback_mats: 8
+freq_quanta: 9
+time_quanta: 1
+num_chan_realisations: 10 # Number of channels simulated for
+chan_offset: 0
+fdts: 0.0001
+
+# Run time variables
+past_vals: 3 # Stores the number of previously known estimates of the subcarriers
+qtiz_rate: 1.4
+norm_fn: stiefCD
