@@ -514,9 +514,13 @@ def unitary_frame_to_givens(A,prev_Uvec, wrap=False):
     for i in range(Num_subcarriers) :
         ret_vec[i]=semiunitary_to_givens_vec(A[i])
     ret_vec=np.unwrap(ret_vec, axis=0)
+    # pdb.set_trace()
     if(wrap==True):
-        x=np.reshape(np.concatenate((prev_Uvec,ret_vec),axis=0),[2,Num_subcarriers,2*m*n-n**2])
-        ret_vec=np.unwrap(x,axis=0)[1]
+        ret_vec=np.reshape(np.unwrap(ret_vec, axis=0),[1,Num_subcarriers,2*m*n-n**2])
+        # x=np.reshape(np.concatenate((prev_Uvec,ret_vec),axis=0),[2,Num_subcarriers,2*m*n-n**2])
+        x=np.reshape(np.append(prev_Uvec,ret_vec, axis=0),[-1,Num_subcarriers,2*m*n-n**2]) 
+        ret_vec=np.unwrap(x,axis=0)[-1]
+        # pdb.set_trace()
     return ret_vec
 
 def sH_retract(A,B):
