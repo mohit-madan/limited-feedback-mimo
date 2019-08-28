@@ -68,7 +68,7 @@ def main():
     # Use Stiefel Chordal Distance as norm
     # norm_fn='stiefCD'
     start_time=time.time()
-    save=True
+    save=False
 
     for chan_index in range(num_chan_realisations):
         print("-----------------------------------------------------------------------")
@@ -195,7 +195,7 @@ def main():
                 # pdb.set_trace()
             prev_Uvec=U_vec
             prev_Ulist=U_list
-        # pdb.set_trace()
+        pdb.set_trace()
             
         if(save==True):
             np.save('Precoders_generated/Pedestrian/'+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy',tH_allH)

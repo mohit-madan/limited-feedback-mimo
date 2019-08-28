@@ -277,10 +277,10 @@ def main():
                 waterfilling(tHS[simulation_index].flatten(),10**(0.1*p_dB)*num_subcarriers),\
                 waterfilling(interpS[simulation_index].flatten(),10**(0.1*p_dB)*num_subcarriers),\
                 Nt,Nr,ret_abs=True)) for p_dB in 5*np.arange(num_Cappar)]
-            # avg_otcap=(count*avg_otcap+np.array(ot_cap))/(count+1)
+            avg_otcap=(count*avg_otcap+np.array(ot_cap))/(count+1)
             avg_hpcap=(count*avg_hpcap+np.array(hp_cap))/(count+1)
             avg_maxcap=(count*avg_maxcap+np.array(max_cap))/(count+1)
-            # print("Avg. Onlyt Capacity " +str(repr(avg_otcap)))
+            print("Avg. Onlyt Capacity " +str(repr(avg_otcap)))
             print("Avg. Max Capacity "+str(repr(avg_maxcap)))
             print("Avg. Freq Hopping Capacity "+str(repr(avg_hpcap)))
             hp_neterr=np.mean([stiefCD(tH_allU[simulation_index][i],allU[simulation_index][i])\

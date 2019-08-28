@@ -381,27 +381,80 @@ def vec_to_tangent(vec,n,p):
     T=np.bmat([[C,-B.H],[B,np.zeros((n-p,n-p))]])
     return T
 
+# def gtheta_qtiz_func(x_vec,B):
+#     num_levels=2**B
+#     qtiz_level=np.linspace(0,np.pi/2,2**B)
+#     qtiz_xvec=np.zeros(np.size(x_vec))
+
+#     for idx in range(np.size(qtiz_xvec)):
+#         qtiz_xvec[idx]=qtiz_level[np.argmin(abs(x_vec[idx]-qtiz_level))]
+    
+#     return qtiz_xvec
+
+# def dphi_qtiz_func(x_vec,B):
+#     num_levels=2**B
+#     qtiz_level=np.linspace(-np.pi,np.pi,2**B)
+#     qtiz_xvec=np.zeros(np.size(x_vec))
+
+#     for idx in range(np.size(qtiz_xvec)):
+#         qtiz_xvec[idx]=qtiz_level[np.argmin(abs(x_vec[idx]-qtiz_level))]
+    
+#     return qtiz_xvec
 def qtiz_func(x_vec,B,m,n):
     '''
     quantize the first (2mn-n^2-n)/2 elements using 2^B bits 
     with equal levels between 0 and pi/2 and the remaining between -pi/2 and pi/2
     '''
     num_levels=2**B
-    theta_level=np.linspace(0,np.pi/2,2**B)
+    y=np.array([np.linspace(0,1,2**B) for l in range(m-1)])
+    theta_level=np.zeros(np.shape(y))
+    # p(theta) = 2l*sin^(2l-1)(theta)*cos(theta)
+    # cdf = sin^(2l)(theta); icdf = arcsin(y^(1/2l))
+    for l in range(m-1):
+        theta_level[l]=np.arcsin(y[l]**(1/(2*(l+1))))    
     phi_level=np.linspace(-np.pi,np.pi,2**B)
+    # pdb.set_trace()
     g_theta=x_vec[:(2*m*n-n**2-n)//2]
     d_phi=x_vec[(2*m*n-n**2-n)//2:]
     qtiz_gtheta=np.zeros(np.size(g_theta))
     qtiz_dphi=np.zeros(np.size(d_phi))
-    
+    l=0
+    max_l=m-2
     for idx in range(np.size(qtiz_gtheta)):
-        qtiz_gtheta[idx]=theta_level[np.argmin(abs(g_theta[idx]-theta_level))]
-    
+        # pdb.set_trace()
+        qtiz_gtheta[idx]=theta_level[l][np.argmin(abs(g_theta[idx]-theta_level[l]))]
+        if(l==max_l):
+            max_l-=1
+            l=0
+        else:
+            l+=1
     for idx in range(np.size(qtiz_dphi)):
         qtiz_dphi[idx]=phi_level[np.argmin(abs(d_phi[idx]-phi_level))]
     
     qtiz_xvec=np.concatenate((qtiz_gtheta,qtiz_dphi))
     return qtiz_xvec
+
+# def qtiz_func(x_vec,B,m,n):
+#     '''
+#     quantize the first (2mn-n^2-n)/2 elements using 2^B bits 
+#     with equal levels between 0 and pi/2 and the remaining between -pi/2 and pi/2
+#     '''
+#     num_levels=2**B
+#     theta_level=np.linspace(0,np.pi/2,2**B)
+#     phi_level=np.linspace(-np.pi,np.pi,2**B)
+#     g_theta=x_vec[:(2*m*n-n**2-n)//2]
+#     d_phi=x_vec[(2*m*n-n**2-n)//2:]
+#     qtiz_gtheta=np.zeros(np.size(g_theta))
+#     qtiz_dphi=np.zeros(np.size(d_phi))
+    
+#     for idx in range(np.size(qtiz_gtheta)):
+#         qtiz_gtheta[idx]=theta_level[np.argmin(abs(g_theta[idx]-theta_level))]
+    
+#     for idx in range(np.size(qtiz_dphi)):
+#         qtiz_dphi[idx]=phi_level[np.argmin(abs(d_phi[idx]-phi_level))]
+    
+#     qtiz_xvec=np.concatenate((qtiz_gtheta,qtiz_dphi))
+#     return qtiz_xvec
 
 def dpcm_pred(oU_vec,prev_qU_vec,del_vec):
     beta=np.sign(oU_vec-prev_qU_vec)
@@ -413,7 +466,7 @@ def calc_del(u_vec, qtiz_vec,beta,qtiz_rate, prev_del):
         if(np.sign(u_vec[i]-qtiz_vec[i])==beta[i]):
             delta[i]=qtiz_rate*prev_del[i]
         else:
-            delta[i]=prev_del[i]/qtiz_rate
+            delta[i]=prev_del[i]/qtiz_rate**2 # follows the curve better than normal decay
     return delta
 
 def semiunitary_to_givens_vec(A):
