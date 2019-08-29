@@ -77,13 +77,13 @@ def main():
 
     for chan_index in range(num_chan):
 
-        tH_allH=np.load('Precoders_generated/Pedestrian/'+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy')
-        tH_allU=np.load('Precoders_generated/Pedestrian/'+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy')
-        tHS=np.load('Precoders_generated/Pedestrian/'+str(fdts)+'/thS_'+str(chan_index+chan_offset)+'.npy')
-        allU=np.load('./Precoders_generated/Pedestrian/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy')
-        onlyt_allU=np.load('./Precoders_generated/Pedestrian/'+str(fdts)+'/onlyt_allU_'+str(chan_index+chan_offset)+'.npy')
+        tH_allH=np.load('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy')
+        tH_allU=np.load('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy')
+        tHS=np.load('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/thS_'+str(chan_index+chan_offset)+'.npy')
+        allU=np.load('./Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy')
+        onlyt_allU=np.load('./Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/onlyt_allU_'+str(chan_index+chan_offset)+'.npy')
         # onlyt_allU=np.load('Precoders_generated/Pedestrian/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy')
-        interpS=np.load('Precoders_generated/Pedestrian/'+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy')
+        interpS=np.load('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy')
 
         for simulation_index in range(0,number_simulations-interp_nbr_vals-2):
             print("---------------------------------------------------------------------------")
@@ -245,6 +245,7 @@ def main():
                          for t in range(1,diff_freq)]
             
             for indice_index in range(fb_indices.shape[0]-1):
+                pdb.set_trace()
                 curr_freq_index=fb_indices[indice_index]
                 next_freq_index=fb_indices[indice_index+1]
                 diff_freq=next_freq_index - curr_freq_index
@@ -310,11 +311,16 @@ if __name__ == '__main__':
     main()
     # pdb.set_trace()
 plt.yscale("log")
-plt.plot(Eb_N0_dB,hpBER_QPSK, marker='o')
+plt.plot(Eb_N0_dB,hpBER_QPSK, marker='o', label="freq_hop")
+plt.plot(Eb_N0_dB,otBER_QPSK, marker='+', label="only_time")
+plt.legend()
 plt.ylabel("BER")
 plt.xlabel("Eb/N0(dB)")
 plt.show()
 x=np.arange(0,35,5)
-achievable_rate=np.divide(avg_hpcap,avg_maxcap)
-plt.plot(x,achievable_rate, marker='o')
+achievable_rate1=np.divide(avg_otcap,avg_maxcap)
+achievable_rate2=np.divide(avg_hpcap,avg_maxcap)
+plt.plot(x,achievable_rate1, marker='o', label="only_time")
+plt.plot(x,achievable_rate2, marker='+', label="freq_hop")
+plt.legend()
 plt.show()

@@ -33,7 +33,8 @@ def main():
     #---------------------------------------------------------------------------
     #Channel Params
     signal.signal(signal.SIGINT, sigint_handler)
-    itpp.RNG_randomize()
+    # itpp.RNG_randomize(81)
+    itpp.RNG_reset(81)
     #c_spec=itpp.comm.Channel_Specification(itpp.comm.CHANNEL_PROFILE.ITU_Vehicular_A)
     c_spec=itpp.comm.Channel_Specification(itpp.comm.CHANNEL_PROFILE.ITU_Pedestrian_A)
     Ts=constants.Ts

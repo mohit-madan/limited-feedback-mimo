@@ -33,7 +33,9 @@ def main():
     #---------------------------------------------------------------------------
     #Channel Params
     signal.signal(signal.SIGINT, sigint_handler)
-    itpp.RNG_randomize()
+    # itpp.RNG_randomize()
+    itpp.RNG_reset(81)
+
     #c_spec=itpp.comm.Channel_Specification(itpp.comm.CHANNEL_PROFILE.ITU_Vehicular_A)
     c_spec=itpp.comm.Channel_Specification(itpp.comm.CHANNEL_PROFILE.ITU_Pedestrian_A)
     Ts=constants.Ts
@@ -146,6 +148,11 @@ def main():
                     # pdb.set_trace()   
                     if(simulation_index%2==0):
                         onlyt_allU_vec[simulation_index][onlyt_test_index]=onlyt_qU_vec
+                        if(simulation_index%4==0):
+                            onlyt_allU_vec[simulation_index][onlyt_test_index][:gtheta_size]=\
+                            onlyt_qU_vec[:gtheta_size]
+                            onlyt_allU_vec[simulation_index][onlyt_test_index][gtheta_size:]=\
+                            onlyt_allU_vec[simulation_index-1][onlyt_test_index][gtheta_size:]
                     else:
                         # theta params(low var) remain same while phi parameters change for odd time instances
                         onlyt_allU_vec[simulation_index][onlyt_test_index][gtheta_size:]=\
@@ -192,6 +199,15 @@ def main():
 
                     Q_error[simulation_index][i] = stiefCD(allU[simulation_index][test_index]\
                         ,tH_allU[simulation_index][test_index]) 
+
+                if(simulation_index%50==0):
+                    # pdb.set_trace()
+                    print("---------------------------------------------------------------------------")
+                    print("Simulation Index: " +str(simulation_index))
+                    print("Hop QT Error: "+str(np.mean(Q_error[simulation_index]))+\
+                    " Only T QT Error: "+str(np.mean(onlyt_Q_error[simulation_index])))
+                    print(str(time.strftime("Elapsed Time %H:%M:%S",time.gmtime(time.time()-start_time)))\
+                    +str(time.strftime(" Current Time %H:%M:%S",time.localtime(time.time()))))
                 
             else:
                 for i in range(feedback_mats):
@@ -221,12 +237,12 @@ def main():
         pdb.set_trace()
             
         if(save==True):
-            np.save('Precoders_generated/partial_Pedestrian/'+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy',tH_allH)
-            np.save('Precoders_generated/partial_Pedestrian/'+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy',tH_allU)
-            np.save('Precoders_generated/partial_Pedestrian/'+str(fdts)+'/thS_'+str(chan_index+chan_offset)+'.npy',tHS)
-            np.save('Precoders_generated/partial_Pedestrian/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy',allU)
-            np.save('Precoders_generated/partial_Pedestrian/'+str(fdts)+'/onlyt_allU_'+str(chan_index+chan_offset)+'.npy',onlyt_allU)
-            np.save('Precoders_generated/partial_Pedestrian/'+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy',interpS)
+            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy',tH_allH)
+            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy',tH_allU)
+            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/thS_'+str(chan_index+chan_offset)+'.npy',tHS)
+            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy',allU)
+            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/onlyt_allU_'+str(chan_index+chan_offset)+'.npy',onlyt_allU)
+            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy',interpS)
 if __name__ == '__main__':      
     main()
 
@@ -235,7 +251,7 @@ if __name__ == '__main__':
 # plt.plot(tH_allU_vec[1::2,4,6])
 # plt.show()
 
-# plt.plot(onlyt_allU_vec[:,0,6])
-# plt.plot(tH_allU_vec[:,0,6])
-# plt.show()
+plt.plot(onlyt_allU_vec[:,0,11])
+plt.plot(tH_allU_vec[:,0,11])
+plt.show()
 

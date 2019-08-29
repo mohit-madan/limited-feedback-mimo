@@ -22,38 +22,38 @@ from sumrate_BER import leakage_analysis, calculate_BER_performance_QPSK
 np.random.seed(81)
 
 def dpcm_encode(qtiz_x_0,x,alpha):
-	qtiz_x=np.zeros(np.size(x))
-	qtiz_x[0]=qtiz_x_0
-	delta=abs(x[1]-x[0])
-	beta=np.zeros(np.size(x))
-	beta[0]=0
-	for i in range(1,len(qtiz_x)-1):
-		beta[i]=np.sign(x[i]-qtiz_x[i-1])
-		qtiz_x[i] = qtiz_x[i-1] + beta[i]*delta
-		if(np.sign(x[i+1]-qtiz_x[i])==beta[i]):
-			delta=alpha*delta
-		else:
-			delta=delta/alpha
-	qtiz_x[-1]=qtiz_x[-2]+beta[-1]*delta		
-	# pdb.set_trace()		
-	return beta,abs(x[1]-x[0])
+    qtiz_x=np.zeros(np.size(x))
+    qtiz_x[0]=qtiz_x_0
+    delta=abs(x[1]-x[0])
+    beta=np.zeros(np.size(x))
+    beta[0]=0
+    for i in range(1,len(qtiz_x)-1):
+        beta[i]=np.sign(x[i]-qtiz_x[i-1])
+        qtiz_x[i] = qtiz_x[i-1] + beta[i]*delta
+        if(np.sign(x[i+1]-qtiz_x[i])==beta[i]):
+            delta=alpha*delta
+        else:
+            delta=delta/alpha
+    qtiz_x[-1]=qtiz_x[-2]+beta[-1]*delta        
+    # pdb.set_trace()       
+    return beta,abs(x[1]-x[0])
 def dpcm_decode(qtiz_x_0,alpha,beta,delta):
-	delta= delta
-	qtiz_x=np.zeros(np.size(beta))
-	qtiz_x[0]=qtiz_x_0
-	for i in range(1,np.size(beta)-1):
-		qtiz_x[i]=qtiz_x[i-1]+beta[i]*delta
-		if(beta[i+1]==beta[i]):
-			delta=delta*alpha
-		else:
-			delta=delta/alpha
-	qtiz_x[-1]=qtiz_x[-2]+beta[-1]*delta		
-	return qtiz_x
-	
+    delta= delta
+    qtiz_x=np.zeros(np.size(beta))
+    qtiz_x[0]=qtiz_x_0
+    for i in range(1,np.size(beta)-1):
+        qtiz_x[i]=qtiz_x[i-1]+beta[i]*delta
+        if(beta[i+1]==beta[i]):
+            delta=delta*alpha
+        else:
+            delta=delta/alpha
+    qtiz_x[-1]=qtiz_x[-2]+beta[-1]*delta        
+    return qtiz_x
+    
 def dpcm_encode_2d(qtiz_x_0, x, alpha1, alpha2):
-	qtiz_x=np.zeros(np.shape(x))
-	qtiz_x[0][0]=qtiz_x_0
-	delta1=abs(x[0][1])	
+    qtiz_x=np.zeros(np.shape(x))
+    qtiz_x[0][0]=qtiz_x_0
+    delta1=abs(x[0][1]) 
 #---------------------------------------------------------------------------
 #SIGINT handler
 def sigint_handler(signal, frame):
@@ -68,7 +68,8 @@ diff_frob_norm = lambda A,B:np.linalg.norm(A-B, 'fro')
 #---------------------------------------------------------------------------
 #Channel Params
 signal.signal(signal.SIGINT, sigint_handler)
-itpp.RNG_randomize()
+# itpp.RNG_randomize()
+itpp.RNG_reset(81)
 # c_spec=itpp.comm.Channel_Specification(itpp.comm.CHANNEL_PROFILE.ITU_Vehicular_A)
 c_spec=itpp.comm.Channel_Specification(itpp.comm.CHANNEL_PROFILE.ITU_Pedestrian_A)
 Ts=5e-8
@@ -103,7 +104,7 @@ time_theta=np.zeros((number_simulations,num_subcarriers//gap+1))
 time_interp_theta=np.zeros((number_simulations,num_subcarriers))
 # un2_theta=np.zeros((number_simulations,num_subcarriers,(2*Nt*Nr-Nr**2)))
 for simulation_index in range(number_simulations):
-	# Print statement to indicate progress
+    # Print statement to indicate progress
     if(simulation_index%10==0):
         print ("Starting Gen sim: "+str(simulation_index)+" : of "+ str(number_simulations) + " # of total simulations")
     # Generate Channel matrices with the above specs
@@ -119,10 +120,28 @@ un_theta=np.unwrap(np.unwrap(g_theta, axis=1), axis=0)
 x=np.arange(0,64,gap)
 x1=[i for i in range(64)]
 for simulation_index in range(number_simulations//gap+1):
-	time_theta[simulation_index*3]=np.array([un_theta[simulation_index*3,carrier*gap,11] for carrier in range(num_subcarriers//gap+1)])
-	time_interp_theta[simulation_index*3,:]=InterpolatedUnivariateSpline(x,time_theta[simulation_index*3,:], k=3)([x1]).flatten()
-plt.plot(un_theta[0,:,11], label="original")
+    time_theta[simulation_index*3]=np.array([un_theta[simulation_index*3,carrier*gap,11] for carrier in range(num_subcarriers//gap+1)])
+    time_interp_theta[simulation_index*3,:]=InterpolatedUnivariateSpline(x,time_theta[simulation_index*3,:], k=3)([x1]).flatten()
+plt.plot(un_theta[:,0,11], label="original")
 plt.plot(time_interp_theta[0,:], label="interpolated")
+
+gap=9
+freq=9
+time_theta=np.zeros((number_simulations//gap + 1,num_subcarriers))
+time_interp_theta=np.zeros((number_simulations,num_subcarriers))
+
+x=np.arange(0,100,gap)
+x1=[i for i in range(100)]
+for simulation_index in range(number_simulations//gap+1):
+    time_theta[simulation_index]=np.array(un_theta[simulation_index*gap,:,freq])
+
+for carrier in range(num_subcarriers):
+    time_interp_theta[:,carrier]=InterpolatedUnivariateSpline(x,time_theta[:,carrier], k=3)([x1]).flatten()
+
+
+plt.plot(un_theta[:,0,freq], label="original")
+plt.plot(time_interp_theta[:,0], label="interpolated")
+plt.show()
 # InterpolatedUnivariateSpline([0,3],time_interp_theta[0,:])
 # plt.plot(time_theta[0,:], label="without")
 plt.legend()
@@ -154,7 +173,7 @@ x,y=np.meshgrid(xs,ys)
 
 
 # !import code; code.interact(local=vars())
-z2=un_theta[:,:,11]
+z2=un_theta[:,:,1]
 # z1=g_theta[:,:,4]
 fig1=plt.figure()
 ax=plt.axes(projection='3d')
