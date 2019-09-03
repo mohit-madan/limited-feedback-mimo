@@ -66,7 +66,7 @@ def main():
     interp_nbr_vals=2
     steady_start_index=6
     sil_BER=0
-    number_simulations=100
+    number_simulations=fdts.number_simulations
     start_time=time.time()
     sigma_cb=np.load('./Codebooks/Independent_qt/sigma_cb_2bits_10000.npy') #do we need this codebook
     hp_Qerr=np.zeros(number_simulations-interp_nbr_vals-2)
@@ -75,7 +75,7 @@ def main():
     ot_Neterr=np.zeros(number_simulations-interp_nbr_vals-2)
     chan_offset=0
 
-    for chan_index in range(num_chan):
+    for chan_index in range(1):
 
         tH_allH=np.load('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy')
         tH_allU=np.load('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy')
@@ -306,6 +306,7 @@ def main():
                 print("hp_pred = np."+str(repr(hpBER_QPSK)))
             
             count=count+1
+            pdb.set_trace()
     pdb.set_trace()             
 if __name__ == '__main__':      
     main()

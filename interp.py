@@ -138,7 +138,7 @@ def main():
                     onlyt_beta_vec[simulation_index][i]=onlyt_beta
                     onlyt_allU[simulation_index][onlyt_test_index]=givens_vec_to_semiunitary(onlyt_qU_vec,Nt,Nr)
                     onlyt_Q_error[simulation_index][i] = stiefCD(\
-                        onlyt_allU[simulation_index][i],tH_allU[simulation_index][onlyt_test_index])
+                        onlyt_allU[simulation_index][onlyt_test_index],tH_allU[simulation_index][onlyt_test_index])
 
                     interpS[simulation_index][onlyt_test_index]=sigma_list[onlyt_test_index]
 
@@ -170,8 +170,15 @@ def main():
                     allU[simulation_index][test_index]=givens_vec_to_semiunitary(qU_vec,Nt,Nr)
 
                     Q_error[simulation_index][i] = stiefCD(allU[simulation_index][test_index]\
-                        ,tH_allU[simulation_index][test_index]) 
-                
+                        ,tH_allU[simulation_index][test_index])
+                if(simulation_index%99==0):
+                    print("---------------------------------------------------------------------------")
+                    print("Simulation Index: " +str(simulation_index))
+                    print("Hop QT Error: "+str(np.mean(Q_error[simulation_index]))+\
+                    " Only T QT Error: "+str(np.mean(onlyt_Q_error[simulation_index])))
+                    print(str(time.strftime("Elapsed Time %H:%M:%S",time.gmtime(time.time()-start_time)))\
+                    +str(time.strftime(" Current Time %H:%M:%S",time.localtime(time.time()))))
+
             else:
                 for i in range(feedback_mats):
                     onlyt_test_index=freq_jump*i
@@ -193,6 +200,7 @@ def main():
                     allU[simulation_index][test_index]=givens_vec_to_semiunitary(qU_vec, Nt, Nr)                    
                     Q_error[simulation_index][i]=stiefCD(allU[simulation_index][test_index]\
                         ,tH_allU[simulation_index][test_index])
+
                 # pdb.set_trace()
             prev_Uvec=U_vec
             prev_Ulist=U_list

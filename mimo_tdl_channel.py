@@ -412,8 +412,11 @@ def qtiz_func(x_vec,B,m,n):
     # cdf = sin^(2l)(theta); icdf = arcsin(y^(1/2l))
     for l in range(m-1):
         theta_level[l]=np.arcsin(y[l]**(1/(2*(l+1))))    
-    phi_level=np.linspace(-np.pi,np.pi,2**B)
+    phi_level=np.linspace(-np.pi,np.pi,2**B-2**5)
     # pdb.set_trace()
+    phi_level_plus=np.linspace(np.pi,4*np.pi,2**4)
+    phi_level_minus=np.linspace(-4*np.pi,np.pi,2**4)
+    phi_level=np.concatenate((phi_level_minus,phi_level,phi_level_plus))
     g_theta=x_vec[:(2*m*n-n**2-n)//2]
     d_phi=x_vec[(2*m*n-n**2-n)//2:]
     qtiz_gtheta=np.zeros(np.size(g_theta))
@@ -557,21 +560,27 @@ def givens_vec_to_semiunitary(vec, m, n):
             c = np.matmul(c,g[j])
     # pdb.set_trace()
     return np.matmul(c, I)
+def givens_frame_to_unitary(vec,m,n):
+    num_subcarriers,_=np.shape(vec)
+    ret_vec=np.zeros((num_subcarriers,m,n), dtype=complex)
+    for i in range(num_subcarriers):
+        ret_vec[i]=givens_vec_to_semiunitary(vec[i],m,n)
+    return ret_vec
 
 def unitary_frame_to_givens(A,prev_Uvec, wrap=False):
     """Returns the givens rotation parameters for a frame of Unitary Subcarriers
 
     """
-    Num_subcarriers,m,n=np.shape(A)
-    ret_vec=np.zeros((Num_subcarriers,2*m*n-n**2))
-    for i in range(Num_subcarriers) :
+    num_subcarriers,m,n=np.shape(A)
+    ret_vec=np.zeros((num_subcarriers,2*m*n-n**2))
+    for i in range(num_subcarriers) :
         ret_vec[i]=semiunitary_to_givens_vec(A[i])
     ret_vec=np.unwrap(ret_vec, axis=0)
     # pdb.set_trace()
     if(wrap==True):
-        ret_vec=np.reshape(np.unwrap(ret_vec, axis=0),[1,Num_subcarriers,2*m*n-n**2])
-        # x=np.reshape(np.concatenate((prev_Uvec,ret_vec),axis=0),[2,Num_subcarriers,2*m*n-n**2])
-        x=np.reshape(np.append(prev_Uvec,ret_vec, axis=0),[-1,Num_subcarriers,2*m*n-n**2]) 
+        ret_vec=np.reshape(np.unwrap(ret_vec, axis=0),[1,num_subcarriers,2*m*n-n**2])
+        # x=np.reshape(np.concatenate((prev_Uvec,ret_vec),axis=0),[2,num_subcarriers,2*m*n-n**2])
+        x=np.reshape(np.append(prev_Uvec,ret_vec, axis=0),[-1,num_subcarriers,2*m*n-n**2]) 
         ret_vec=np.unwrap(x,axis=0)[-1]
         # pdb.set_trace()
     return ret_vec
@@ -660,7 +669,7 @@ def find_precoder_list(H_list,ret_full=False):
 # Class for generating a MIMO TDL channel
 class MIMO_TDL_Channel():
     # Class Constructor
-    def __init__(self,Nt,Nr,c_spec,sampling_time,Num_subcarriers):
+    def __init__(self,Nt,Nr,c_spec,sampling_time,num_subcarriers):
         # Num Tx antenna
         self.Nt=Nt
         # Num Rx antenna
@@ -668,7 +677,7 @@ class MIMO_TDL_Channel():
         # Sampling Time
         self.sampling_time = sampling_time
         # FFT size will be the number of subcarriers in OFDM frame
-        self.fft_size = Num_subcarriers
+        self.fft_size = num_subcarriers
         # Declare Nt*Nr channels        
         self.tdl_channels=[]
         # Initialise using the TDL Channel method to get the channel length

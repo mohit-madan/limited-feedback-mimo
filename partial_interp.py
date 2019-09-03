@@ -55,7 +55,7 @@ def main():
     freq_quanta=constants.freq_quanta
     time_quanta=constants.time_quanta
     # for cold start
-    ran_init=False
+    # ran_init=False
     # Number of channels simulated for
     num_chan_realisations=constants.num_chan_realisations
     count=0
@@ -66,13 +66,14 @@ def main():
     # Run Time variables
     norm_fn=constants.norm_fn
     qtiz_rate=constants.qtiz_rate
+    # qtiz_rate=1.3
 
     Q_error=np.zeros((number_simulations,feedback_mats),dtype=np.float64) #
     onlyt_Q_error=np.zeros((number_simulations,feedback_mats),dtype=np.float64) #
     # Use Stiefel Chordal Distance as norm
     # norm_fn='stiefCD'
     start_time=time.time()
-    save=False
+    save=True
 
     for chan_index in range(num_chan_realisations):
         print("-----------------------------------------------------------------------")
@@ -135,16 +136,16 @@ def main():
                     if(simulation_index==1):
                         onlyt_del_vec[simulation_index][i]=abs(U_vec[onlyt_test_index]\
                         -onlyt_allU_vec[simulation_index-1][onlyt_test_index])/2 #checking if this initializing works
-                    else:
+                    else:    
                         onlyt_del_vec[simulation_index][i]=calc_del(U_vec[onlyt_test_index],\
                             onlyt_allU_vec[simulation_index-1][onlyt_test_index], onlyt_beta_vec[simulation_index-1][i]\
                             , qtiz_rate, onlyt_del_vec[simulation_index-1][i])
-
                     # part_onlyt_del_vec[simulation_index][i]= onlyt_del_vec[simulation_index,i,gtheta_size:]
 
                     onlyt_oU_vec=U_vec[onlyt_test_index]
                     onlyt_prev_qU_vec=onlyt_allU_vec[simulation_index-1][onlyt_test_index]
                     onlyt_qU_vec, onlyt_beta=dpcm_pred(onlyt_oU_vec,onlyt_prev_qU_vec,onlyt_del_vec[simulation_index][i])
+                    
                     # pdb.set_trace()   
                     if(simulation_index%2==0):
                         onlyt_allU_vec[simulation_index][onlyt_test_index]=onlyt_qU_vec
@@ -166,7 +167,7 @@ def main():
                     onlyt_allU[simulation_index][onlyt_test_index]=givens_vec_to_semiunitary(\
                         onlyt_allU_vec[simulation_index][onlyt_test_index],Nt,Nr)
                     onlyt_Q_error[simulation_index][i] = stiefCD(\
-                        onlyt_allU[simulation_index][i],tH_allU[simulation_index][onlyt_test_index])
+                        onlyt_allU[simulation_index][onlyt_test_index],tH_allU[simulation_index][onlyt_test_index])
 
                     interpS[simulation_index][onlyt_test_index]=sigma_list[onlyt_test_index]
 
@@ -192,15 +193,27 @@ def main():
                     oU_vec= U_vec[test_index]
                     prev_qU_vec=allU_vec[simulation_index-2][test_index]
                     qU_vec, beta=dpcm_pred(oU_vec,prev_qU_vec,del_vec[simulation_index][i])
-                    # pdb.set_trace()   
-                    allU_vec[simulation_index][test_index]=qU_vec
+                    # pdb.set_trace() 
+
+                    if(simulation_index>3):
+                        if(simulation_index%4==1 or simulation_index%4 ==0):
+                            allU_vec[simulation_index][test_index][:gtheta_size]=allU_vec[simulation_index-2][test_index][:gtheta_size]
+                            allU_vec[simulation_index][test_index][gtheta_size:]=qU_vec[gtheta_size:]
+                        # elif(simulation_index%4==0):
+                        elif(simulation_index%4 ==3):
+                            allU_vec[simulation_index][test_index][gtheta_size:]=allU_vec[simulation_index-2][test_index][gtheta_size:]
+                            allU_vec[simulation_index][test_index][:gtheta_size]=qU_vec[:gtheta_size]
+                        else:
+                            allU_vec[simulation_index][test_index]=qU_vec
+                    else:
+                        allU_vec[simulation_index][test_index]=qU_vec  
                     beta_vec[simulation_index][i]=beta
                     allU[simulation_index][test_index]=givens_vec_to_semiunitary(qU_vec,Nt,Nr)
 
                     Q_error[simulation_index][i] = stiefCD(allU[simulation_index][test_index]\
                         ,tH_allU[simulation_index][test_index]) 
 
-                if(simulation_index%50==0):
+                if(simulation_index%80==0):
                     # pdb.set_trace()
                     print("---------------------------------------------------------------------------")
                     print("Simulation Index: " +str(simulation_index))
@@ -234,24 +247,30 @@ def main():
                 # pdb.set_trace()
             prev_Uvec=U_vec
             prev_Ulist=U_list
-        pdb.set_trace()
+        # pdb.set_trace()
             
         if(save==True):
             np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy',tH_allH)
             np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy',tH_allU)
+            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allU_vec'+str(chan_index+chan_offset)+'.npy',tH_allU_vec)
             np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/thS_'+str(chan_index+chan_offset)+'.npy',tHS)
             np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy',allU)
+            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy',allU_vec)
             np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/onlyt_allU_'+str(chan_index+chan_offset)+'.npy',onlyt_allU)
+            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/onlyt_allU_vec'+str(chan_index+chan_offset)+'.npy',onlyt_allU_vec)
             np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy',interpS)
 if __name__ == '__main__':      
     main()
 
 
-# plt.plot(allU_vec[1::2,4,6])
-# plt.plot(tH_allU_vec[1::2,4,6])
+# plt.plot(onlyt_allU_vec[:,63,6])
+# plt.plot(tH_allU_vec[:,63,6])
 # plt.show()
 
-plt.plot(onlyt_allU_vec[:,0,11])
-plt.plot(tH_allU_vec[:,0,11])
-plt.show()
+# plt.plot(allU_vec[1::2,4,4])
+# plt.plot(tH_allU_vec[1::2,4,4])
 
+# plt.show()
+
+# plt.plot(np.mean(Q_error[1::4],axis=1))
+# plt.show()

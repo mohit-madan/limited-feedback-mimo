@@ -91,7 +91,7 @@ ran_init=False
 num_chan_realisations=10
 count=0
 chan_offset=10
-fdts=1e-4
+fdts=0.01
 
 class_obj=MIMO_TDL_Channel(Nt,Nr,c_spec,Ts,num_subcarriers)
 class_obj.set_norm_doppler(fdts)
@@ -124,30 +124,33 @@ for simulation_index in range(number_simulations//gap+1):
     time_interp_theta[simulation_index*3,:]=InterpolatedUnivariateSpline(x,time_theta[simulation_index*3,:], k=3)([x1]).flatten()
 plt.plot(un_theta[:,0,11], label="original")
 plt.plot(time_interp_theta[0,:], label="interpolated")
+B=10
+Nt=4
+Nr=2
 
-gap=9
-freq=9
+gap=19
+freq=11
 time_theta=np.zeros((number_simulations//gap + 1,num_subcarriers))
 time_interp_theta=np.zeros((number_simulations,num_subcarriers))
-
 x=np.arange(0,100,gap)
 x1=[i for i in range(100)]
 for simulation_index in range(number_simulations//gap+1):
     time_theta[simulation_index]=np.array(un_theta[simulation_index*gap,:,freq])
 
 for carrier in range(num_subcarriers):
-    time_interp_theta[:,carrier]=InterpolatedUnivariateSpline(x,time_theta[:,carrier], k=3)([x1]).flatten()
+    time_interp_theta[:,carrier]=InterpolatedUnivariateSpline(x,time_theta[:,carrier], k=2)([x1]).flatten()
 
 
-plt.plot(un_theta[:,0,freq], label="original")
-plt.plot(time_interp_theta[:,0], label="interpolated")
-plt.show()
+# plt.plot(un_theta[:,40,freq], label="original")
+# plt.plot(time_interp_theta[:,40], label="interpolated")
+# plt.show()
+
 # InterpolatedUnivariateSpline([0,3],time_interp_theta[0,:])
 # plt.plot(time_theta[0,:], label="without")
-plt.legend()
-plt.title("every 3rd cubcarrier")
-plt.show()
-pdb.set_trace()
+# plt.legend()
+# plt.title("every 3rd cubcarrier")
+# plt.show()
+# pdb.set_trace()
 xs=np.arange(64)
 ys=np.arange(100)
 x,y=np.meshgrid(xs,ys)
@@ -155,9 +158,11 @@ x,y=np.meshgrid(xs,ys)
 # fig=plt.figure()
 # ax=plt.axes(projection='3d')
 
-# diff_freq=np.zeros(63)
-
-# diff_freq=np.array([[[un2_theta[k,i+1,j]-un2_theta[k,0,j] for i in range(63)] for j in range(12)] for k in range(100)])
+# diff_freq=np.zeros(99)
+# diff_freq=np.array([un_theta[k+1]-un_theta[k] for k in range(99)])
+# diff2=np.array([diff_freq[k+1]-diff_freq[k] for k in range(98)])
+# pdb.set_trace()
+# diff_freq=np.array([[[un_theta[k,i+1,j]-un2_theta[k,0,j] for i in range(63)] for j in range(12)] for k in range(100)])
 # # plt.plot(un2_theta[0,:,10])
 
 # # x= [sci.dct(diff_freq[i], norm='ortho') for i in range(12)] 
@@ -173,7 +178,7 @@ x,y=np.meshgrid(xs,ys)
 
 
 # !import code; code.interact(local=vars())
-z2=un_theta[:,:,1]
+z2=un_theta[:,:,2]
 # z1=g_theta[:,:,4]
 fig1=plt.figure()
 ax=plt.axes(projection='3d')
