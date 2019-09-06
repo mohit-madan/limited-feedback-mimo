@@ -469,7 +469,7 @@ def calc_del(u_vec, qtiz_vec,beta,qtiz_rate, prev_del):
         if(np.sign(u_vec[i]-qtiz_vec[i])==beta[i]):
             delta[i]=qtiz_rate*prev_del[i]
         else:
-            delta[i]=prev_del[i]/qtiz_rate**2 # follows the curve better than normal decay
+            delta[i]=prev_del[i]/(qtiz_rate*2.5) # faster decay
     return delta
 
 def semiunitary_to_givens_vec(A):
@@ -560,12 +560,77 @@ def givens_vec_to_semiunitary(vec, m, n):
             c = np.matmul(c,g[j])
     # pdb.set_trace()
     return np.matmul(c, I)
+# def givens_frame_to_unitary(vec,m,n):
+#     num_subcarriers,_=np.shape(vec)
+#     # pdb.set_trace()
+#     ret_vec=np.zeros((num_subcarriers,m,n), dtype=complex)
+#     for i in range(num_subcarriers):
+#         ret_vec[i]=givens_vec_to_semiunitary(vec[i],m,n)
+#     return ret_vec
+
 def givens_frame_to_unitary(vec,m,n):
-    num_subcarriers,_=np.shape(vec)
-    ret_vec=np.zeros((num_subcarriers,m,n), dtype=complex)
-    for i in range(num_subcarriers):
-        ret_vec[i]=givens_vec_to_semiunitary(vec[i],m,n)
-    return ret_vec
+    """Converts a vector of givens rotation parameters into a semiunitary matrix
+    Parameters:
+        vec(int): vector of size 2mn-n^2 terms
+        m(int): Number of rows of output unitary matrix
+        n(int): Number of columns of output unitary matrix 
+        output(np.array): mxn matrix with complex entries
+    """
+    num_vec=np.shape(vec)[0]
+    g_theta = vec[:,:(2*m*n-n**2-n)//2]
+    # d_phi = [vec[(2*m*n-n**2-n)//2+j*(m-j)-((m-j)*(m-j-1))//2:][:j] for j in range(m,m-n,-1)]
+    new_vec = vec[:,(2*m*n-n**2-n)//2:]
+    d_phi=[]
+    for i in range(m,m-n,-1):
+        d_phi.append(new_vec[:,:i])
+        new_vec = new_vec[:,i:]
+
+    c = np.cos(g_theta)
+    s = np.sin(g_theta)
+    g = []
+    d = []
+    k=0
+    z = np.identity(n)
+    I = np.zeros((num_vec,m,n))
+    I[:,:n,:] = z
+    # pdb.set_trace()
+    for j in range(n):
+        if(j>0):
+            temp = np.ones((num_vec,j))
+            # pdb.set_trace()
+            # new_d = np.append(-1, np.exp(np.vectorize(complex)(0,d_phi[j])))
+            temp = np.concatenate((temp, np.exp(np.vectorize(complex)(0,d_phi[j]))), axis=1)
+            # temp = np.append(temp, new_d)
+            a = np.apply_along_axis(np.diag,1,temp)
+            d.append(a)
+            # pdb.set_trace()
+        else:
+            # a = np.diag(np.append(1, np.exp(np.vectorize(complex)(0,d_phi[j]))))
+            a = np.apply_along_axis(np.diag, 1, np.exp(np.vectorize(complex)(0,d_phi[j])))
+            # pdb.set_trace()
+            d.append(a)
+            # pdb.set_trace()
+
+        for i in range(m-1,j,-1):
+            G = np.reshape(np.tile(np.eye(m),(num_vec,1)),[num_vec,m,m])
+            # pdb.set_trace()
+            c_t=np.transpose(c[:,k])
+            s_t=np.transpose(s[:,k])
+            G[:,i-1:i+1,i-1:i+1] = np.transpose([[c_t,-s_t],[s_t,c_t]],(2,0,1))
+            k+=1
+            g.append(G)
+            # pdb.set_trace()
+    # pdb.set_trace()
+    _,t, n= np.shape(I)
+    c = np.zeros((num_vec,t,t))
+    c[:]= np.identity(t)
+    for i in range(n):
+        c = np.matmul(c, d[i])
+        for j in range (i*(2*t - (i+1))//2, (2*(i+1)*t-i*(i+3)-2)//2):
+            c = np.matmul(c,g[j])
+    
+    # pdb.set_trace()
+    return np.matmul(c, I)
 
 def unitary_frame_to_givens(A,prev_Uvec, wrap=False):
     """Returns the givens rotation parameters for a frame of Unitary Subcarriers

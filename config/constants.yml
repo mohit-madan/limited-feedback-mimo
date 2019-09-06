@@ -1,14 +1,14 @@
 # Channel Parameters
 Ts: 0.00000005
-num_subcarriers: 64
+num_subcarriers: 64 #1024
 Nt: 4
 Nr: 2
 B: 10
 
 # Simulation Parameters
 number_simulations: 100 # time equivalent
-feedback_mats: 8
-freq_quanta: 9
+feedback_mats: 8 #32
+freq_quanta: 9 #33
 time_quanta: 1
 num_chan_realisations: 10 # Number of channels simulated for
 chan_offset: 0
