@@ -125,7 +125,7 @@
 \begin{document}
 %Here goes the title
 
-\title{Heading to be decided}
+\title{Scalar Parametrization and Joint Time-Frequency interpolation technique for MIMO-OFDM}
 
 
 %Authors List
@@ -218,7 +218,7 @@ Here, we denote $\phi_{i}'s$ by phases and $\theta_{i}'s$ by rotation angles. $\
 \begin{equation}
 p(\theta) = 2lsin(\theta)^{2l-1}cos(\theta), \theta \in [0, \frac{\pi}{2}), for \; l = 1,2,\ldots,t-1
 \end{equation} 
-Here all $\theta_i$ and $\phi_i$ are statistically independent which is usefel for tracking them across time as explained in the next subsection.
+Here all $\theta_i$ and $\phi_i$ are statistically independent which is usefel for tracking them across time as explained in the next subsection. The total number of parameters obtained from the decomposition of a complex orthogonal matrix $N_{T} \times N_{R} $ is given by the relation $N_{R}(2*N_{T} - N_{R}) $ \cite{4114278}. Number of $\phi = N_{R}(2*N_{T} - N_{R}-1)/2$ while the number of $\theta = N_{T}(2*N_{T} - N_{R}+1)/2$
 % may cross pi and come immediately to -pi, therefore, values are unwrapped while calculating them. Unwrapping is performed at the receiver over the frequency initially and later in time.
 % To exploit the interpolation of time \& frequency jointly at the transmitter, feedback bits are sent in an alternating fashion as shown in the figure.
 
@@ -246,14 +246,17 @@ Thus, the quantied vector $\hat{x}_n$ changes with time as
 
 Here we initialize delta using $\Delta_1 = abs(x_{2}-\hat{x}_1)$.
 
-We need to quantize the subcarriers in a way such that we can exploit the joint time-frequency interpolation at the transmitter side. Therefore we select the subcarriers for quantization in an alternating fashion as shown in the figure. Figure shows a 64 subcarrier MIMO channel
+We need to quantize the subcarriers in a way such that we can exploit the joint time-frequency interpolation at the transmitter side. Therefore we select the subcarriers for quantization in an alternating fashion as shown in the figure. Figure shows a \textbf{S} subcarrier MIMO channel with subcarriers which are going to be quantized at the position sk, k = 0,1,...,S-1/s for even time instance. Here s is the gap between two frequencies. For odd time instances, subcarriers at the position sk + t , k = 0,1,..., S-1/s - 1 with t = floor(s/2).
+Therefore in ADPCM channel tracking scheme, the arrows in the figure show how previous quantized values along with with the 1-bit number find the new quantized value. Now with the above discussion, the bit budget for each subcarrier will be equal to number of scalars * 1-bit. On an average, this can be reduced to half if we transmit only $\theta$ values for one time instance and only $\phi$ values for the next time while keeping the untransmitted values same as the previous one. This was, the average number of bits required to quantize a channel matrix will be $N_{T}(2*N_{T} - N_{R})/2$. 
+One problem associated with the tracking of phases ($\phi$) is that they change abruptly (cite the figure) between $-\pi$ and $\pi$ since $sin/cos(\pi) = sin/cos(-\pi)$. Therefore we have to wrap around the values by removing those abrupt changes (/cite another figure here).
+
 % We initialize $\hat{x}$ i.e. $\hat{x}_1$ by quantizing the $x_1$ using 10 bits.
-Explain ADPM here
-also the way you are alternatingly
 \subsection{Joint Time Frequency Interpolation}
 \label{interp}
 
-Here explain about how yo
+After obtaining the $\beta$ values(1-bit numbers) at the trasnmitter we will calculate the subcarrier indices at indices sk or sk+t. To reproduce the rest of the subcarriers will use future time instances to do the interpolation. As you can see in the figure, each parameter is interpolated using the subcarriers of the next six time instances. We do the interpolation using the spline-cubic interpolation. We could also use other standard techniques by calculating the MMSE at the missing subcarrier locations but the spline-cubic interpolation method gives better results over the other method. 
+
+Now here we can see the advantage of using subcarriers in an alternating fashion as given in the previous section. With this method we could exploit both time and frequency correlation because 
 %Explain prediction and quantization steps here itself ! (succintly)
 \section{SIMULATION AND DISCUSSION}
 \label{section3}
@@ -265,25 +268,16 @@ While doing interpolation at the transmitter end, future time instances are used
 Performance Measurements:
 Since the Precoding matrices fundamentally lie on the Stiefel manifold, therefore, we are using the chordal distance parameter to measure the effectiveness of the quantization method used by us. Later we are comparing the ber rates with the ideal completely fed back subcarriers.
 Using the idea of joint interpolation given in the other paper.  
+%talk about this in the simulations, that would be more relevant
+Since $\Delta_{n} = M\Delta_{n-1} or \Delta_{n-1}/m $, we found emperically that $m=2.4*M$ i.e. decay
 
-\begin{figure*}[ht]
-\centering
-\includegraphics[width=0.8\textwidth]{images/system2.pdf}
+\begin{figure}
+\includegraphics[width=0.5\textwidth]{images/ber_results.pdf}
 
-\caption{Forward Prediction (Green): Both the transmitter and receiver utilize identical reservoirs and quantized precoder estimate at $t-1$ (i.e. $\tilde{\bu}_{i,t-1}$, top left of figure) to obtain $\bP_{i,t}$ via \eqref{fwd_pred}. The transmitter estimates the quantized precoder at $t$ (i.e. $\tilde{\bu}_{i,t}$, top right of figure) using receiver feedback $\text{fb}_{i,t}$ via $q_P$ \eqref{eqn:cn2}. 
-\\Feedback Estimation (Cyan): The Receiver estimates the ideal $\text{fb}_{i,t}$ using the exact precoders $\bU_{i,t}$ via \eqref{eqn:cn1}. The transmitter observes only the feedback $\text{fb}_{i,t}$\\ Backward Pass (Blue): $\bW^{\text{out}}_{i,t}$ is updated via \eqref{wout_upd} for optimizing $\mathcal{O}_{i,t}$. This is done at both transmitter and receiver to ensure identical evolution of the reservoirs} 
-\label{res_overview}
+\caption{BER vs SNR for pedestrian channel} 
+\label{ber_overview}
 \vspace{-5pt}
-\end{figure*}
-
-\subsection{Reservoir Training Procedure, the backward pass}
-\label{train}
-
-\begin{equation}
-\tilde{\bU}_{i,t}=q_P(\bP_{i,t},\text{fb}_{i,t})=q_P(f_P(\tilde{\bU}_{i,t-1}),\text{fb}_{i,t})
-\label{fpqp}
-\end{equation} %its good to label every eqution, section or anything
-
+\end{figure}
 
 \subsection{Performance Measurement}
 \label{setting}
@@ -293,7 +287,13 @@ The advantage they had over the number of bits due to the 6 bit codebook they us
 The problem of values hopping between pi and -pi is also tackled by wrapping the values around which we can show works nicely. The only drawback is that while initializing the parameter, they go out of their actual range and therefore using a uniform quantizer over the prescribed range does not work. But since most of the values lie between the given range we can use most of the initialization bits quantizing the parameters uniformly between the [-$\pi$ , $\pi$] and using smaller amount of bits between the range outside that which could go upto $-3\pi$ and $3\pi$, i.e. we are covering 300% more range outside the given area and that works mostly fine for the rest of the values.
 
 Using the idea of joint interpolation given in the other paper.  
+\begin{figure}
+\includegraphics[width=0.5\textwidth]{images/vehicular_ber.png}
 
+\caption{BER vehicular plot comparison between \cite{Gupta1905} and our method} 
+\label{ber_overview}
+\vspace{-5pt}
+\end{figure}
 
 %Qtisn error with 1000 chan evols
 %Qtisn error with 100 chan evols
