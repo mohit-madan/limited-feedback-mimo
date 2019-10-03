@@ -125,15 +125,14 @@
 \begin{document}
 %Here goes the title
 
-\title{Scalar Parametrization and Joint Time-Frequency interpolation technique for MIMO-OFDM}
+\title{Scalar Parametrization for Joint Time-Frequency interpolation in a MIMO-OFDM channel}
 
 
 %Authors List
 
- \author{\authorblockN{Mohit Madan, Kumar Appaiah, Agrim Gupta}
+ \author{\authorblockN{Author 1, Author 2, Author 3}
  \
- \authorblockA{Department of Electrical Engineering, Indian Institute of Technology Bombay\\
- \{mohit,akumar,agrim\}@ee.iitb.ac.in}
+ \authorblockA{Department of Electrical Engineering, Indian Institute of Technology Bombay}
 % \thanks{Parts of this work was supported by the Bharti Centre for Communication in
 % IIT Bombay, and the Visvesvaraya
 % PhD Scheme of Ministry of Electronics \& Information Technology,
@@ -150,20 +149,19 @@
 % \noindent We consider problem of quantization and interpolation of
 % time and frequency varying precoding matrices in wireless MIMO
 \begin{abstract}
-In a limited feedback MIMO channel, the performance of the channel can improve significantly if the transmitter has the knowledge of the channel state information(CSI). This precoding information is known at the receiver and can be fed back to the transmitter. However, it is not possible to feedback complete information for a limited-feeback OFDM channel since the channel information for multiple subcarriers consume a large amount of data. Therefore to resolve this problem, the orthonormality structure of the precoder matrix is exploited to make its one-to-one mapping to minimal number of scalar paramters calculated by decomposing the matrix using Givens Rotation. For an i.i.d flat-fading Rayleigh channel, these parameters are independent which makes its quantization and interpolation easy. We propose an efficient method for quantization of the channel state information at the receiver by using adpative depta modulation for successive time interval. We also propose a method for joint time-frequency interpolation of the channel information at the transmitter.
+In a limited feedback MIMO channel, the performance of the channel can improve significantly if the transmitter knows the channel state information(CSI). The receiver knows the channel information, and it feeds back to the transmitter. However, it is not possible to feedback complete information for a limited-feedback OFDM channel since the channel information for multiple subcarriers consumes a large amount of data. Therefore to resolve this problem, the orthonormality structure of the precoder matrix is exploited to make its one-to-one mapping to a minimal number of scalar parameters. The Precoder matrix is decomposed using Givens Rotation. For an i.i.d. flat-fading Rayleigh channel, these parameters are independent, which makes its quantization and interpolation easy. We propose an efficient method for quantization of the channel state information at the receiver by using adaptive delta modulation for successive time interval. We also propose a method for joint time-frequency interpolation of the channel information at the transmitter. 153-words
 \end{abstract}
 
 \section{Introduction}
 \label{intro}
 
 % no need to write the numbers in your introduction. You start by explaining what is happenning currently and then propose your solution.
-MIMO channels can perform significantly better if transmitter has complete knowledge of the Channel State Information (CSIT). In a frequency selective OFDM channel each subcarrier can be modelled as a flat fading MIMO channel. With the CSI information available at the transmitter, beamforming is used to increase the capacity and reduce the BER \cite{love2008overview}. The receiver has the channel knowledge and it could provide feedback to the transmitter after quantizing it. However, it is unrealistic to feeback complete information to the transmitter and therefore information is communicated through a limited feedback channel.
+MIMO channels can perform significantly better if the transmitter has complete knowledge of the Channel State Information (CSIT). In a frequency-selective OFDM channel, a flat fading MIMO channel approximated each subcarrier. With the CSI information available at the transmitter, beamforming is used to increase the capacity and reduce the BER \cite{love2008overview}. The receiver has the channel knowledge, and it could provide feedback to the transmitter after quantizing it. However, it is unrealistic to feedback complete information to the transmitter, and therefore information is communicated through a limited feedback channel. 
+In recent years, codebook design over the Stiefel Manifold \cite{6891198} has been proposed where the manifold structure of the channel matrix is used for its predictive quantization and interpolation across time and frequency. Another such variation of \cite{6891198} has exploited both time and frequency domain together in Stiefel Manifold \cite{Gupt1905:Predictive}. All these methods are useful, but they do so over Manifolds which has problems of getting stuck in local Maxima. Also, there are different challenged which are faced while interpolating in a high dimensional space.
 
-In recent years, codebook design over the Stiefel Manifold \cite{6891198} has been proposed where the manifold structure of the channel matrix is used for its predictive quantization and interpolation across time and frequency. Another such variation of \cite{6891198} has exploited both time and frequency domain together in Stiefel Manifold \cite{Gupt1905:Predictive}. All these methods are good but they do so over Manifolds which has problems of getting stuck in local Maxima. Also there are different challeneged which are faced while interpolating in such a high dimensional space.
+Another very different approach in \cite{4114278} has tried to break down the precoder matrix into independent scalar parameters using transformations, namely Givens rotation and Household Transformation. They are tracking each of these scalar parameters using ADCPM(Adaptive Digital Pulse Code Modulation) for a slowly varying channel in the time domain. They have shown capacity achieved with the quantized precoding matrix to be very close to the unquantized one. In another paper \cite{4556174}, they have exploited frequency and performed ADPM in frequency domain to achieve similar performance with a lower number of feedback bits.  
 
-Another very different approach in \cite{4114278} have tried to break down the precoder matrix into independent scalar parameters using transformations - Givens rotation and Household Transformation. They are tracking each of these scalar parameters using ADCPM(Adaptive Digital Pulse Code Modulation) for a slowly varying channel in time domain. They have shown capacity achieved with quantized precoding matrix to be very close to the unquantized one. In another paper \cite{4556174}, they have exploited frequency and performed ADPM in frequency domain to achieve similar performance with lower number of feedback bits.  
-
-We now propose a method for predictive quantization in time domain over few subcarriers using scalar parameters.We also propose a method for exploiting the joint time-frequency correlation of those scalar parameters on the transmitter side. In \ref{section2}, westart by explaining the system model and the method for scalar quantization \& interpolation of the precoder matrix. In \ref{section3} we perform various simulations for our approach and show the benefits from the imporoved BER rates and achievable Rate. 
+We now propose a method for predictive quantization in time domain over few subcarriers using scalar parameters. We also propose a method for exploiting the joint time-frequency correlation of those scalar parameters on the transmitter side. In \ref{section2}, we start by explaining the system model and the method for scalar quantization \& interpolation of the precoder matrix. In \ref{section3}, we perform various simulations for our approach and show the benefits from the improved BER rates and Achievable Rate. 
 %Since $H=U\Sigma V$, it is sufficient to quantize V*(precoder) and send this information back. In an OFDM channel, this data consume significant amount of bits and therefore, sending the complete data could consume too much bandwidth data. For e.g. an OFDM channel with 4 transmitters, 2 receiver antennas, and 64 subcarriers would require 64*(no. of bits required to send one precoder ~ 12-16 bits) ~ 896 bits per frame. This information could be significantly reduced if we provide better quantization and interpolation techniques/strategies. Also, the matrices which need to be fed back could be broken down into independent scalar parameters. These scalar quantities could be later quantized and interpolated.
 % Broad summary of your work, come to your problem definition.
 
@@ -209,6 +207,14 @@ I_{m-2} & & & \\
 
 % \begin{equation}
 
+\begin{figure}
+\includegraphics[width=0.5\textwidth]{images/adpm.pdf}
+
+\caption{Subcarriers which need to be quantized} 
+\label{ber_overvie}
+\vspace{-5pt}
+\end{figure}
+
 For a $4 \times 2$ orthogonal matrix V, 
 $$V = D_{1}(\phi_{1,1},\ldots,\phi_{1,4}).G_{3,4}(\theta_{1,1}) .G_{2,3}(\theta_{1,2}) .G_{1,2}(\theta_{1,3})$$
 \vspace{-1.4em}
@@ -218,7 +224,7 @@ Here, we denote $\phi_{i}'s$ by phases and $\theta_{i}'s$ by rotation angles. $\
 \begin{equation}
 p(\theta) = 2lsin(\theta)^{2l-1}cos(\theta), \theta \in [0, \frac{\pi}{2}), for \; l = 1,2,\ldots,t-1
 \end{equation} 
-Here all $\theta_i$ and $\phi_i$ are statistically independent which is usefel for tracking them across time as explained in the next subsection. The total number of parameters obtained from the decomposition of a complex orthogonal matrix $N_{T} \times N_{R} $ is given by the relation $N_{R}(2*N_{T} - N_{R}) $ \cite{4114278}. Number of $\phi = N_{R}(2*N_{T} - N_{R}-1)/2$ while the number of $\theta = N_{T}(2*N_{T} - N_{R}+1)/2$
+Here all $\theta_i$ and $\phi_i$ are statistically independent which is usefel for tracking them across time as explained in the next subsection. The total number of parameters obtained from the decomposition of a complex orthogonal matrix $N_{T} \times N_{R} $ is given by the relation $N_{R}(2N_{T} - N_{R}) $ \cite{4114278}. Number of $\phi = N_{R}(2N_{T} - N_{R}-1)/2$ while the number of $\theta = N_{T}(2N_{T} - N_{R}+1)/2$
 % may cross pi and come immediately to -pi, therefore, values are unwrapped while calculating them. Unwrapping is performed at the receiver over the frequency initially and later in time.
 % To exploit the interpolation of time \& frequency jointly at the transmitter, feedback bits are sent in an alternating fashion as shown in the figure.
 
@@ -247,7 +253,7 @@ Thus, the quantied vector $\hat{x}_n$ changes with time as
 Here we initialize delta using $\Delta_1 = abs(x_{2}-\hat{x}_1)$.
 
 We need to quantize the subcarriers in a way such that we can exploit the joint time-frequency interpolation at the transmitter side. Therefore we select the subcarriers for quantization in an alternating fashion as shown in the figure. Figure shows a \textbf{S} subcarrier MIMO channel with subcarriers which are going to be quantized at the position sk, k = 0,1,...,S-1/s for even time instance. Here s is the gap between two frequencies. For odd time instances, subcarriers at the position sk + t , k = 0,1,..., S-1/s - 1 with t = floor(s/2).
-Therefore in ADPCM channel tracking scheme, the arrows in the figure show how previous quantized values along with with the 1-bit number find the new quantized value. Now with the above discussion, the bit budget for each subcarrier will be equal to number of scalars * 1-bit. On an average, this can be reduced to half if we transmit only $\theta$ values for one time instance and only $\phi$ values for the next time while keeping the untransmitted values same as the previous one. This was, the average number of bits required to quantize a channel matrix will be $N_{T}(2*N_{T} - N_{R})/2$. 
+Therefore in ADPCM channel tracking scheme, the arrows in the figure show how previous quantized values along with with the 1-bit number find the new quantized value. Now with the above discussion, the bit budget for each subcarrier will be equal to number of scalars * 1-bit. On an average, this can be reduced to half if we transmit only $\theta$ values for one time instance and only $\phi$ values for the next time while keeping the untransmitted values same as the previous one. This was, the average number of bits required to quantize a channel matrix will be $N_{T}(2N_{T} - N_{R})/2$. 
 One problem associated with the tracking of phases ($\phi$) is that they change abruptly (cite the figure) between $-\pi$ and $\pi$ since $sin/cos(\pi) = sin/cos(-\pi)$. Therefore we have to wrap around the values by removing those abrupt changes (/cite another figure here).
 
 % We initialize $\hat{x}$ i.e. $\hat{x}_1$ by quantizing the $x_1$ using 10 bits.
@@ -261,7 +267,7 @@ Now here we can see the advantage of using subcarriers in an alternating fashion
 \section{SIMULATION AND DISCUSSION}
 \label{section3}
 
-Initialization is performed by using 10x12 bits for each subcarrier for the first two time frames. Later, the quantization will take place in the time-domain using 1bit for each parameter. Since the bit budget is low and we are considering slowly varying channels, therefore, we will be sending only theta and phi parameters alternatingly in the time domain while keeping the unsent parameters equal to their previous values. This brings down the bit budget to 6 bits average per fed back subcarrier. 
+Initialization is performed by using $10 \times 12$ bits for each subcarrier for the first two time frames. Later, the quantization will take place in the time-domain using 1bit for each parameter. Since the bit budget is low and we are considering slowly varying channels, therefore, we will be sending only theta and phi parameters alternatingly in the time domain while keeping the unsent parameters equal to their previous values. This brings down the bit budget to 6 bits average per fed back subcarrier. 
 Describing how you performed ADPCM to carry out the 1-bit quantization. Also, the increment rate was 2.4 times the decay rate. Also, need to describe the initialization of the Delta values required in the quantization process. I need to cite that paper. We should also try over different quantization rates to compar \cite{Gupt1905}
 
 While doing interpolation at the transmitter end, future time instances are used to interpolate the rest of the subcarriers indices which are not fed back. To prevent much delay we are using 6 future time instances and using SciPy cubic interpolation over each parameter in 2D. These interpolated values and then used to reconstruct the precoding matrices all together.
@@ -272,7 +278,7 @@ Using the idea of joint interpolation given in the other paper.
 Since $\Delta_{n} = M\Delta_{n-1} or \Delta_{n-1}/m $, we found emperically that $m=2.4*M$ i.e. decay
 
 \begin{figure}
-\includegraphics[width=0.5\textwidth]{images/ber_results.pdf}
+\includegraphics[width=0.5\textwidth]{images/pedestrian.pdf}
 
 \caption{BER vs SNR for pedestrian channel} 
 \label{ber_overview}
@@ -288,9 +294,9 @@ The problem of values hopping between pi and -pi is also tackled by wrapping the
 
 Using the idea of joint interpolation given in the other paper.  
 \begin{figure}
-\includegraphics[width=0.5\textwidth]{images/vehicular_ber.png}
+\includegraphics[width=0.5\textwidth]{images/vehicular_ber.pdf}
 
-\caption{BER vehicular plot comparison between \cite{Gupta1905} and our method} 
+\caption{BER vehicular plot comparison between our method and agrims} 
 \label{ber_overview}
 \vspace{-5pt}
 \end{figure}
