@@ -154,6 +154,10 @@ The rest of this paper is organized as follows: Section~\ref{section2} described
 
 %Since $H=U\Sigma V$, it is sufficient to quantize V*(precoder) and send this information back. In an OFDM channel, this data consumes significant amount of bits and therefore, sending the complete data could consume too much bandwidth data. For e.g. an OFDM channel with 4 transmitters, 2 receiver antennas, and 64 subcarriers would require 64*(no. of bits required to send one precoder ~ 12-16 bits) ~ 896 bits per frame. This information could be significantly reduced if we provide better quantization and interpolation techniques/strategies. Also, the matrices which need to be fed back could be broken down into independent scalar parameters. These scalar quantities could be later quantized and interpolated.
 
+In this paper, we propose a method for predictive quantization in the time domain over the subcarriers of a MIMO-OFDM system using scalar parameters. We also exploit the joint time-frequency correlation of these scalar parameters on the transmitter side. TODO how we solve it?
+
+The rest of this paper is organized as follows: Section~\ref{section2}, we start by explaining the system model and the method for scalar quantization \& interpolation of the precoder matrix. In \ref{section3}, we perform various simulations for our approach and show the benefits from the improved BER rates and Achievable Rate.
+%Since $H=U\Sigma V$, it is sufficient to quantize V*(precoder) and send this information back. In an OFDM channel, this data consume significant amount of bits and therefore, sending the complete data could consume too much bandwidth data. For e.g. an OFDM channel with 4 transmitters, 2 receiver antennas, and 64 subcarriers would require 64*(no. of bits required to send one precoder ~ 12-16 bits) ~ 896 bits per frame. This information could be significantly reduced if we provide better quantization and interpolation techniques/strategies. Also, the matrices which need to be fed back could be broken down into independent scalar parameters. These scalar quantities could be later quantized and interpolated.
 % Broad summary of your work, come to your problem definition.
 
 
@@ -161,45 +165,36 @@ The rest of this paper is organized as follows: Section~\ref{section2} described
 \section{System Model}
 
 \label{section2}
-
-For a MIMO-OFDM system with $N_T$ transmitter and $N_R$ receiver antennas, each subcarrier $i$ with time instant $t$ could be modelled as a flat-fading MIMO channel. This flat-fading MIMO channel could be modelled as
-
-\vspace{-1pt}
-
 \begin{equation}
 \by_{i,t} = \bH_{i,t} \bx_{i,t}+ \bf{\eta_{i,t}}
 \end{equation}
+where the channel matrix $H_{i,t} \in \mathbb{C}^{N_R \times N_T}$; the input $x_{i,t} \in \mathbb{C}^{N_T}$; the output $y_{i,t} \in \mathbb{C}^{N_R}$ and $\eta$ is the complex additive white gaussian noise vector with distribution $\tilde{\mathcal{N}}(0,I_{N_R})$. On applying thin SVD to H, we get $H_{i,t} = U_{i,t} \Sigma_{i,t} V_{i,t}^{H}$, where $U_{i,t} \in \mathbb{C}^{N_R \times N_T}$, $\Sigma_{i,t} \in \mathbb{C}^{N_T \times N_T}$  and $V_{i,t} \in \mathbb{C}^{N_T \times N_T}$. $U_{i,t}$ and $V_{i,t}$ are orthonormal column matrices and $\Sigma_{i,t}$ contains the singular values $\sigma_1 \geq \ldots \geq \sigma_{N_T} > 0$ of H. The entries of H are assumed to be i.i.d. $\tilde{\mathcal{N}}(0,1)$, complex circularly symmetric Gaussian with mean zero and variance 1. Therefore, the first n column vectors of $V_{i,t}$ have to be quantized and fed back to the transmitter as channel spatial information.
 
-\vspace{-1pt}
-
-where the channel matrix $\bH_{i,t} \in \mathbb{C}^{N_R \times N_T}$; the input $\bx_{i,t} \in \mathbb{C}^{N_T}$; the output $\by_{i,t} \in \mathbb{C}^{N_R}$ and $\eta$ is the complex additive white gaussian noise vector with distribution $\tilde{\mathcal{N}}(0,I_{N_R})$. On applying thin SVD to H, we get $\bH_{i,t} = U_{i,t} \Sigma_{i,t} V_{i,t}^{H}$, where $U_{i,t} \in \mathbb{C}^{N_R \times N_R}$, $\Sigma_{i,t} \in \mathbb{C}^{N_R \times N_R}$  and $V_{i,t} \in \mathbb{C}^{N_T \times N_R}$. $U_{i,t}$ and $V_{i,t}$ are orthonormal column matrices and $\Sigma_{i,t}$ contains the singular values $\sigma_1 \geq \ldots \geq \sigma_{N_T} > 0$ of H. The entries of H are assumed to be i.i.d. $\tilde{\mathcal{N}}(0,1)$, complex circularly symmetric Gaussian with mean zero and variance 1. Therefore, the first n column vectors of $V_{i,t}$ have to be quantized and fed back to the transmitter as channel spatial information.
 
 % Givens rotation definition and how we are decomposing, Theta- pdf = 2lsin(theta)(2l-1).\cos(theta) 0 $\leq$ Theta $\leq$ pi/2.
 % Householders' transformation and how we are decomposing. -pi$\leq$ phi $\leq$ pi. Uniformly distributed.
 % Low-complexity quantization scheme based on a further parameterization of a vector in
 % terms of a minimal number of independent scalar parameters. In particular, we consider its application to CSI feedback in slowly time-varying MIMO channels
 
-\subsection{Scalar Parameterization}
+
+\subsection{Scalar Paramatrization}
 \label{givens}
-
-The degrees of freedom in the spatial information matrix is much smaller than the number of real entries in the matrix because of the geometrical structure between the columns of the matrix \cite{4114278}. An orthonormal matrix with $t$ rows and $n$ columns can be represented as
-
+The degrees of freedom in the spatial information matrix is much smaller than the number of real entries in the matrix because of the geometrical structure between the columns of the matrix~\cite{4114278}. An orthonormal matrix with $t$ rows and $n$ columns can be represented as
 
 
 \begin{equation}
 \textbf{V} = \Bigg[\prod_{k=1}^{n} D_{k} \big( \phi_{k,k},\ldots , \phi_{k,n} \big) \: \Bigg\{ \prod_{l=1}^{l=t-k} G_{t-l,t-l+1} \big( \theta_{k,l}\big) \Bigg\} \Bigg] \: \tilde{I}
 \end{equation}
 
-
-where $D_{k}$ is the diagonal matrix given as $D_{k}\big(\phi_{k,k}, \ldots, \phi_{k,t} \big)$ =  $diag\big( 1_{k-1}, e^{j\phi_{k,k}},\ldots, e^{j\phi_{k,t}}  \big)$, $1_{k-1}$ is (k-1) ones; and t x n matrix $\tilde{I}$ = $\big[I_{n}, 0_{n,t-n}\big]^{T}$. The Givens matrix \textbf{G} is given as
+where $D_{k}$ is the diagonal matrix given as $D_{k}\big(\phi_{k,k}, \ldots, \phi_{k,t} \big)$ =  $\mbox{diag}\big( 1_{k-1}, e^{j\phi_{k,k}},\ldots, e^{j\phi_{k,t}}  \big)$, $1_{k-1}$ is (k-1) ones; and t x n matrix $\tilde{I}$ = $\big[I_{n}, 0_{n,t-n}\big]^{T}$. The Givens matrix \textbf{G} is given as
 
 \begin{equation}
 G_{m-1,m}\big(\theta\big)  =
 \begin{bmatrix}
 
 I_{m-2} & & & \\
-& \cos\;\theta & - \sin\;\theta & \\
-& \sin\;\theta & \cos\;\theta & \\
+& \cos\theta & -\sin\theta & \\
+& \sin\theta & \cos\theta & \\
 & & & I_{t-m}
 
 \end{bmatrix}
@@ -227,12 +222,11 @@ $$V = D_{1}(\phi_{1,1},\ldots,\phi_{1,4}).G_{3,4}(\theta_{1,1}) .G_{2,3}(\theta_
 
 Here, we denote $\phi_{i}'s$ by phases and $\theta_{i}'s$ by rotation angles. $\phi \in (-\pi, + \pi]$ is uniformaly distributed between the two extremes\cite{4114278}, while $\theta$ has a distribution
 
+%TODO What is t in the equation below?
 \begin{equation}
-p(\theta) = 2l\sin(\theta)^{2l-1}\cos(\theta), \theta \in [0, \frac{\pi}{2}), for \; l = 1,2,\ldots,t-1
+p(\theta) = 2l(\sin\theta)^{2l-1}\cos\theta, \theta \in \left[0, \frac{\pi}{2}\right) \mbox{ for } l = 1,2,\ldots,t-1
 \end{equation}
-
-Here all $\theta_i$ and $\phi_i$ are statistically independent which is usefel for tracking them across time as explained in the next subsection. The total number of parameters obtained from the decomposition of a complex orthogonal matrix $N_{T} \times N_{R} $ is given by the relation $N_{R}(2N_{T} - N_{R}) $ \cite{4114278}. Number of $\phi = N_{R}(2N_{T} - N_{R}-1)/2$ while the number of $\theta = N_{T}(2N_{T} - N_{R}+1)/2$
-
+Here all $\theta_i$ and $\phi_i$ are statistically independent, making it useful for tracking them across time as explained in the next subsection. The total number of parameters obtained from the decomposition of a complex orthogonal matrix $N_{T} \times N_{R} $ is $N_{R}(2N_{T} - N_{R})$~\cite{4114278}. The number of $\phi_i$ parameters is $N_{R}(2N_{T} - N_{R}-1)/2$ while the number of $\theta$ parameters is $N_{T}(2N_{T} - N_{R}+1)/2$.
 % may cross pi and come immediately to -pi, therefore, values are unwrapped while calculating them. Unwrapping is performed at the receiver over the frequency initially and later in time.
 
 % To exploit the interpolation of time \& frequency jointly at the transmitter, feedback bits are sent in an alternating fashion as shown in the figure.
@@ -243,7 +237,6 @@ Here all $\theta_i$ and $\phi_i$ are statistically independent which is usefel f
 \label{quantiz}
 
 For a slowly time varying channel, ADPM is an effective method for tracking a paramater over time with using only 1-bit. The 1-bit number $\beta_{n} = Q(x_{n} - \hat{x}_{n-1})$ where $x$ is the unquantized vector $\&$ $\hat{x}$ is the quantized vector and $Q(x)$ is the quantization function given as
-
 
 
 \begin{equation}
@@ -293,8 +286,7 @@ After obtaining the $\beta$ values(1-bit numbers) at the trasnmitter we will cal
 Now here we can see the advantage of using subcarriers in an alternating fashion as given in the previous section. With this method we could exploit both time and frequency correlation because
 
 %Explain prediction and quantization steps here itself ! (succintly)
-
-\section{SIMULATION AND DISCUSSION}
+\section{Simulation and discussion}
 \label{section3}
 
  We have performed simulations to analyse the performance of the proposed quantization and interpolation method for slowly time-varying MIMO OFDM channel. Channel is simulated using the typical Jakes Model for both ITU Vehicular-A channel and ITU Pedestrian Channel. Performance is measured by averaging over 10 channel realizations with 100 simulations each. The normalised doppler frequency $f_{norm} = f_{max}.T_s$ is set to $3.5\times10^{-4}$ with sampling frequency $T_s = 20MHz$. For both vehicular and pedestrian channel, $N_T=4$ and $N_R=2$. Therefore, the total number of parameters are $N_{R}(2N_{T} - N_{R}) = 12$ with 5$\theta$’s and 7$\phi$’s. There are 1024 subcarriers in Vehicular channel and 64 subcarriers in the Pedestrian Channel. We take s = 33/9 for Vehicular and pedestrian channel respectively I.e. 32/8 equally spaced subcarriers with indices 33t/9t, t = 0,1, … , 31 and 0,1, .. ,7 respectively.
