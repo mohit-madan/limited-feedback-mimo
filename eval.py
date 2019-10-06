@@ -101,17 +101,17 @@ def main():
     gridz_prev=np.zeros((6,num_subcarriers,2*Nt*Nr-Nr**2))
     for chan_index in range(num_chan):
 
-        tH_allH=np.load('Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy')
-        tH_allU=np.load('Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy')
-        tH_allU_vec=np.load('Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/th_allU_vec'+str(chan_index+chan_offset)+'.npy')        
-        tHS=np.load('Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/thS_'+str(chan_index+chan_offset)+'.npy')
-        allU=np.load('./Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy')
-        allU_vec_copy=np.load('./Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy')
-        onlyt_allU=np.load('./Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/onlyt_allU_'+str(chan_index+chan_offset)+'.npy')
-        allU_vec=np.load('./Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy')
-        onlyt_allU_vec=np.load('./Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/onlyt_allU_vec'+str(chan_index+chan_offset)+'.npy')
-        # onlyt_allU=np.load('Precoders_generated/Vehicularfast/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy')
-        interpS=np.load('Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy')
+        tH_allH=np.load('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy')
+        tH_allU=np.load('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy')
+        tH_allU_vec=np.load('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allU_vec'+str(chan_index+chan_offset)+'.npy')        
+        tHS=np.load('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/thS_'+str(chan_index+chan_offset)+'.npy')
+        allU=np.load('./Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy')
+        allU_vec_copy=np.load('./Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy')
+        onlyt_allU=np.load('./Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/onlyt_allU_'+str(chan_index+chan_offset)+'.npy')
+        allU_vec=np.load('./Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy')
+        onlyt_allU_vec=np.load('./Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/onlyt_allU_vec'+str(chan_index+chan_offset)+'.npy')
+        # onlyt_allU=np.load('Precoders_generated/Pedestrian/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy')
+        interpS=np.load('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy')
         for simulation_index in range(number_simulations-6):
         # for simulation_index in range(0,number_simulations-interp_nbr_vals-2):
             print("---------------------------------------------------------------------------")
@@ -133,7 +133,7 @@ def main():
                     gridz[:,:,i]=griddata(points[0:3*(2*feedback_mats-1)], \
                         allU_vec[points[(simulation_index*(2*feedback_mats-1)+1)//2:(simulation_index*(2*feedback_mats-1)+1)//2+3*(2*feedback_mats-1),0],\
                         points[(simulation_index*(2*feedback_mats-1)+1)//2:(simulation_index*(2*feedback_mats-1)+1)//2+3*(2*feedback_mats-1),1]][:,i], (ys[0:6],\
-                            xs[0:6]), method='cubic')
+                            xs[0:6]), method='nearest')
 
                 allU_vec_copy[simulation_index]=gridz[0]
                 gridz_prev=np.array(gridz)
