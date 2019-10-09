@@ -379,7 +379,8 @@ I_{m-2} & & & \\
 \end{equation} 
   
 
-\begin{figure} 
+\begin{figure}
+\label{adpm-fig}
 \includegraphics[width=0.45\textwidth]{images/new-adpm-crop.pdf} 
 \caption{Subcarriers which need to be quantized} 
 \label{ber_overvie}
@@ -431,7 +432,8 @@ Thus, the quantied vector $\hat{x}_n$ changes with time as
 \hat{x}_{n} = \hat{x}_{n-1} + \beta_{n}\Delta_{n} 
 \end{equation} 
 
-\begin{equation} 
+\begin{equation}
+\label{delta_eqn}
 \Delta_{n} = \begin{cases} 
     M \Delta_{n-1}, & \text{if $\beta_{n} = \beta_{n-1}$}.\\ 
     \Delta_{n-1}/m , & \text{if $\beta_{n} \neq \beta_{n-1}$}. 
@@ -453,7 +455,7 @@ One problem associated with the tracking of phases ($\phi$) is that they change 
 
 After obtaining the $\beta$ values(1-bit numbers) at the trasnmitter we will calculate the subcarrier indices at indices sk or sk+t. To reproduce the rest of the subcarriers will use future time instances to do the interpolation. As you can see in the figure, each parameter is interpolated using the subcarriers of the next six time instances. We do the interpolation using the spline-cubic interpolation. We could also use other standard techniques by calculating the MMSE at the missing subcarrier locations but the spline-cubic interpolation method gives better results over the other method. 
 
-Now here we can see the advantage of using subcarriers in an alternating fashion as given in the Section~\ref{section1}. With this method we could exploit both time and frequency correlation because 
+Now here we can see the advantage of using subcarriers in an alternating fashion as given in the previous section. With this method we could exploit both time and frequency correlation because 
 
 %Explain prediction and quantization steps here itself ! (succintly) 
 
@@ -467,9 +469,10 @@ For the first and the second simulations/time instances we use of $\textbf{B}$ =
 
 Simulation: BER is calculated by averaging over all the simulations. For Vehicular Channel, 1024 subcarriers are used with doppler frequency – and sampling rate = $10^{5}$
 
-Initialization is performed by using $10\times12$ bits for each subcarrier for the initial two time frames. Later, the quantization will take place in the time-domain using one bit for each parameter. Since the bit budget is low and we are considering slowly varying channels, therefore, we will be sending either theta or phi parameters alternatingly in the time domain while keeping the unsent parameters equal to their previous values. This brings down the bit budget to 6 bits average per fed back subcarrier. 
+Initialization is performed by using $10\times12$ bits for each subcarrier for the initial two time frames. Later, the quantization will take place in the time-domain using one bit for each parameter. Since the bit budget is low and we are considering slowly varying channels, therefore, either theta or phi parameters are sent alternatingly in the time domain while keeping the unsent parameters equal to their previous values as show in the Figure \ref{adpm-fig}. Here $\Theta$ is the the collection of all $\theta$'s and $\Phi$ is the collection of all $phi$'s. This brings down the bit budget to average of 5(Size of $\Theta$) and 7(Size of $\Phi$) i.e. 6 bits average per fed back subcarrier. 
 
-Describing how you performed ADPCM to carry out the 1-bit quantization. Also, the increment rate was 2.4 times the decay rate. Also, need to describe the initialization of the Delta values required in the quantization process. I need to cite that paper. We should also try over different quantization rates to compare \cite{Gupt1905:Predictive} 
+\bf{ADPM Design}: The decrement rate - \bm is 2.4 times the \bM - increment rate in the Equation~\ref{delta_eqn} . This ratio was decided after trying with different ratios. This implies that if quantied values loose track of the actual values then after changing delta quickly they start following it again.
+Also, need to describe the initialization of the Delta values required in the quantization process. Need to cite that paper. We should also try over different quantization rates to compare 
 
 While doing interpolation at the transmitter end, future time instances are used to interpolate the rest of the subcarriers indices which are not fed back. To prevent much delay, we are using 6 future time instances and using SciPy cubic interpolation over each parameter in 2D. These interpolated values and then used to reconstruct the precoding matrices all together. 
 
