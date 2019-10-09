@@ -340,14 +340,14 @@ For a MIMO-OFDM system with $N_T$ transmitter and $N_R$ receiver antennas, each 
 \vspace{-1pt} 
 
 \begin{equation} 
-y_{i,t} = H_{i,t} x_{i,t}+ \eta 
+\by_{i,t} = \bH_{i,t} \bx_{i,t}+ \bf{\eta_{i,t}} 
 \end{equation} 
 
 \vspace{-1pt} 
 
-where the channel matrix $H_{i,t} \in \mathbb{C}^{N_R \times N_T}$; the input $x_{i,t} \in \mathbb{C}^{N_T}$; the output $y_{i,t} \in \mathbb{C}^{N_R}$ and $\eta$ is the complex additive white gaussian noise vector with distribution $\tilde{\mathcal{N}}(0,I_{N_R})$. On applying thin SVD to H, we get $H_{i,t} = U_{i,t} \Sigma_{i,t} V_{i,t}^{H}$, where $U_{i,t} \in \mathbb{C}^{N_R \times N_T}$, $\Sigma_{i,t} \in \mathbb{C}^{N_T \times N_T}$  and $V_{i,t} \in \mathbb{C}^{N_T \times N_T}$. $U_{i,t}$ and $V_{i,t}$ are orthonormal column matrices and $\Sigma_{i,t}$ contains the singular values $\sigma_1 \geq \ldots \geq \sigma_{N_T} > 0$ of H. The entries of H are assumed to be i.i.d. $\tilde{\mathcal{N}}(0,1)$, complex circularly symmetric Gaussian with mean zero and variance 1. Therefore, the first n column vectors of $V_{i,t}$ have to be quantized and fed back to the transmitter as channel spatial information.
+where the channel matrix $\bH_{i,t} \in \mathbb{C}^{N_R \times N_T}$; the input $\bx_{i,t} \in \mathbb{C}^{N_T}$; the output $\by_{i,t} \in \mathbb{C}^{N_R}$ and $\eta$ is the complex additive white gaussian noise vector with distribution $\tilde{\mathcal{N}}(0,I_{N_R})$. On applying thin SVD to H, we get $\bH_{i,t} = U_{i,t} \Sigma_{i,t} V_{i,t}^{H}$, where $U_{i,t} \in \mathbb{C}^{N_R \times N_R}$, $\Sigma_{i,t} \in \mathbb{C}^{N_R \times N_R}$  and $V_{i,t} \in \mathbb{C}^{N_T \times N_R}$. $U_{i,t}$ and $V_{i,t}$ are orthonormal column matrices and $\Sigma_{i,t}$ contains the singular values $\sigma_1 \geq \ldots \geq \sigma_{N_T} > 0$ of H. The entries of H are assumed to be i.i.d. $\tilde{\mathcal{N}}(0,1)$, complex circularly symmetric Gaussian with mean zero and variance 1. Therefore, the first n column vectors of $V_{i,t}$ have to be quantized and fed back to the transmitter as channel spatial information.
 
-% Givens rotation definition and how we are decomposing, Theta- pdf = 2lsin(theta)(2l-1).cos(theta) 0 $\leq$ Theta $\leq$ pi/2. 
+% Givens rotation definition and how we are decomposing, Theta- pdf = 2lsin(theta)(2l-1).\cos(theta) 0 $\leq$ Theta $\leq$ pi/2. 
 % Householders' transformation and how we are decomposing. -pi$\leq$ phi $\leq$ pi. Uniformly distributed. 
 % Low-complexity quantization scheme based on a further parameterization of a vector in 
 % terms of a minimal number of independent scalar parameters. In particular, we consider its application to CSI feedback in slowly time-varying MIMO channels 
@@ -371,8 +371,8 @@ G_{m-1,m}\big(\theta\big)  =
 \begin{bmatrix}
 
 I_{m-2} & & & \\ 
-& cos\;\theta & - sin\;\theta & \\ 
-& sin\;\theta & cos\;\theta & \\ 
+& \cos\;\theta & - \sin\;\theta & \\ 
+& \sin\;\theta & \cos\;\theta & \\ 
 & & & I_{t-m}
 
 \end{bmatrix} 
@@ -380,7 +380,7 @@ I_{m-2} & & & \\
   
 
 \begin{figure} 
-\includegraphics[width=0.5\textwidth]{images/adpm.pdf} 
+\includegraphics[width=0.45\textwidth]{images/new-adpm-crop.pdf} 
 \caption{Subcarriers which need to be quantized} 
 \label{ber_overvie}
 \vspace{-5pt} 
@@ -400,7 +400,7 @@ $$V = D_{1}(\phi_{1,1},\ldots,\phi_{1,4}).G_{3,4}(\theta_{1,1}) .G_{2,3}(\theta_
 Here, we denote $\phi_{i}'s$ by phases and $\theta_{i}'s$ by rotation angles. $\phi \in (-\pi, + \pi]$ is uniformaly distributed between the two extremes\cite{4114278}, while $\theta$ has a distribution 
 
 \begin{equation} 
-p(\theta) = 2lsin(\theta)^{2l-1}cos(\theta), \theta \in [0, \frac{\pi}{2}), for \; l = 1,2,\ldots,t-1
+p(\theta) = 2l\sin(\theta)^{2l-1}\cos(\theta), \theta \in [0, \frac{\pi}{2}), for \; l = 1,2,\ldots,t-1
 \end{equation}
 
 Here all $\theta_i$ and $\phi_i$ are statistically independent which is usefel for tracking them across time as explained in the next subsection. The total number of parameters obtained from the decomposition of a complex orthogonal matrix $N_{T} \times N_{R} $ is given by the relation $N_{R}(2N_{T} - N_{R}) $ \cite{4114278}. Number of $\phi = N_{R}(2N_{T} - N_{R}-1)/2$ while the number of $\theta = N_{T}(2N_{T} - N_{R}+1)/2$ 
@@ -444,7 +444,7 @@ We need to quantize the subcarriers in a way such that we can exploit the joint 
 
 Therefore, in ADPCM channel tracking scheme, the arrows in the figure show how previous quantized values along with the 1-bit number find the new quantized value. Now with the above discussion, the bit budget for each subcarrier will be equal to number of scalars * 1-bit. On an average, this can be reduced to half if we transmit only $\theta$ values for one-time instance and only $\phi$ values for the next time while keeping the un transmitted values same as the previous one. This was, the average number of bits required to quantize a channel matrix will be $N_{T}(2N_{T} - N_{R})/2$. 
 
-One problem associated with the tracking of phases ($\phi$) is that they change abruptly (cite the figure) between $-\pi$ and $\pi$ since $sin/cos(\pi) = sin/cos(-\pi)$. Therefore we have to wrap around the values by removing those abrupt changes (/cite another figure here). 
+One problem associated with the tracking of phases ($\phi$) is that they change abruptly (cite the figure) between $-\pi$ and $\pi$ since $\sin/\cos(\pi) =\sin/\cos(-\pi)$. Therefore we have to wrap around the values by removing those abrupt changes (/cite another figure here). 
 
 % We initialize $\hat{x}$ i.e. $\hat{x}_1$ by quantizing the $x_1$ using $\textbf{B}$ bits. 
 
@@ -453,7 +453,7 @@ One problem associated with the tracking of phases ($\phi$) is that they change 
 
 After obtaining the $\beta$ values(1-bit numbers) at the trasnmitter we will calculate the subcarrier indices at indices sk or sk+t. To reproduce the rest of the subcarriers will use future time instances to do the interpolation. As you can see in the figure, each parameter is interpolated using the subcarriers of the next six time instances. We do the interpolation using the spline-cubic interpolation. We could also use other standard techniques by calculating the MMSE at the missing subcarrier locations but the spline-cubic interpolation method gives better results over the other method. 
 
-Now here we can see the advantage of using subcarriers in an alternating fashion as given in the previous section. With this method we could exploit both time and frequency correlation because 
+Now here we can see the advantage of using subcarriers in an alternating fashion as given in the Section~\ref{section1}. With this method we could exploit both time and frequency correlation because 
 
 %Explain prediction and quantization steps here itself ! (succintly) 
 
@@ -463,7 +463,7 @@ Now here we can see the advantage of using subcarriers in an alternating fashion
  We have performed simulations to analyse the performance of the proposed quantization and interpolation method for slowly time-varying MIMO OFDM channel. Channel is simulated using the typical Jakes Model for both ITU Vehicular-A channel and ITU Pedestrian Channel. Performance is measured by averaging over 10 channel realizations with 100 simulations each. The normalised doppler frequency $f_{norm} = f_{max}.T_s$ is set to $3.5\times10^{-4}$ with sampling frequency $T_s = 20MHz$. For both vehicular and pedestrian channel, $N_T=4$ and $N_R=2$. Therefore, the total number of parameters are $N_{R}(2N_{T} - N_{R}) = 12$ with 5$\theta$’s and 7$\phi$’s. There are 1024 subcarriers in Vehicular channel and 64 subcarriers in the Pedestrian Channel. We take s = 33/9 for Vehicular and pedestrian channel respectively I.e. 32/8 equally spaced subcarriers with indices 33t/9t, t = 0,1, … , 31 and 0,1, .. ,7 respectively.  
 
 \subsection{Initial Quantization} 
-For the first and the second simulations/time instances we use of $\textbf{B}$ = 10 bits for quantizing each parameter for effective quantization/initialization. Therefore, the number of bits for each subcarrier = $10\times12$ = 120. Quantization is performed as given in \ref{section2}. 
+For the first and the second simulations/time instances we use of $\textbf{B}$ = 10 bits for quantizing each parameter for effective quantization/initialization. Therefore, the number of bits for each subcarrier = $10\times12$ = 120. Quantization is performed as given in Section~\ref{section2}. 
 
 Simulation: BER is calculated by averaging over all the simulations. For Vehicular Channel, 1024 subcarriers are used with doppler frequency – and sampling rate = $10^{5}$
 

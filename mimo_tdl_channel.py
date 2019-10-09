@@ -792,7 +792,8 @@ class MIMO_TDL_Channel():
             self.tdl_channels[i].calc_frequency_response(inp_resp,freq_resp , 2*self.fft_size)
             # Store it in chan_freq in appropriate places across 64 matrices
             # print(freq_resp.to_numpy_ndarray().flatten()[0:64]-freq_resp.to_numpy_ndarray().flatten()[64:128])
-            chan_freq[:,row_idx][:,col_idx]=freq_resp.to_numpy_ndarray().flatten()[0:self.fft_size]
+            np_array = np.asarray(freq_resp, dtype=np.ndarray)
+            chan_freq[:,row_idx][:,col_idx]=np.ndarray((freq_resp.rows(), freq_resp.cols()), dtype=np.complex128).flatten()[0:self.fft_size]
         
         chan_freq_list=[]
         for i in range(self.fft_size):
