@@ -12,25 +12,25 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="new-adpm.svg"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    id="svg385"
    version="1.1"
-   viewBox="0 0 210 297"
-   height="297mm"
-   width="210mm">
+   viewBox="0 0 124.51315 78.065353"
+   height="78.065353mm"
+   width="124.51315mm">
   <sodipodi:namedview
      inkscape:guide-bbox="true"
      showguides="true"
      inkscape:window-maximized="1"
-     inkscape:window-y="27"
-     inkscape:window-x="71"
-     inkscape:window-height="1025"
-     inkscape:window-width="1849"
+     inkscape:window-y="0"
+     inkscape:window-x="0"
+     inkscape:window-height="703"
+     inkscape:window-width="1366"
      showgrid="false"
      inkscape:current-layer="layer1"
      inkscape:document-units="mm"
-     inkscape:cy="894.14772"
-     inkscape:cx="386.90053"
+     inkscape:cy="96.926211"
+     inkscape:cx="359.23709"
      inkscape:zoom="0.98994949"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -38,12 +38,16 @@
      bordercolor="#666666"
      pagecolor="#ffffff"
      id="base"
-     inkscape:snap-bbox="false">
+     inkscape:snap-bbox="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
     <sodipodi:guide
        inkscape:locked="false"
        id="guide6014"
        orientation="1,0"
-       position="-335.45386,239.06995" />
+       position="-342.77315,28.138426" />
   </sodipodi:namedview>
   <defs
      id="defs379">
@@ -127,44 +131,47 @@
     <marker
        inkscape:stockid="TriangleOutM"
        orient="auto"
-       refY="0.0"
-       refX="0.0"
+       refY="0"
+       refX="0"
        id="marker20921"
        style="overflow:visible"
        inkscape:isstock="true">
       <path
          id="path20919"
-         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
-         style="fill-rule:evenodd;stroke:#f9bd41;stroke-width:1pt;stroke-opacity:1;fill:#f9bd41;fill-opacity:1"
-         transform="scale(0.4)" />
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#f9bd41;fill-opacity:1;fill-rule:evenodd;stroke:#f9bd41;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(0.4)"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:stockid="TriangleOutM"
        orient="auto"
-       refY="0.0"
-       refX="0.0"
+       refY="0"
+       refX="0"
        id="marker20879"
        style="overflow:visible"
        inkscape:isstock="true">
       <path
          id="path20877"
-         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
-         style="fill-rule:evenodd;stroke:#f9bd41;stroke-width:1pt;stroke-opacity:1;fill:#f9bd41;fill-opacity:1"
-         transform="scale(0.4)" />
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#f9bd41;fill-opacity:1;fill-rule:evenodd;stroke:#f9bd41;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(0.4)"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:stockid="TriangleOutM"
        orient="auto"
-       refY="0.0"
-       refX="0.0"
+       refY="0"
+       refX="0"
        id="marker20839"
        style="overflow:visible"
        inkscape:isstock="true">
       <path
          id="path20837"
-         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
-         style="fill-rule:evenodd;stroke:#f9bd41;stroke-width:1pt;stroke-opacity:1;fill:#f9bd41;fill-opacity:1"
-         transform="scale(0.4)" />
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         style="fill:#f9bd41;fill-opacity:1;fill-rule:evenodd;stroke:#f9bd41;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="scale(0.4)"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:collect="always"
@@ -186,43 +193,46 @@
        inkscape:isstock="true"
        style="overflow:visible"
        id="TriangleOutL"
-       refX="0.0"
-       refY="0.0"
+       refX="0"
+       refY="0"
        orient="auto"
        inkscape:stockid="TriangleOutL">
       <path
          transform="scale(0.8)"
-         style="fill-rule:evenodd;stroke:#f9bd41;stroke-width:1pt;stroke-opacity:1;fill:#f9bd41;fill-opacity:1"
-         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
-         id="path11261" />
+         style="fill:#f9bd41;fill-opacity:1;fill-rule:evenodd;stroke:#f9bd41;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path11261"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:isstock="true"
        style="overflow:visible"
        id="DiamondL"
-       refX="0.0"
-       refY="0.0"
+       refX="0"
+       refY="0"
        orient="auto"
        inkscape:stockid="DiamondL">
       <path
          transform="scale(0.8)"
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         d="M 0,-7.0710768 L -7.0710894,0 L 0,7.0710589 L 7.0710462,0 L 0,-7.0710768 z "
-         id="path11198" />
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,-7.0710768 -7.0710894,0 0,7.0710589 7.0710462,0 Z"
+         id="path11198"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:isstock="true"
-       style="overflow:visible;"
+       style="overflow:visible"
        id="Arrow1Lend"
-       refX="0.0"
-       refY="0.0"
+       refX="0"
+       refY="0"
        orient="auto"
        inkscape:stockid="Arrow1Lend">
       <path
-         transform="scale(0.8) rotate(180) translate(12.5,0)"
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         id="path11122" />
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path11122"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:collect="always"
@@ -448,14 +458,15 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
      id="layer1"
      inkscape:groupmode="layer"
-     inkscape:label="Layer 1">
+     inkscape:label="Layer 1"
+     transform="translate(-7.3192858,-8.003121)">
     <rect
        inkscape:tile-y0="-56.529757"
        inkscape:tile-x0="-320.26785"
@@ -1114,7 +1125,7 @@
      ns0:pdfconverter="pdf2svg"
      ns0:texconverter="pdflatex"
      ns0:version="0.11.0"
-     transform="matrix(0.39290626,0,0,0.39290626,-44.219572,-8.445098)">
+     transform="matrix(0.39290626,0,0,0.39290626,-51.538858,-16.448219)">
     <g
        id="g6212">
       <g
@@ -1160,7 +1171,7 @@
     </g>
   </g>
   <g
-     transform="matrix(0.39290626,0,0,0.39290626,3.9255837,-7.849756)"
+     transform="matrix(0.39290626,0,0,0.39290626,-3.3937021,-15.852877)"
      ns0:version="0.11.0"
      ns0:texconverter="pdflatex"
      ns0:pdfconverter="pdf2svg"
@@ -1222,7 +1233,7 @@
      ns0:pdfconverter="pdf2svg"
      ns0:texconverter="pdflatex"
      ns0:version="0.11.0"
-     transform="matrix(0.39290626,0,0,0.39290626,-43.777062,16.083026)">
+     transform="matrix(0.39290626,0,0,0.39290626,-51.096348,8.079905)">
     <g
        id="g6628">
       <g
@@ -1268,7 +1279,7 @@
     </g>
   </g>
   <g
-     transform="matrix(0.39290626,0,0,0.39290626,4.3680917,15.84489)"
+     transform="matrix(0.39290626,0,0,0.39290626,-2.9511941,7.841769)"
      ns0:version="0.11.0"
      ns0:texconverter="pdflatex"
      ns0:pdfconverter="pdf2svg"
@@ -1330,7 +1341,7 @@
      ns0:pdfconverter="pdf2svg"
      ns0:texconverter="pdflatex"
      ns0:version="0.11.0"
-     transform="matrix(1.5875001,0,0,1.5875001,-427.04075,-236.72149)">
+     transform="matrix(1.5875001,0,0,1.5875001,-434.36004,-244.72461)">
     <g
        id="g7965"
        transform="matrix(0.25410231,0,0,0.24949883,255.29196,136.47925)">
@@ -1886,7 +1897,7 @@
        style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.37716657;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker11537)" />
   </g>
   <g
-     transform="matrix(0.39290626,0,0,0.39290626,26.465716,-19.994748)"
+     transform="matrix(0.39290626,0,0,0.39290626,19.14643,-27.997869)"
      ns0:version="0.11.0"
      ns0:texconverter="pdflatex"
      ns0:pdfconverter="pdf2svg"
@@ -1961,49 +1972,49 @@
      sodipodi:nodetypes="cc"
      inkscape:connector-curvature="0"
      id="path11791-2"
-     d="m 18.037764,49.023554 c -3.514902,6.44516 -1.765292,13.50686 -0.220652,13.8722"
+     d="m 10.718478,41.020433 c -3.5149018,6.44516 -1.7652918,13.50686 -0.220652,13.8722"
      style="fill:none;stroke:#f9bd41;stroke-width:0.52680379;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-1)" />
   <path
      sodipodi:nodetypes="cc"
      inkscape:connector-curvature="0"
      id="path11791-27"
-     d="m 126.13364,24.852638 c -3.51489,6.445154 -2.1225,13.268716 -0.57786,13.634058"
+     d="m 118.81435,16.849517 c -3.51489,6.445154 -2.1225,13.268716 -0.57786,13.634058"
      style="fill:none;stroke:#f9bd41;stroke-width:0.52680379;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-0)" />
   <path
      sodipodi:nodetypes="cc"
      inkscape:connector-curvature="0"
      id="path20563-3"
-     d="M 65.9001,40.24971 C 64.390102,37.570816 64.78541,34.952348 65.131852,34.520134"
+     d="m 58.580814,32.246589 c -1.509998,-2.678894 -1.11469,-5.297362 -0.768248,-5.729576"
      style="fill:none;stroke:#f11200;stroke-width:0.52680379;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.0536075, 0.52680374;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker34230)" />
   <path
      sodipodi:nodetypes="cc"
      inkscape:connector-curvature="0"
      id="path20563-3-0-0"
-     d="M 84.834534,32.114536 C 82.772424,29.029624 69.503426,30.924918 68.770838,31.3517"
+     d="M 77.515248,24.111415 C 75.453138,21.026503 62.18414,22.921797 61.451552,23.348579"
      style="fill:none;stroke:#f11200;stroke-width:0.58663869;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.17327738, 0.58663866;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker20921-4-2-3)" />
   <path
      sodipodi:nodetypes="cc"
      inkscape:connector-curvature="0"
      id="path20563-3-4"
-     d="m 65.952288,24.315536 c -2.077124,2.57031 -0.616094,5.149714 -0.389372,5.616974"
+     d="m 58.633002,16.312415 c -2.077124,2.57031 -0.616094,5.149714 -0.389372,5.616974"
      style="fill:none;stroke:#f11200;stroke-width:0.52373338;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.04746676, 0.52373336;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker20921-4-0)" />
   <path
      sodipodi:nodetypes="cc"
      inkscape:connector-curvature="0"
      id="path11791-2-7"
-     d="M 41.850702,36.422646 C 38.3358,42.867794 40.08541,49.929494 41.63005,50.294834"
+     d="m 34.531416,28.419525 c -3.514902,6.445148 -1.765292,13.506848 -0.220652,13.872188"
      style="fill:none;stroke:#f9bd41;stroke-width:0.52680379;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-1-8)" />
   <path
      sodipodi:nodetypes="cc"
      inkscape:connector-curvature="0"
      id="path11791-2-7-5"
-     d="m 42.365985,61.066404 c -3.514902,6.445148 -1.765292,13.506848 -0.220652,13.872188"
+     d="m 35.046699,53.063283 c -3.514902,6.445148 -1.765292,13.506848 -0.220652,13.872188"
      style="fill:none;stroke:#f9bd41;stroke-width:0.52680379;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-1-8-6)" />
   <path
      sodipodi:nodetypes="cc"
      inkscape:connector-curvature="0"
      id="path11791-2-7-5-1"
-     d="m 126.714,48.98253 c -3.5149,6.445148 -1.76529,13.506848 -0.22065,13.872188"
+     d="m 119.39471,40.979409 c -3.5149,6.445148 -1.76529,13.506848 -0.22065,13.872188"
      style="fill:none;stroke:#f9bd41;stroke-width:0.52680379;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM-1-8-6-3)" />
   <g
      id="g7115"
@@ -2016,17 +2027,18 @@
      ns0:pdfconverter="pdf2svg"
      ns0:texconverter="pdflatex"
      ns0:version="0.11.0"
-     transform="matrix(0.352778,0.000000,0.000000,0.352778,-39.190896,9.525536)">
+     transform="matrix(0.352778,0,0,0.352778,-46.510182,1.522415)">
     <g
        id="g7113">
       <g
          id="g7111"
-         style="fill:rgb(0%,0%,0%);fill-opacity:1;">
+         style="fill:#000000;fill-opacity:1">
         <path
            id="path7109"
            transform="translate(148.712,134.765)"
-           d="M 3.984375 -1.34375 C 5.515625 -1.46875 6.625 -2.390625 6.625 -3.40625 C 6.625 -4.4375 5.5 -5.34375 3.984375 -5.46875 L 3.984375 -6.015625 C 3.984375 -6.359375 3.984375 -6.5 4.921875 -6.5 L 5.25 -6.5 L 5.25 -6.8125 C 4.890625 -6.78125 3.984375 -6.78125 3.5625 -6.78125 C 3.15625 -6.78125 2.234375 -6.78125 1.875 -6.8125 L 1.875 -6.5 L 2.203125 -6.5 C 3.15625 -6.5 3.15625 -6.375 3.15625 -6.015625 L 3.15625 -5.46875 C 1.625 -5.3125 0.5625 -4.390625 0.5625 -3.40625 C 0.5625 -2.375 1.671875 -1.5 3.15625 -1.34375 L 3.15625 -0.78125 C 3.15625 -0.453125 3.15625 -0.3125 2.203125 -0.3125 L 1.875 -0.3125 L 1.875 0 C 2.234375 -0.03125 3.15625 -0.03125 3.5625 -0.03125 C 3.96875 -0.03125 4.890625 -0.03125 5.25 0 L 5.25 -0.3125 L 4.921875 -0.3125 C 3.984375 -0.3125 3.984375 -0.4375 3.984375 -0.78125 Z M 3.15625 -1.578125 C 1.734375 -1.765625 1.5625 -2.78125 1.5625 -3.40625 C 1.5625 -3.921875 1.65625 -5.03125 3.15625 -5.234375 Z M 3.984375 -5.25 C 5.359375 -5.078125 5.625 -4.171875 5.625 -3.40625 C 5.625 -2.8125 5.484375 -1.75 3.984375 -1.5625 Z M 3.984375 -5.25 "
-           style="stroke:none;stroke-width:0" />
+           d="M 3.984375,-1.34375 C 5.515625,-1.46875 6.625,-2.390625 6.625,-3.40625 6.625,-4.4375 5.5,-5.34375 3.984375,-5.46875 v -0.546875 c 0,-0.34375 0,-0.484375 0.9375,-0.484375 H 5.25 v -0.3125 c -0.359375,0.03125 -1.265625,0.03125 -1.6875,0.03125 -0.40625,0 -1.328125,0 -1.6875,-0.03125 V -6.5 h 0.328125 c 0.953125,0 0.953125,0.125 0.953125,0.484375 V -5.46875 C 1.625,-5.3125 0.5625,-4.390625 0.5625,-3.40625 c 0,1.03125 1.109375,1.90625 2.59375,2.0625 v 0.5625 c 0,0.328125 0,0.46875 -0.953125,0.46875 H 1.875 V 0 c 0.359375,-0.03125 1.28125,-0.03125 1.6875,-0.03125 0.40625,0 1.328125,0 1.6875,0.03125 V -0.3125 H 4.921875 c -0.9375,0 -0.9375,-0.125 -0.9375,-0.46875 z M 3.15625,-1.578125 C 1.734375,-1.765625 1.5625,-2.78125 1.5625,-3.40625 c 0,-0.515625 0.09375,-1.625 1.59375,-1.828125 z M 3.984375,-5.25 c 1.375,0.171875 1.640625,1.078125 1.640625,1.84375 0,0.59375 -0.140625,1.65625 -1.640625,1.84375 z m 0,0"
+           style="stroke:none;stroke-width:0"
+           inkscape:connector-curvature="0" />
       </g>
     </g>
   </g>
@@ -2041,7 +2053,7 @@
      ns0:pdfconverter="pdf2svg"
      ns0:texconverter="pdflatex"
      ns0:version="0.11.0"
-     transform="matrix(0.35277801,0,0,0.35277801,-15.223795,21.794938)">
+     transform="matrix(0.35277801,0,0,0.35277801,-22.543081,13.791817)">
     <g
        id="g7113-6">
       <g
@@ -2067,7 +2079,7 @@
      ns0:pdfconverter="pdf2svg"
      ns0:texconverter="pdflatex"
      ns0:version="0.11.0"
-     transform="matrix(0.35277801,0,0,0.35277801,69.301131,9.1327356)">
+     transform="matrix(0.35277801,0,0,0.35277801,61.981845,1.1296146)">
     <g
        id="g7113-2">
       <g
@@ -2093,7 +2105,7 @@
      ns0:pdfconverter="pdf2svg"
      ns0:texconverter="pdflatex"
      ns0:version="0.11.0"
-     transform="matrix(0.352778,0,0,0.352778,-39.638116,-14.162649)">
+     transform="matrix(0.352778,0,0,0.352778,-46.957402,-22.16577)">
     <g
        id="g8432">
       <g
@@ -2119,7 +2131,7 @@
      ns0:pdfconverter="pdf2svg"
      ns0:texconverter="pdflatex"
      ns0:version="0.11.0"
-     transform="matrix(0.35277801,0,0,0.35277801,-15.748237,-2.20655)">
+     transform="matrix(0.35277801,0,0,0.35277801,-23.067523,-10.209671)">
     <g
        id="g8432-8">
       <g

@@ -3,14 +3,15 @@ all: main.pdf
 
 MAINFILES := main.tex
 
-IMAGEFILES := $(shell find -iname '*svg')
+IMAGEFILES := images/new-adpm.svg
 
 IMAGEPDFS := $(IMAGEFILES:%.svg=%.pdf)
 
 main.pdf: main.bib $(MAINFILES) $(IMAGEPDFS)
 	pdflatex main.tex && bibtex main && pdflatex main && pdflatex main
 
-
+images/new-adpm.pdf: images/new-adpm.svg
+	inkscape --export-pdf=images/new-adpm.pdf images/new-adpm.svg
 
 .PHONY: clean
 clean:
