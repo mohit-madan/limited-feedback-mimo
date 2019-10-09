@@ -163,12 +163,30 @@ The rest of this paper is organized as follows: Section~\ref{section2}, we start
 
 
 \section{System Model}
-For a MIMO-OFDM system with $N_T$ transmitter and $N_R$ receiver antennas, each subcarrier $i$ with time instant $t$ could be modelled as a flat-fading MIMO channel. This flat-fading MIMO channel can be modelled as
+For a MIMO-OFDM system with $N_T$ transmitter and $N_R$ receiver
+antennas, each subcarrier $i$ with time instant $t$ could be modelled as a flat-fading MIMO channel. This flat-fading MIMO channel can be modelled as
 \label{section2}
 \begin{equation}
 \by_{i,t} = \bH_{i,t} \bx_{i,t}+ \bf{\eta_{i,t}}
 \end{equation}
-where the channel matrix $H_{i,t} \in \mathbb{C}^{N_R \times N_T}$; the input $x_{i,t} \in \mathbb{C}^{N_T}$; the output $y_{i,t} \in \mathbb{C}^{N_R}$ and $\eta$ is the complex additive white gaussian noise vector with distribution $\tilde{\mathcal{N}}(0,I_{N_R})$. On applying thin SVD to H, we get $H_{i,t} = U_{i,t} \Sigma_{i,t} V_{i,t}^{H}$, where $U_{i,t} \in \mathbb{C}^{N_R \times N_T}$, $\Sigma_{i,t} \in \mathbb{C}^{N_T \times N_T}$  and $V_{i,t} \in \mathbb{C}^{N_T \times N_T}$. $U_{i,t}$ and $V_{i,t}$ are orthonormal column matrices and $\Sigma_{i,t}$ contains the singular values $\sigma_1 \geq \ldots \geq \sigma_{N_T} > 0$ of H. The entries of H are assumed to be i.i.d. $\tilde{\mathcal{N}}(0,1)$, complex circularly symmetric Gaussian with mean zero and variance 1. Therefore, the first n column vectors of $V_{i,t}$ have to be quantized and fed back to the transmitter as channel spatial information.
+where the channel matrix is
+$\bH_{i,t} \in \mathbb{C}^{N_R \times N_T}$; the input is
+$\bx_{i,t} \in \mathbb{C}^{N_T}$; the output is
+$\by_{i,t} \in \mathbb{C}^{N_R}$ and the complex additive white
+Gaussian noise is $\eta$ whose distribution is
+${\mathcal{CN}}(0,I_{N_R})$. We consider the case where $N_R <
+N_T$. The thin SVD of $\bH$ is given by
+$\bH_{i,t} = \bU_{i,t} \Sigma_{i,t} \bV_{i,t}^{H}$, where
+$\bU_{i,t} \in \mathbb{C}^{N_R \times N_R}$,
+$\Sigma_{i,t} \in \mathbb{C}^{N_R \times N_R}$ and
+$\bV_{i,t} \in \mathbb{C}^{N_T \times N_R}$. $\bU_{i,t}$ and
+$\bV_{i,t}$ are matrices whose columns are orthonormal, and
+$\Sigma_{i,t}$ contains the singular values
+$\sigma_1 \geq \ldots \geq \sigma_{N_T} > 0$ of $\bH_{i,t}$. The
+entries of $\bH_{i,t}$ are assumed to be distributed
+i.i.d. $\tilde{\mathcal{N}}(0,1)$. To obtain a precoder at the
+transmitter, we need to quantize and feed back information about
+$\bV_{i,t}$ for each subcarrier.
 
 
 % Givens rotation definition and how we are decomposing, Theta- pdf = 2lsin(theta)(2l-1).\cos(theta) 0 $\leq$ Theta $\leq$ pi/2.
@@ -177,100 +195,93 @@ where the channel matrix $H_{i,t} \in \mathbb{C}^{N_R \times N_T}$; the input $x
 % terms of a minimal number of independent scalar parameters. In particular, we consider its application to CSI feedback in slowly time-varying MIMO channels
 
 
-\subsection{Scalar Paramatrization}
+\subsection{Scalar Parametrization}
 \label{givens}
-The degrees of freedom in the spatial information matrix is much smaller than the number of real entries in the matrix because of the geometrical structure between the columns of the matrix~\cite{4114278}. An orthonormal matrix with $t$ rows and $n$ columns can be represented as
-
-
+The degrees of freedom in the $\bV_{i,t}$ matrices is smaller than the
+number of real entries in the matrix because of the geometrical
+structure between the columns of the matrix~\cite{4114278}. The
+orthonormal matrix $\bV_{i,t}$ with $N_T$ rows and $N_R$ columns can be
+decomposed as TODO
 \begin{equation}
-\textbf{V} = \Bigg[\prod_{k=1}^{n} D_{k} \big( \phi_{k,k},\ldots , \phi_{k,n} \big) \: \Bigg\{ \prod_{l=1}^{l=t-k} G_{t-l,t-l+1} \big( \theta_{k,l}\big) \Bigg\} \Bigg] \: \tilde{I}
+\textbf{V} = \Bigg[\prod_{k=1}^{n} \bD_{k} \big( \phi_{k,k},\ldots , \phi_{k,n} \big) \: \Bigg\{ \prod_{l=1}^{l=t-k} \bG_{t-l,t-l+1} \big( \theta_{k,l}\big) \Bigg\} \Bigg] \: \tilde{\bI}
 \end{equation}
-
-where $D_{k}$ is the diagonal matrix given as $D_{k}\big(\phi_{k,k}, \ldots, \phi_{k,t} \big)$ =  $\mbox{diag}\big( 1_{k-1}, e^{j\phi_{k,k}},\ldots, e^{j\phi_{k,t}}  \big)$, $1_{k-1}$ is (k-1) ones; and t x n matrix $\tilde{I}$ = $\big[I_{n}, 0_{n,t-n}\big]^{T}$. The Givens matrix \textbf{G} is given as
-
+where $D_{k}$ is the diagonal matrix given as $D_{k}\big(\phi_{k,k},
+\ldots, \phi_{k,t} \big)$ =  $\mbox{diag}\big( {\bf 1}_{k-1},
+e^{j\phi_{k,k}},\ldots, e^{j\phi_{k,t}}  \big)$, ${\bf 1}_{k-1}$ is
+represents  $k-1$ ones, and the $N_R \times N_T$ matrix $\tilde{\bI}$
+= $\big[\bI_{n}, {\bf 0}_{n,t-n}\big]^{T}$, and
 \begin{equation}
 G_{m-1,m}\big(\theta\big)  =
 \begin{bmatrix}
-
 I_{m-2} & & & \\
 & \cos\theta & -\sin\theta & \\
 & \sin\theta & \cos\theta & \\
 & & & I_{t-m}
-
 \end{bmatrix}
 \end{equation}
-
-
-\begin{figure}
-\label{adpm-fig}
-\includegraphics[width=0.45\textwidth]{images/new-adpm.pdf}
-\caption{Subcarriers which need to be quantized}
-\label{ber_overvie}
-\vspace{-5pt}
-\end{figure}
-
-
-For a $4 \times 2$ orthogonal matrix V,
-
-$$V = D_{1}(\phi_{1,1},\ldots,\phi_{1,4}).G_{3,4}(\theta_{1,1}) .G_{2,3}(\theta_{1,2}) .G_{1,2}(\theta_{1,3})$$
-
-\vspace{-1.4em}
-
-\hspace{1pt}$$.D_{2}(\phi_{2,2},\phi_{2,3},\phi_{2,4}) .G_{3,4}(\theta_{2,1}) .G_{2,3}(\theta_{2,2}).\tilde{I}$$
-
-
-
-Here, we denote $\phi_{i}'s$ by phases and $\theta_{i}'s$ by rotation angles. $\phi \in (-\pi, + \pi]$ is uniformaly distributed between the two extremes\cite{4114278}, while $\theta$ has a distribution
-
-%TODO What is t in the equation below?
+Thus, for a $4 \times 2$ orthogonal matrix $\bV_{i,t}$, we have
+\begin{align*}
+  \bV_{i,t} & =
+  \bD_{1}(\phi_{1,1},\ldots,\phi_{1,4})\bG_{3,4}(\theta_{1,1})
+  \bG_{2,3}(\theta_{1,2}) \bG_{1,2}(\theta_{1,3})\times\\
+& \bD_{2}(\phi_{2,2},\phi_{2,3},\phi_{2,4}) \bG_{3,4}(\theta_{2,1}) \bG_{2,3}(\theta_{2,2})\tilde{\bI}
+\end{align*}
+Here, $\phi_{k}$s are referred to as phases and $\theta_{l}$s as
+rotation angles. $\phi_k \in (-\pi, + \pi]$ is uniformly distributed
+between the two extremes\cite{4114278}, while $\theta_l$
+is distributed as
 \begin{equation}
 p(\theta) = 2l(\sin\theta)^{2l-1}\cos\theta, \theta \in \left[0, \frac{\pi}{2}\right) \mbox{ for } l = 1,2,\ldots,t-1
 \end{equation}
-Here all $\theta_i$ and $\phi_i$ are statistically independent, making it useful for tracking them across time as explained in the next subsection. The total number of parameters obtained from the decomposition of a complex orthogonal matrix $N_{T} \times N_{R} $ is $N_{R}(2N_{T} - N_{R})$~\cite{4114278}. The number of $\phi_i$ parameters is $N_{R}(2N_{T} - N_{R}-1)/2$ while the number of $\theta$ parameters is $N_{T}(2N_{T} - N_{R}+1)/2$.
-% may cross pi and come immediately to -pi, therefore, values are unwrapped while calculating them. Unwrapping is performed at the receiver over the frequency initially and later in time.
-
+The $\phi_k$ and $\theta_l$ are statistically independent, making this
+representation useful for tracking them separately across time, as
+explained in the following subsection. The total number of parameters
+obtained from the decomposition of a complex orthogonal matrix
+$N_{T} \times N_{R} $ is $N_{R}(2N_{T} - N_{R})$~\cite{4114278}. The
+number of $\phi_i$ parameters is $N_{R}(2N_{T} - N_{R}-1)/2$ while the
+number of $\theta$ parameters is $N_{T}(2N_{T} - N_{R}+1)/2$.
+\begin{figure}
+\includegraphics[width=0.45\textwidth]{images/new-adpm.pdf}
+\caption{\label{fig:adpm-fig}Subcarriers which need to be quantized}
+\label{ber_overvie}
+\vspace{-5pt}
+\end{figure}
 % To exploit the interpolation of time \& frequency jointly at the transmitter, feedback bits are sent in an alternating fashion as shown in the figure.
-
-
 
 \subsection{Differential Quantization - Channel Tracking}
 \label{quantiz}
-
-For a slowly time varying channel, ADPM is an effective method for tracking a paramater over time with using only 1-bit. The 1-bit number $\beta_{n} = Q(x_{n} - \hat{x}_{n-1})$ where $x$ is the unquantized vector $\&$ $\hat{x}$ is the quantized vector and $Q(x)$ is the quantization function given as
-
-
+For a channel that varies slowly with time, ADPM is an effective
+method for tracking parameters over time using very few bits (often
+just one bit). For example, while tracking a process $x_n$, at time
+$n$, the one-bit jump $\beta_{n} = Q(x_{n} - \hat{x}_{n-1})$, where
+$x_n$ is the unquantized value and $\hat{x}_{n-1}$ is the unquantized
+(accurate) value, the quantization function $Q(x)$ is given as
 \begin{equation}
   Q(x)=\begin{cases}
     1, & \text{if $x>0$}.\\
     -1, & \text{otherwise}.
   \end{cases}
 \end{equation}
-
-Thus, the quantied vector $\hat{x}_n$ changes with time as
-
+Thus, the quantied vector $\hat{x}_n$ evolves with time as
 \begin{equation}
-\hat{x}_{n} = \hat{x}_{n-1} + \beta_{n}\Delta_{n}
-\end{equation}
-
-\begin{equation}
+\hat{x}_{n} = \hat{x}_{n-1} + \beta_{n}\Delta_{n} \mbox{ where }
 \label{delta_eqn}
 \Delta_{n} = \begin{cases}
-    M \Delta_{n-1}, & \text{if $\beta_{n} = \beta_{n-1}$}.\\
+    M \Delta_{n-1}, & \text{if $\beta_{n} = \beta_{n-1}$}\\
     \Delta_{n-1}/m , & \text{if $\beta_{n} \neq \beta_{n-1}$}.
   \end{cases}
 \end{equation}
+Here we initialize delta using $\Delta_1 = |x_{2}-\hat{x}_1|$.
 
-Here we initialize delta using $\Delta_1 = abs(x_{2}-\hat{x}_1)$.
-
-We need to quantize the subcarriers in a way such that we can exploit
-the joint time-frequency interpolation at the transmitter
-side. Therefore, we select the subcarriers for quantization in an
-alternating fashion as shown in the figure. Figure shows a \textbf{N}
-subcarrier MIMO channel with subcarriers which are going to be
-quantized at the position sk, k = 0,1,...,$\frac{N-1}{s}$ for even
-time instance. Here, s is the gap between two frequencies. For odd
-time instances, subcarriers at the position sk + t for k = 0,1,...,
-$\frac{N-1}{s}$ with t = ${\frac{s}{2}}$.
+To quantize the subcarriers efficiently and exploit the joint
+time-frequency interpolation at the transmitter side, we select the
+subcarriers for quantization in an alternating fashion as shown in
+Fig.~\ref{fig:adpm-fig}. The figure shows the channel evolution of an
+$N$ subcarrier MIMO-OFDM system with subcarriers which are going to be
+quantized at every $s$-th subcarriers, for even time instances, where,
+$s$ is the gap between two quantized subcarrier indices. For odd time
+instances, subcarriers at the position $sk$ for k = 0,1,...,
+$\frac{N-1}{s}$ with t = ${\frac{s}{2}}$. TODO
 
 Therefore, in ADPCM channel tracking scheme, the arrows in the figure show how previous quantized values along with the 1-bit number find the new quantized value. Now with the above discussion, the bit budget for each subcarrier will be equal to number of scalars * 1-bit. On an average, this can be reduced to half if we transmit only $\theta$ values for one-time instance and only $\phi$ values for the next time while keeping the un transmitted values same as the previous one. This was, the average number of bits required to quantize a channel matrix will be $N_{T}(2N_{T} - N_{R})/2$.
 
@@ -298,7 +309,7 @@ Simulation: BER is calculated by averaging over all the simulations. For Vehicul
 
 Initialization is performed by using $10\times12$ bits for each subcarrier for the initial two time frames. Later, the quantization will take place in the time-domain using one bit for each parameter. Since the bit budget is low and we are considering slowly varying channels, therefore, either theta or phi parameters are sent alternatingly in the time domain while keeping the unsent parameters equal to their previous values as show in the Figure \ref{adpm-fig}. Here $\Theta$ is the the collection of all $\theta$'s and $\Phi$ is the collection of all $phi$'s. This brings down the bit budget to average of 5(Size of $\Theta$) and 7(Size of $\Phi$) i.e. 6 bits average per fed back subcarrier.
 
-\bf{ADPM Design}: The decrement rate - \bm is 2.4 times the \bM - increment rate in the Equation~\ref{delta_eqn} . This ratio was decided after trying with different ratios. This implies that if quantied values loose track of the actual values then after changing delta quickly they start following it again.
+{ADPM Design}: The decrement rate - \bm is 2.4 times the \bM - increment rate in the Equation~\ref{delta_eqn} . This ratio was decided after trying with different ratios. This implies that if quantied values lose track of the actual values then after changing delta quickly they start following it again.
 Also, need to describe the initialization of the Delta values required in the quantization process. Need to cite that paper. We should also try over different quantization rates to compare
 
 While doing interpolation at the transmitter end, future time instances are used to interpolate the rest of the subcarriers indices which are not fed back. To prevent much delay, we are using 6 future time instances and using SciPy cubic interpolation over each parameter in 2D. These interpolated values and then used to reconstruct the precoding matrices all together.
