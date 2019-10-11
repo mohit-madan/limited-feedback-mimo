@@ -203,13 +203,13 @@ structure between the columns of the matrix~\cite{4114278}. The
 orthonormal matrix $\bV_{i,t}$ with $N_T$ rows and $N_R$ columns can be
 decomposed as TODO
 \begin{equation}
-\textbf{V} = \Bigg[\prod_{k=1}^{n} \bD_{k} \big( \phi_{k,k},\ldots , \phi_{k,n} \big) \: \Bigg\{ \prod_{l=1}^{l=t-k} \bG_{t-l,t-l+1} \big( \theta_{k,l}\big) \Bigg\} \Bigg] \: \tilde{\bI}
+\textbf{V} = \Bigg[\prod_{k=1}^{N_{R}} \bD_{k} \big( \phi_{k,k},\ldots , \phi_{k,N_{R}} \big) \: \Bigg\{ \prod_{l=1}^{l=N_{T}-k} \bG_{N_{T}-l,N_{T} -l+1} \big( \theta_{k,l}\big) \Bigg\} \Bigg] \: \tilde{\bI}
 \end{equation}
 where $D_{k}$ is the diagonal matrix given as $D_{k}\big(\phi_{k,k},
-\ldots, \phi_{k,t} \big)$ =  $\mbox{diag}\big( {\bf 1}_{k-1},
-e^{j\phi_{k,k}},\ldots, e^{j\phi_{k,t}}  \big)$, ${\bf 1}_{k-1}$ is
+\ldots, \phi_{k,N_T } \big)$ =  $\mbox{diag}\big( {\bf 1}_{k-1},
+e^{j\phi_{k,k}},\ldots, e^{j\phi_{k,N_T }}  \big)$, ${\bf 1}_{k-1}$ is
 represents  $k-1$ ones, and the $N_R \times N_T$ matrix $\tilde{\bI}$
-= $\big[\bI_{n}, {\bf 0}_{n,t-n}\big]^{T}$, and
+= $\big[\bI_{N_R }, {\bf 0}_{N_T ,N_T -N_R }\big]^{T}$, and
 \begin{equation}
 G_{m-1,m}\big(\theta\big)  =
 \begin{bmatrix}
@@ -226,12 +226,11 @@ Thus, for a $4 \times 2$ orthogonal matrix $\bV_{i,t}$, we have
   \bG_{2,3}(\theta_{1,2}) \bG_{1,2}(\theta_{1,3})\times\\
 & \bD_{2}(\phi_{2,2},\phi_{2,3},\phi_{2,4}) \bG_{3,4}(\theta_{2,1}) \bG_{2,3}(\theta_{2,2})\tilde{\bI}
 \end{align*}
-Here, $\phi_{k}$s are referred to as phases and $\theta_{l}$s as
-rotation angles. $\phi_k \in (-\pi, + \pi]$ is uniformly distributed
+Here, $\phi_{k}$s are referred to as phases; their collection is given by $\Phi and $$\theta_{l}$s as rotation angles; their collection is given by $\Theta$. $\phi_k \in (-\pi, + \pi]$ is uniformly distributed
 between the two extremes\cite{4114278}, while $\theta_l$
 is distributed as
 \begin{equation}
-p(\theta) = 2l(\sin\theta)^{2l-1}\cos\theta, \theta \in \left[0, \frac{\pi}{2}\right) \mbox{ for } l = 1,2,\ldots,t-1
+p(\theta) = 2l(\sin\theta)^{2l-1}\cos\theta, \theta \in \left[0, \frac{\pi}{2}\right) \mbox{ for } l = 1,2,\ldots,N_T -1
 \end{equation}
 The $\phi_k$ and $\theta_l$ are statistically independent, making this
 representation useful for tracking them separately across time, as
@@ -241,7 +240,7 @@ $N_{T} \times N_{R} $ is $N_{R}(2N_{T} - N_{R})$~\cite{4114278}. The
 number of $\phi_i$ parameters is $N_{R}(2N_{T} - N_{R}-1)/2$ while the
 number of $\theta$ parameters is $N_{T}(2N_{T} - N_{R}+1)/2$.
 \begin{figure}
-\includegraphics[width=0.45\textwidth]{images/new-adpm.pdf}
+\includegraphics[width=0.5\textwidth]{images/new-adpm.pdf}
 \caption{\label{fig:adpm-fig}Subcarriers which need to be quantized}
 \label{ber_overvie}
 \vspace{-5pt}
@@ -278,10 +277,10 @@ time-frequency interpolation at the transmitter side, we select the
 subcarriers for quantization in an alternating fashion as shown in
 Fig.~\ref{fig:adpm-fig}. The figure shows the channel evolution of an
 $N$ subcarrier MIMO-OFDM system with subcarriers which are going to be
-quantized at every $s$-th subcarriers, for even time instances, where,
-$s$ is the gap between two quantized subcarrier indices. For odd time
-instances, subcarriers at the position $sk$ for k = 0,1,...,
-$\frac{N-1}{s}$ with t = ${\frac{s}{2}}$. TODO
+quantized at every $p$-th subcarriers, for even time instances, where,
+$p$ is the gap between two quantized subcarrier indices. For odd time
+instances, subcarriers at the position $pk+q$ for k = 0,1,...,
+$\frac{N-1}{p}$ with q = ${\frac{p}{2}}$. TODO
 
 Therefore, in ADPCM channel tracking scheme, the arrows in the figure show how previous quantized values along with the 1-bit number find the new quantized value. Now with the above discussion, the bit budget for each subcarrier will be equal to number of scalars * 1-bit. On an average, this can be reduced to half if we transmit only $\theta$ values for one-time instance and only $\phi$ values for the next time while keeping the un transmitted values same as the previous one. This was, the average number of bits required to quantize a channel matrix will be $N_{T}(2N_{T} - N_{R})/2$.
 
@@ -292,7 +291,7 @@ One problem associated with the tracking of phases ($\phi$) is that they change 
 \subsection{Joint Time Frequency Interpolation}
 \label{interp}
 
-After obtaining the $\beta$ values(1-bit numbers) at the trasnmitter we will calculate the subcarrier indices at indices sk or sk+t. To reproduce the rest of the subcarriers will use future time instances to do the interpolation. As you can see in the figure, each parameter is interpolated using the subcarriers of the next six time instances. We do the interpolation using the spline-cubic interpolation. We could also use other standard techniques by calculating the MMSE at the missing subcarrier locations but the spline-cubic interpolation method gives better results over the other method.
+After obtaining the $\beta$ values(1-bit numbers) at the trasnmitter we will calculate the subcarrier indices at indices $pk$ or $pk+q$. To reproduce the rest of the subcarriers will use future time instances to do the interpolation. As you can see in the figure, each parameter is interpolated using the subcarriers of the next six time instances. We do the interpolation using the spline-cubic interpolation. We could also use other standard techniques by calculating the MMSE at the missing subcarrier locations but the spline-cubic interpolation method gives better results over the other method.
 
 Now here we can see the advantage of using subcarriers in an alternating fashion as given in the previous section. With this method we could exploit both time and frequency correlation because
 
@@ -300,7 +299,7 @@ Now here we can see the advantage of using subcarriers in an alternating fashion
 \section{Simulation and discussion}
 \label{section3}
 
- We have performed simulations to analyse the performance of the proposed quantization and interpolation method for slowly time-varying MIMO OFDM channel. Channel is simulated using the typical Jakes Model for both ITU Vehicular-A channel and ITU Pedestrian Channel. Performance is measured by averaging over 10 channel realizations with 100 simulations each. The normalised doppler frequency $f_{norm} = f_{max}.T_s$ is set to $3.5\times10^{-4}$ with sampling frequency $T_s = 20MHz$. For both vehicular and pedestrian channel, $N_T=4$ and $N_R=2$. Therefore, the total number of parameters are $N_{R}(2N_{T} - N_{R}) = 12$ with 5$\theta$’s and 7$\phi$’s. There are 1024 subcarriers in Vehicular channel and 64 subcarriers in the Pedestrian Channel. We take s = 33/9 for Vehicular and pedestrian channel respectively I.e. 32/8 equally spaced subcarriers with indices 33t/9t, t = 0,1, … , 31 and 0,1, .. ,7 respectively.
+ We have performed simulations to analyse the performance of the proposed quantization and interpolation method for slowly time-varying MIMO OFDM channel. Channel is simulated using the typical Jakes Model for both ITU Vehicular-A channel and ITU Pedestrian Channel. Performance is measured by averaging over 10 channel realizations with 100 simulations each. The normalised doppler frequency $f_{norm} = f_{max}.T_s$ is set to $3.5\times10^{-4}$ with symbol time period $T_d = 5\times10^{-8} s$. For both vehicular and pedestrian channel, $N_T=4$ and $N_R=2$. Therefore, the total number of parameters are $N_{R}(2N_{T} - N_{R}) = 12$ with 5$\theta$’s and 7$\phi$’s. There are 1024 subcarriers in Vehicular channel and 64 subcarriers in the Pedestrian Channel. We take s = 33/9 for Vehicular and pedestrian channel respectively I.e. 32/8 equally spaced subcarriers with indices 33t/9t, t = 0,1, … , 31 and 0,1, .. ,7 respectively.
 
 \subsection{Initial Quantization}
 For the first and the second simulations/time instances we use of $\textbf{B}$ = 10 bits for quantizing each parameter for effective quantization/initialization. Therefore, the number of bits for each subcarrier = $10\times12$ = 120. Quantization is performed as given in Section~\ref{section2}.
@@ -309,10 +308,10 @@ Simulation: BER is calculated by averaging over all the simulations. For Vehicul
 
 Initialization is performed by using $10\times12$ bits for each subcarrier for the initial two time frames. Later, the quantization will take place in the time-domain using one bit for each parameter. Since the bit budget is low and we are considering slowly varying channels, therefore, either theta or phi parameters are sent alternatingly in the time domain while keeping the unsent parameters equal to their previous values as show in the Figure \ref{adpm-fig}. Here $\Theta$ is the the collection of all $\theta$'s and $\Phi$ is the collection of all $phi$'s. This brings down the bit budget to average of 5(Size of $\Theta$) and 7(Size of $\Phi$) i.e. 6 bits average per fed back subcarrier.
 
-{ADPM Design}: The decrement rate - \bm is 2.4 times the \bM - increment rate in the Equation~\ref{delta_eqn} . This ratio was decided after trying with different ratios. This implies that if quantied values lose track of the actual values then after changing delta quickly they start following it again.
-Also, need to describe the initialization of the Delta values required in the quantization process. Need to cite that paper. We should also try over different quantization rates to compare
+{ADPM Design}: The decrement/decay rate is given by $\bm$ and increment/growth rate is given by $\bM$ in the Equation~\ref{delta_eqn} . The ratio of $m/M$ is fixed at 2.5 i.e. higher decay than increment of the delta values. This way, quantized values are able to follow the curve more precisely. Also, need to describe the initialization of the Delta values required in the quantization process. Need to cite that paper.
 
-While doing interpolation at the transmitter end, future time instances are used to interpolate the rest of the subcarriers indices which are not fed back. To prevent much delay, we are using 6 future time instances and using SciPy cubic interpolation over each parameter in 2D. These interpolated values and then used to reconstruct the precoding matrices all together.
+\subsection{Bilinear Interpolation}
+Bilinear interpolation is the equivalent of linear interpolation in two dimensions. On the transmitter side, all the scalars - $\Theta$ and $\Phi$ of the missing subcarriers are interpolatted using the values of the neigbours. These interpolated values and then used to reconstruct the precoding matrices all together.
 
 Performance Measurements:
 Since the Precoding matrices fundamentally lie on the Stiefel manifold, therefore, we are using the chordal distance parameter to measure the effectiveness of the quantization method used by us. Later we are comparing the BER rates with the ideal completely fed back subcarriers.

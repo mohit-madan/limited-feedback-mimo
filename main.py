@@ -73,7 +73,7 @@ def main():
     # Use Stiefel Chordal Distance as norm
     # norm_fn='stiefCD'
     start_time=time.time()
-    save=False
+    save=True
 
     for chan_index in range(num_chan_realisations):
         print("-----------------------------------------------------------------------")

@@ -685,7 +685,7 @@ def stiefCD(A,B):
     CD_2=np.sum([grassCD_2(np.array(A_mat[:,i]),np.array(B_mat[:,i])) for i in range(A_mat.shape[1])])
     if(CD_2<0):
         pdb.set_trace()
-        return -1
+        return 0
     return np.sqrt(CD_2)
 
 
@@ -793,12 +793,12 @@ class MIMO_TDL_Channel():
             # Store it in chan_freq in appropriate places across 64 matrices
             # print(freq_resp.to_numpy_ndarray().flatten()[0:64]-freq_resp.to_numpy_ndarray().flatten()[64:128])
             np_array = np.asarray(freq_resp, dtype=np.ndarray)
-            chan_freq[:,row_idx][:,col_idx]=np.ndarray((freq_resp.rows(), freq_resp.cols()), dtype=np.complex128).flatten()[0:self.fft_size]
-        
+            chan_freq[:,row_idx][:,col_idx]=freq_resp.to_numpy_ndarray().flatten()[0:self.fft_size]
         chan_freq_list=[]
         for i in range(self.fft_size):
             chan_freq_list.append(chan_freq[i])
         #print(chan_freq_list[0])
+        # pdb.set_trace()
         return(chan_freq_list)
 
 
