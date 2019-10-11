@@ -204,7 +204,7 @@ structure between the columns of the matrix~\cite{4114278}. The
 orthonormal matrix $\bV_{i,t}$ with $N_T$ rows and $N_R$ columns can be
 decomposed as TODO
 \begin{equation}
-\textbf{V} = \Bigg[\prod_{k=1}^{N_{R}} \bD_{k} \big( \phi_{k,k},\ldots , \phi_{k,N_{R}} \big) \: \Bigg\{ \prod_{l=1}^{l=N_{T}-k} \bG_{N_{T}-l,N_{T} -l+1} \big( \theta_{k,l}\big) \Bigg\} \Bigg] \: \tilde{\bI}
+\textbf{V} = \left[\prod_{k=1}^{N_{R}} \bD_{k} \left( \phi_{k,k},\ldots , \phi_{k,N_{R}} \right) \:  \prod_{l=1}^{N_{T}-k} \bG_{N_{T}-l,N_{T} -l+1} \big( \theta_{k,l}\big)  \right] \: \tilde{\bI}
 \end{equation}
 where $D_{k}$ is the diagonal matrix given as $D_{k}\big(\phi_{k,k},
 \ldots, \phi_{k,N_T } \big)$ =  $\mbox{diag}\big( {\bf 1}_{k-1},
@@ -227,11 +227,13 @@ Thus, for a $4 \times 2$ orthogonal matrix $\bV_{i,t}$, we have
   \bG_{2,3}(\theta_{1,2}) \bG_{1,2}(\theta_{1,3})\times\\
 & \bD_{2}(\phi_{2,2},\phi_{2,3},\phi_{2,4}) \bG_{3,4}(\theta_{2,1}) \bG_{2,3}(\theta_{2,2})\tilde{\bI}
 \end{align*}
-Here, $\phi_{k}$s are referred to as phases; their collection is given by $\Phi and $$\theta_{l}$s as rotation angles; their collection is given by $\Theta$. $\phi_k \in (-\pi, + \pi]$ is uniformly distributed
-between the two extremes\cite{4114278}, while $\theta_l$
-is distributed as
+Here, $\phi_{k}$s are referred to as phases; their collection is given
+by $\Phi$ and $\theta_{l}$s as rotation angles; their collection is
+given by $\Theta$. $\phi_k \in (-\pi, + \pi]$ is uniformly distributed
+between the two extremes~\cite{4114278}, while $\theta_l$ is
+distributed as
 \begin{equation}
-p(\theta) = 2l(\sin\theta)^{2l-1}\cos\theta, \theta \in \left[0, \frac{\pi}{2}\right) \mbox{ for } l = 1,2,\ldots,N_T -1
+2l(\sin\theta_l)^{2l-1}\cos\theta_l, \theta_l \in \left[0, \frac{\pi}{2}\right) \mbox{ , } l = 1,2,\ldots,N_T -1
 \end{equation}
 The $\phi_k$ and $\theta_l$ are statistically independent, making this
 representation useful for tracking them separately across time, as
