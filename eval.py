@@ -52,7 +52,7 @@ def main():
     Nr=constants.Nr #2
     freq_quanta=constants.freq_quanta #4 - 5
     time_quanta=constants.time_quanta #1
-    channel_type="vehicular/"
+    channel_type="Pedestrian/"
     #---------------------------------------------------------------------------
     # Run Time variables
     # Stores the previously known estimates of the subcarriers
@@ -95,12 +95,11 @@ def main():
 
     start_time=time.time()
     sigma_cb=np.load('./Codebooks/Independent_qt/sigma_cb_2bits_10000.npy') #do we need this codebook
-    hp_Qerr=np.zeros(number_simulations-interp_nbr_vals-2)
-    ot_Qerr=np.zeros(number_simulations-interp_nbr_vals-2)
-    hp_Neterr=np.zeros(number_simulations-interp_nbr_vals-2)
-    ot_Neterr=np.zeros(number_simulations-interp_nbr_vals-2)
+    hp_Qerr=np.zeros(number_simulations-1)
+    ot_Qerr=np.zeros(number_simulations-1)
+    hp_Neterr=np.zeros(number_simulations-1)
+    ot_Neterr=np.zeros(number_simulations-1)
     chan_offset=0
-    gridz_prev=np.zeros((6,num_subcarriers,2*Nt*Nr-Nr**2))
     for chan_index in range(num_chan):
 
         tH_allH=np.load('Precoders_generated/6bit_'+channel_type+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy')
@@ -113,8 +112,9 @@ def main():
         allU_vec=np.load('./Precoders_generated/6bit_'+channel_type+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy')
         onlyt_allU_vec=np.load('./Precoders_generated/6bit_'+channel_type+str(fdts)+'/onlyt_allU_vec'+str(chan_index+chan_offset)+'.npy')
         interpS=np.load('Precoders_generated/6bit_'+channel_type+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy')
+        # pdb.set_trace(    )
         # for simulation_index in range(number_simulations-6):
-        for simulation_index in range(0,number_simulations-interp_nbr_vals-2):
+        for simulation_index in range(1,number_simulations-1):
             print("---------------------------------------------------------------------------")
             print ("Starting Eval sim: "+str(simulation_index)+" : of "+ str(number_simulations) + " # of total simulations")
             print(str(time.strftime("Elapsed Time %H:%M:%S",time.gmtime(time.time()-start_time)))\
@@ -127,21 +127,23 @@ def main():
                 for i in fb_indices])
             ot_Qerr[simulation_index]=(chan_index*ot_Qerr[simulation_index]+ot_qterr)/(chan_index+1)
             print("Qtisn Error: Hop -> "+str(hp_qterr) + " OnlyT -> "+str(ot_qterr))
-            gridz=np.zeros((6,num_subcarriers,2*Nt*Nr-Nr**2))
+            gridz=np.zeros((3,num_subcarriers,2*Nt*Nr-Nr**2))
             # pdb.set_trace()
             if(simulation_index%2==0):
                 for i in range(12):
-                    gridz[:,:,i]=griddata(points[0:3*(2*feedback_mats-1)], \
-                        allU_vec[points[(simulation_index*(2*feedback_mats-1)+1)//2:(simulation_index*(2*feedback_mats-1)+1)//2+3*(2*feedback_mats-1),0],\
-                        points[(simulation_index*(2*feedback_mats-1)+1)//2:(simulation_index*(2*feedback_mats-1)+1)//2+3*(2*feedback_mats-1),1]][:,i], (ys[0:6],\
-                            xs[0:6]), method='linear')
+                    gridz[:,:,i]=griddata(points[feedback_mats:2*(2*feedback_mats-1)]-np.array([1,0]), \
+                        allU_vec[points[((simulation_index-1)*(2*feedback_mats-1)+1)//2:(simulation_index*(2*feedback_mats-1)+1)//2+(2*feedback_mats-1),0],\
+                        points[((simulation_index-1)*(2*feedback_mats-1)+1)//2:(simulation_index*(2*feedback_mats-1)+1)//2+(2*feedback_mats-1),1]][:,i], (ys[0:3],\
+                            xs[0:3]), method='linear')
 
-                allU_vec_copy[simulation_index]=gridz[0]
-                gridz_prev=np.array(gridz)
-                # pdb.set_trace()
             else:
-                allU_vec_copy[simulation_index]=gridz_prev[1]
-            # pdb.set_trace()
+                for i in range(12):
+                    gridz[:,:,i]=griddata(points[0:(3*feedback_mats-1)], \
+                        allU_vec[points[((simulation_index-1)*(2*feedback_mats-1)+1)//2:(simulation_index*(2*feedback_mats-1)+1)//2+(2*feedback_mats-1),0],\
+                        points[((simulation_index-1)*(2*feedback_mats-1)+1)//2:(simulation_index*(2*feedback_mats-1)+1)//2+(2*feedback_mats-1),1]][:,i], (ys[0:3],\
+                            xs[0:3]), method='linear')
+
+            allU_vec_copy[simulation_index]=gridz[1]
             allU[simulation_index]=givens_frame_to_unitary(allU_vec_copy[simulation_index],Nt,Nr)
             # pdb.set_trace()
             for indice_index in range(fb_indices.shape[0]-1):
@@ -203,7 +205,7 @@ def main():
                         BER_onlyt_QPSK[i]=calculate_BER_performance_QPSK(np.array(tH_allH[simulation_index]),onlyt_allU[simulation_index],Eb_N0_dB[i])
                         BER_freqhop_QPSK[i]=calculate_BER_performance_QPSK(np.array(tH_allH[simulation_index]),allU[simulation_index],Eb_N0_dB[i])
                         #print(BER_quasigeodesic_list_QAM[i])
-                    idealBER_QPSK=(count*hpBER_QPSK+BER_ideal_QPSK)/(count+1)
+                    idealBER_QPSK=(count*idealBER_QPSK+BER_ideal_QPSK)/(count+1)
                     hpBER_QPSK=(count*hpBER_QPSK+BER_freqhop_QPSK)/(count+1)
                     otBER_QPSK=(count*otBER_QPSK+BER_onlyt_QPSK)/(count+1)
                     print("ideal_ber = np." +str(idealBER_QPSK))
@@ -219,6 +221,7 @@ if __name__ == '__main__':
 plt.yscale("log")
 plt.plot(Eb_N0_dB,hpBER_QPSK, marker='o', label="freq_hop")
 plt.plot(Eb_N0_dB,otBER_QPSK, marker='+', label="only_time")
+plt.plot(Eb_N0_dB,idealBER_QPSK, marker='>', label="ideal")
 plt.legend()
 plt.ylabel("BER")
 plt.xlabel("Eb/N0(dB)")

@@ -94,7 +94,7 @@ def calculate_BER_performance_QPSK(H_sequence, precoder_sequence, Eb_N0_dB,flag=
     Eb_N0=10**(0.1*Eb_N0_dB)
     N0=1.0
     #Constellation_pts=np.array([((2*i+1)+1j*(2*j+1))*Eb_N0/16 for i in range(-8,8) for j in range(-8,8)])    
-    Constellation_pts=np.array([-1-1j,-1+1j,1-1j,+1+1j])*(Eb_N0)/np.sqrt(2)
+    Constellation_pts=np.array([-1-1j,-1+1j,1-1j,+1+1j])*np.sqrt(Eb_N0)
     rand_arr=np.random.randint(4,size=(1,number_streams*num_comp_each_stream)).flatten()
     QPSK_stream=np.array([2*Constellation_pts[rand_arr[i]] for i in range(rand_arr.shape[0])]).reshape(number_streams,num_comp_each_stream)
     QPSK_stream_to_bits=np.ravel([bin2conv(rand_arr[i])\
@@ -102,7 +102,8 @@ def calculate_BER_performance_QPSK(H_sequence, precoder_sequence, Eb_N0_dB,flag=
     ])
     
     #print(QAM_stream.shape)
-    Es=2*(np.sum([np.abs(Constellation_pt) for Constellation_pt in Constellation_pts]))*N0
+    # why is that twice as sqrt(Es) = abs(constellation point)
+    Es=np.sum([np.abs(Constellation_pt)**2 for Constellation_pt in Constellation_pts])*N0/len(Constellation_pts)
     #Chan Out
     channel_out=np.matmul(H_F_sequence, np.array(np.hsplit(QPSK_stream, N_subcarrier)))
     noise=(N0/2)*np.random.randn(channel_out.shape[0], channel_out.shape[1], channel_out.shape[2])+(1.0j)*(N0/2)*np.random.randn(channel_out.shape[0], channel_out.shape[1], channel_out.shape[2])
@@ -113,13 +114,14 @@ def calculate_BER_performance_QPSK(H_sequence, precoder_sequence, Eb_N0_dB,flag=
     flattened_op=est_output
     flattened_op=flattened_op.flatten()
     bins=[0]
-    
     real_arr=np.digitize(flattened_op.real,bins)
+    # real_arr=np.digitize(flattened_op.real,bins)channel_out_with_noise
     imag_arr=np.digitize(flattened_op.imag,bins)
     
     ml_estimate=np.ravel([np.array([imag_arr[k],real_arr[k]])\
          for k in range(number_streams*num_comp_each_stream)])
     error_rate=1-(np.float128(np.sum(ml_estimate==QPSK_stream_to_bits))/np.float128(ml_estimate.shape[0]))
+    # pdb.set_trace()
     #print(error_rate)
     return error_rate
 

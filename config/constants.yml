@@ -12,7 +12,7 @@ freq_quanta: 9 #33
 time_quanta: 1
 num_chan_realisations: 10 # Number of channels simulated for
 chan_offset: 0
-fdts: 0.00035
+fdts: 0.0001
 
 # Run time variables
 past_vals: 3 # Stores the number of previously known estimates of the subcarriers
