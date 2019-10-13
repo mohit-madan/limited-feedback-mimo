@@ -1,2 +1,0 @@
-decay=2*qtiz_rate
-
