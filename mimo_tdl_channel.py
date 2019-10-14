@@ -749,6 +749,7 @@ class MIMO_TDL_Channel():
         # Delay profile in cspec will be discretized with sampling_time in seconds
         channel = itpp.comm.TDL_Channel(c_spec, sampling_time)
         self.channel_length=channel.taps()
+        # pdb.set_trace()
         # Initialise the Nt*Nr TDL channels
         for i in range(self.Nt*self.Nr):
             self.tdl_channels.append(itpp.comm.TDL_Channel(c_spec,sampling_time))

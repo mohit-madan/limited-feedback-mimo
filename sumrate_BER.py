@@ -9,19 +9,20 @@ import pdb
 diff_frobenius_norm = lambda A,B:np.linalg.norm(A-B, 'fro')
 
 def waterfilling(alpha,P=1):
-	n=alpha.size
-	ind=np.argsort(alpha)
-	lambda1=0
-	for m in range(n):
-		t=0
-		for j in range(m,n):
-			t=t+(1/alpha[ind[j]])
-		t=(t+P)/(n-m)
-		lambda1=1/t
-		if(lambda1<alpha[ind[m]]):
-			break
-	result=[((1/lambda1)-(1/alpha[j])) if (lambda1<alpha[j]) else 0 for j in range(n)]
-	return result
+    n=alpha.size
+    ind=np.argsort(alpha)
+    lambda1=0
+    for m in range(n):
+        t=0
+        for j in range(m,n):
+            t=t+(1/alpha[ind[j]])
+        t=(t+P)/(n-m)
+        lambda1=1/t
+        if(lambda1<alpha[ind[m]]):
+            break
+    result=[((1/lambda1)-(1/alpha[j])) if (lambda1<alpha[j]) else 0 for j in range(n)]
+    # pdb.set_trace()
+    return result
 
 def leakage_analysis(H_list,U_list,interpolated_U,num_subcarriers,wf_sigma_list,wf_interp_S,Nt,Nr,ret_abs=False):
     fig_merit=np.zeros(num_subcarriers)
@@ -93,17 +94,18 @@ def calculate_BER_performance_QPSK(H_sequence, precoder_sequence, Eb_N0_dB,flag=
     total_number_bits=number_streams*Number_bits_each_stream
     Eb_N0=10**(0.1*Eb_N0_dB)
     N0=1.0
+    Es_N0=2*Eb_N0
     #Constellation_pts=np.array([((2*i+1)+1j*(2*j+1))*Eb_N0/16 for i in range(-8,8) for j in range(-8,8)])    
     Constellation_pts=np.array([-1-1j,-1+1j,1-1j,+1+1j])*np.sqrt(Eb_N0)
     rand_arr=np.random.randint(4,size=(1,number_streams*num_comp_each_stream)).flatten()
-    QPSK_stream=np.array([2*Constellation_pts[rand_arr[i]] for i in range(rand_arr.shape[0])]).reshape(number_streams,num_comp_each_stream)
+    QPSK_stream=np.array([Constellation_pts[rand_arr[i]] for i in range(rand_arr.shape[0])]).reshape(number_streams,num_comp_each_stream)
     QPSK_stream_to_bits=np.ravel([bin2conv(rand_arr[i])\
     for i in range(number_streams*num_comp_each_stream)
     ])
     
     #print(QAM_stream.shape)
     # why is that twice as sqrt(Es) = abs(constellation point)
-    Es=np.sum([np.abs(Constellation_pt)**2 for Constellation_pt in Constellation_pts])*N0/len(Constellation_pts)
+    Es=Es_N0*N0
     #Chan Out
     channel_out=np.matmul(H_F_sequence, np.array(np.hsplit(QPSK_stream, N_subcarrier)))
     noise=(N0/2)*np.random.randn(channel_out.shape[0], channel_out.shape[1], channel_out.shape[2])+(1.0j)*(N0/2)*np.random.randn(channel_out.shape[0], channel_out.shape[1], channel_out.shape[2])
@@ -222,7 +224,7 @@ def apply_MMSE_decoder(H_F_sequence, Es, input_sequence, N0=1.0):
     N_subcarriers=H_F_sequence.shape[0]
     H_F_h_sequence=np.conjugate(np.transpose(H_F_sequence, (0,2,1)))
     A_sequence=np.matmul(H_F_h_sequence, H_F_sequence)
-    B_sequence=np.tile((input_sequence.shape[1])*(N0/Es)*np.eye(input_sequence.shape[1]), (N_subcarriers,1,1))
+    B_sequence=np.tile(input_sequence.shape[1]*(N0/Es)*np.eye(input_sequence.shape[1]), (N_subcarriers,1,1))
     C_sequence=np.linalg.inv(A_sequence+B_sequence)
     G_sequence=np.matmul(C_sequence, H_F_h_sequence)
     output_sequence=np.matmul(G_sequence, input_sequence)

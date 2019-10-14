@@ -35,7 +35,8 @@ def main():
     signal.signal(signal.SIGINT, sigint_handler)
     # itpp.RNG_randomize()
     itpp.RNG_reset(81)
-
+    # channel_type="Vehicular"
+    channel_type="Pedestrian"
     # c_spec=itpp.comm.Channel_Specification(itpp.comm.CHANNEL_PROFILE.ITU_Vehicular_A)
     c_spec=itpp.comm.Channel_Specification(itpp.comm.CHANNEL_PROFILE.ITU_Pedestrian_A)
     Ts=constants.Ts
@@ -54,8 +55,7 @@ def main():
     freq_jump=(num_subcarriers-1)//(feedback_mats-1)
     freq_quanta=constants.freq_quanta
     time_quanta=constants.time_quanta
-    # for cold start
-    # ran_init=False
+    
     # Number of channels simulated for
     num_chan_realisations=constants.num_chan_realisations
     count=0
@@ -74,7 +74,6 @@ def main():
     # norm_fn='stiefCD'
     start_time=time.time()
     save=True
-
     for chan_index in range(num_chan_realisations):
         print("-----------------------------------------------------------------------")
         print ("Starting Chan Realisation: "+str(chan_index)+" : of "+ str(num_chan_realisations) + " # of total channel realisations for "+str(fdts))
@@ -169,12 +168,13 @@ def main():
                     onlyt_Q_error[simulation_index][i] = stiefCD(\
                         onlyt_allU[simulation_index][onlyt_test_index],tH_allU[simulation_index][onlyt_test_index])
 
+                    test_index=simulation_index%2*(freq_jump//2) + freq_jump*i
                     interpS[simulation_index][onlyt_test_index]=sigma_list[onlyt_test_index]
 
                     # hop_pred vectors
                     if(simulation_index%2==1 and i==feedback_mats-1):
                         continue
-                    test_index=simulation_index%2*(freq_jump//2) + freq_jump*i    
+                    
                     if(simulation_index==1):
                         # pdb.set_trace()
                         oU_vec=U_vec[test_index]
@@ -234,11 +234,11 @@ def main():
                     # pdb.set_trace()
                     onlyt_Q_error[simulation_index][i]=stiefCD(onlyt_allU[simulation_index][onlyt_test_index]\
                         ,tH_allU[simulation_index][onlyt_test_index])   
+                    test_index=simulation_index%2*(freq_jump//2) + freq_jump*i
                     interpS[simulation_index][onlyt_test_index]=sigma_list[onlyt_test_index]
                     if(simulation_index%2==1 and i==feedback_mats-1):
                         continue
 
-                    test_index=simulation_index%2*(freq_jump//2) + freq_jump*i
                     oU_vec=U_vec[test_index]
                     qU_vec=qtiz_func(oU_vec,B,Nt,Nr)
                     allU_vec[simulation_index][test_index]=qU_vec
@@ -248,29 +248,19 @@ def main():
                 # pdb.set_trace()
             prev_Uvec=U_vec
             prev_Ulist=U_list
+            tHS[simulation_index]=sigma_list
         # pdb.set_trace()
             
         if(save==True):
-            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy',tH_allH)
-            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy',tH_allU)
-            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/th_allU_vec'+str(chan_index+chan_offset)+'.npy',tH_allU_vec)
-            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/thS_'+str(chan_index+chan_offset)+'.npy',tHS)
-            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy',allU)
-            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy',allU_vec)
-            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/onlyt_allU_'+str(chan_index+chan_offset)+'.npy',onlyt_allU)
-            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/onlyt_allU_vec'+str(chan_index+chan_offset)+'.npy',onlyt_allU_vec)
-            np.save('Precoders_generated/6bit_Pedestrian/'+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy',interpS)
+            np.save('Precoders_generated/6bit_'+str(channel_type)+'/'+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy',tH_allH)
+            np.save('Precoders_generated/6bit_'+str(channel_type)+'/'+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy',tH_allU)
+            np.save('Precoders_generated/6bit_'+str(channel_type)+'/'+str(fdts)+'/th_allU_vec'+str(chan_index+chan_offset)+'.npy',tH_allU_vec)
+            np.save('Precoders_generated/6bit_'+str(channel_type)+'/'+str(fdts)+'/thS_'+str(chan_index+chan_offset)+'.npy',tHS)
+            np.save('Precoders_generated/6bit_'+str(channel_type)+'/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy',allU)
+            np.save('Precoders_generated/6bit_'+str(channel_type)+'/'+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy',allU_vec)
+            np.save('Precoders_generated/6bit_'+str(channel_type)+'/'+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy',interpS)
 
-        # if(save==True): 
-        #     np.save('Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy',tH_allH)
-        #     np.save('Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy',tH_allU)
-        #     np.save('Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/th_allU_vec'+str(chan_index+chan_offset)+'.npy',tH_allU_vec)
-        #     np.save('Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/thS_'+str(chan_index+chan_offset)+'.npy',tHS)
-        #     np.save('Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy',allU)
-        #     np.save('Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy',allU_vec)
-        #     np.save('Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/onlyt_allU_'+str(chan_index+chan_offset)+'.npy',onlyt_allU)
-        #     np.save('Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/onlyt_allU_vec'+str(chan_index+chan_offset)+'.npy',onlyt_allU_vec)
-        #     np.save('Precoders_generated/6bit_Vehicularfast/'+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy',interpS)           
+
 if __name__ == '__main__':      
     main()
     pdb.set_trace()
