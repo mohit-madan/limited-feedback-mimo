@@ -142,8 +142,8 @@ def main():
                         allU_vec[points[((simulation_index-1)*(2*feedback_mats-1)+1)//2:(simulation_index*(2*feedback_mats-1)+1)//2+(2*feedback_mats-1),0],\
                         points[((simulation_index-1)*(2*feedback_mats-1)+1)//2:(simulation_index*(2*feedback_mats-1)+1)//2+(2*feedback_mats-1),1]][:,i], (ys[0:3],\
                             xs[0:3]), method='linear')
-
             allU_vec_copy[simulation_index]=gridz[1]
+            
             allU[simulation_index]=givens_frame_to_unitary(allU_vec_copy[simulation_index],Nt,Nr)
             # pdb.set_trace()
             for indice_index in range(fb_indices.shape[0]-1):

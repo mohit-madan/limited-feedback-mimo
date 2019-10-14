@@ -168,15 +168,17 @@ For a MIMO-OFDM system with $N_T$ transmitter and $N_R$ receiver
 antennas, each subcarrier $i$ with time instant $t$ could be modelled as a flat-fading MIMO channel. This flat-fading MIMO channel can be modelled as
 \label{section2}
 \begin{equation}
-\by_{i,t} = \bH_{i,t} \bx_{i,t}+ \bf{\eta_{i,t}}
+\by_{i,t} = \bH_{i,t}\bV_{i,t} \bx_{i,t}+ \bf{\eta_{i,t}}
 \end{equation}
 where the channel matrix is
-$\bH_{i,t} \in \mathbb{C}^{N_R \times N_T}$; the input is
-$\bx_{i,t} \in \mathbb{C}^{N_T}$; the output is
-$\by_{i,t} \in \mathbb{C}^{N_R}$ and the complex additive white
+$\bH_{i,t} \in \mathbb{C}^{N_R \times N_T}$; the input data vector is
+$\bx_{i,t} \in \mathbb{C}^{N_d}$; the output is
+$\by_{i,t} \in \mathbb{C}^{N_R}$; the precoder matrix is
+$\bV_{i,t} \in \mathbb{C}^{N_T \times N_R}$; and the complex additive white
 Gaussian noise is $\eta$ whose distribution is
 ${\mathcal{CN}}(0,I_{N_R})$. We consider the case where $N_R <
-N_T$. The thin SVD of $\bH$ is given by
+N_T$ and the data vector size $N_d = N_R$.
+The thin SVD of $\bH$ is given by
 $\bH_{i,t} = \bU_{i,t} \Sigma_{i,t} \bV_{i,t}^{H}$, where
 $\bU_{i,t} \in \mathbb{C}^{N_R \times N_R}$,
 $\Sigma_{i,t} \in \mathbb{C}^{N_R \times N_R}$ and
@@ -328,14 +330,14 @@ limited to tracking the temporal evolution of the parameters.
 \section{Simulation and discussion}
 \label{section3}
 We present some simulations of the scalar feedback based joint
-time-frequency predictive quantization outlined in the previous section. performed simulations to analyse the performance of the proposed quantization and interpolation method for slowly time-varying MIMO OFDM channel. Channel is simulated using the typical Jakes Model for both ITU Vehicular-A channel and ITU Pedestrian Channel. Performance is measured by averaging over 10 channel realizations with 100 simulations each. The normalised doppler frequency $f_{norm} = f_{max}.T_s$ is set to $3.5\times10^{-4}$ with symbol time period $T_d = 5\times10^{-8} s$. For both vehicular and pedestrian channel, $N_T=4$ and $N_R=2$. Therefore, the total number of parameters are $N_{R}(2N_{T} - N_{R}) = 12$ with 5$\theta$’s and 7$\phi$’s. There are 1024 subcarriers in Vehicular channel and 64 subcarriers in the Pedestrian Channel. We take s = 33/9 for Vehicular and pedestrian channel respectively I.e. 32/8 equally spaced subcarriers with indices 33t/9t, t = 0,1, … , 31 and 0,1, .. ,7 respectively.
+time-frequency predictive quantization outlined in the previous section. performed simulations to analyse the performance of the proposed quantization and interpolation method for slowly time-varying MIMO OFDM channel. Channel is simulated using the typical Jakes Model for both ITU Vehicular-A channel and ITU Pedestrian Channel. Performance is measured by averaging over 10 channel realizations with 100 simulations each. The normalised doppler frequency $f_{norm} = f_{max}.T_s$ is set to $3.5\times10^{-4}$ with symbol time period $T_d = 5\times10^{-8} s$. For both vehicular and pedestrian channel, $N_T=4$ and $N_R=2$. Therefore, the total number of parameters are $N_{R}(2N_{T} - N_{R}) = 12$ with 5$\theta$’s and 7$\phi$’s. There are 1024 subcarriers in Vehicular channel and 64 subcarriers in the Pedestrian Channel. We take s = 33/9 for Vehicular and pedestrian channel respectively i.e. 32/8 equally spaced subcarriers with indices 33t/9t, t = 0,1,$, .. , 31 and 0,1, .. ,7 respectively.
 
 \subsection{Initial Quantization}
 For the first and the second simulations/time instances we use of $\textbf{B}$ = 10 bits for quantizing each parameter for effective quantization/initialization. Therefore, the number of bits for each subcarrier = $10\times12$ = 120. Quantization is performed as given in Section~\ref{section2}.
 
-Simulation: BER is calculated by averaging over all the simulations. For Vehicular Channel, 1024 subcarriers are used with doppler frequency – and sampling rate = $10^{5}$
+Simulation: BER is calculated by averaging over all the simulations. For Vehicular Channel, 1024 subcarriers are used whereas 64 subcarriers are used in the Pedestrian Channel.
 
-Initialization is performed by using $10\times12$ bits for each subcarrier for the initial two time frames. Later, the quantization will take place in the time-domain using one bit for each parameter. Since the bit budget is low and we are considering slowly varying channels, therefore, either theta or phi parameters are sent alternatingly in the time domain while keeping the unsent parameters equal to their previous values as show in the Figure \ref{adpm-fig}. Here $\Theta$ is the the collection of all $\theta$'s and $\Phi$ is the collection of all $phi$'s. This brings down the bit budget to average of 5(Size of $\Theta$) and 7(Size of $\Phi$) i.e. 6 bits average per fed back subcarrier.
+Initialization is performed by using $10\times12$ bits for each subcarrier for the initial two time frames. Later, the quantization takes place in the time-domain using one bit for each parameter. Since the bit budget is low and we are considering slowly varying channels, therefore, either theta or phi parameters are sent alternatingly in the time domain while keeping the unsent parameters equal to their previous values as show in the Figure \ref{fig:adpm-fig}. Here $\Theta$ is the the collection of all $\theta$'s and $\Phi$ is the collection of all $phi$'s. This brings down the bit budget to average of 5(Size of $\Theta$) and 7(Size of $\Phi$) i.e. 6 bits average per fed back subcarrier.
 
 {ADPM Design}: The decrement/decay rate is given by $\bm$ and increment/growth rate is given by $\bM$ in the Equation~\ref{delta_eqn} . The ratio of $m/M$ is fixed at 2.5 i.e. higher decay than increment of the delta values. This way, quantized values are able to follow the curve more precisely. Also, need to describe the initialization of the Delta values required in the quantization process. Need to cite that paper.
 
@@ -345,7 +347,7 @@ Since the Precoding matrices fundamentally lie on the Stiefel manifold, therefor
 Using the idea of joint interpolation given in the other paper.
 
 %talk about this in the simulations, that would be more relevant
-Since $\Delta_{n} = M\Delta_{n-1} or \Delta_{n-1}/m $, we found empirically that $m=2.4*M$ i.e. decay
+Since $\Delta_{n} = M\Delta_{n-1} or \Delta_{n-1}/m $, we found empirically that $m=2.5*M$ i.e. decay
 
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{images/pedestrian.pdf}
