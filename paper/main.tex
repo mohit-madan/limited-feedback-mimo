@@ -292,8 +292,8 @@ For the adaptive channel tracking scheme, the arrows in
 Fig.~\ref{fig:adpm-fig} show how previous quantized values along with
 the 1-bit enhancement are used to find the new quantized value. Since
 we use a single bit adaptation, the amount of feedback required is 1
-bit for each scalar parameter that is being tracked. On an average,
-this can be reduced by half if we transmit only $\Theta$ values for
+bit for each scalar parameter that is being tracked. On average, this
+can be reduced by half if we transmit only $\Theta$ values for
 one-time instance and only $\Phi$ values for the next time instant in
 an alternating fashion (the untransmitted value is assumed to be the
 same as that at the previous instant). In this case, the average
@@ -301,7 +301,7 @@ number of bits required to quantize a channel matrix will be
 $N_{T}(2N_{T} - N_{R})/2$.
 
 One issue that is associated with the tracking the $\phi_i$ parameters
-is that they may change abruptly (cite the figure) between $-\pi$ and
+is that they may change abruptly between $-\pi$ and
 $\pi$ due to jumps of $2\pi$. We have avoided this by unwrapping the
 phases to facilitate continuous tracking.
 \subsection{Joint Time Frequency Interpolation}
