@@ -1,6 +1,5 @@
 np.save('hp_ber.npy', hpBER_QPSK)
-np.save('ot_ber.npy', otBER_QPSK)
 np.save('ideal_ber.npy', idealBER_QPSK)
 np.save('max_cap.npy', avg_maxcap)
 np.save('hp_cap.npy', avg_hpcap)
-np.save('ot_cap.npy', avg_otcap)
+

@@ -1,0 +1,4 @@
+B=2 bits for the initialization. q_eeror is calculated for pedestrian channel wi
+th old code i.e. decay = 2.5*gain.  fdts = 3.5e-4.
+q_error is averaged over all the channel realizations.
+Pedestrian channel

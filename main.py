@@ -23,8 +23,10 @@ def sigint_handler(signal, frame):
     sys.exit(0)
 
 def main():
-    args = parser.parse_args()
-    with open(args.constants, 'r') as f:
+    # channel_type="Pedestrian"
+    channel_type="Vehicular"
+    args = "config/"+ channel_type + ".yml"
+    with open(args, 'r') as f:
         constants = munchify(yaml.load(f)) 
     #---------------------------------------------------------------------------
     #Lambda Functions
@@ -35,10 +37,9 @@ def main():
     signal.signal(signal.SIGINT, sigint_handler)
     # itpp.RNG_randomize()
     itpp.RNG_reset(81)
-    # channel_type="Vehicular"
-    channel_type="Pedestrian"
-    # c_spec=itpp.comm.Channel_Specification(itpp.comm.CHANNEL_PROFILE.ITU_Vehicular_A)
-    c_spec=itpp.comm.Channel_Specification(itpp.comm.CHANNEL_PROFILE.ITU_Pedestrian_A)
+
+    c_spec=itpp.comm.Channel_Specification(itpp.comm.CHANNEL_PROFILE.ITU_Vehicular_A)
+    # c_spec=itpp.comm.Channel_Specification(itpp.comm.CHANNEL_PROFILE.ITU_Pedestrian_A)
     Ts=constants.Ts
     num_subcarriers=constants.num_subcarriers
     Nt=constants.Nt
@@ -47,7 +48,6 @@ def main():
     gtheta_size=(2*Nt*Nr-Nr**2-Nr)//2
     vec_size=2*Nt*Nr-Nr**2
     B=constants.B
-
     #---------------------------------------------------------------------------
     # Simulation Parameters
     number_simulations=constants.number_simulations # equivalent of time
@@ -68,12 +68,15 @@ def main():
     qtiz_rate=constants.qtiz_rate
     # qtiz_rate=1.3
 
-    Q_error=np.zeros((number_simulations,feedback_mats),dtype=np.float64) #
+    Q_error_even=np.zeros((number_simulations//2,feedback_mats),dtype=np.float64) #
+    Q_error_odd=np.zeros((number_simulations//2,feedback_mats-1),dtype=np.float64) #
+    
     onlyt_Q_error=np.zeros((number_simulations,feedback_mats),dtype=np.float64) #
+    q_error=np.zeros((10,100))
     # Use Stiefel Chordal Distance as norm
     # norm_fn='stiefCD'
     start_time=time.time()
-    save=True
+    save=False
     for chan_index in range(num_chan_realisations):
         print("-----------------------------------------------------------------------")
         print ("Starting Chan Realisation: "+str(chan_index)+" : of "+ str(num_chan_realisations) + " # of total channel realisations for "+str(fdts))
@@ -171,7 +174,7 @@ def main():
                     test_index=simulation_index%2*(freq_jump//2) + freq_jump*i
                     interpS[simulation_index][onlyt_test_index]=sigma_list[onlyt_test_index]
 
-                    # hop_pred vectors
+                    # ---------------------------hop_pred vectors----------------------------------------
                     if(simulation_index%2==1 and i==feedback_mats-1):
                         continue
                     
@@ -181,7 +184,9 @@ def main():
                         qU_vec=qtiz_func(oU_vec,B,Nt,Nr)
                         allU_vec[simulation_index][test_index]=qU_vec
                         allU[simulation_index][test_index]=givens_vec_to_semiunitary(qU_vec, Nt, Nr)
-                        continue                    
+                        Q_error_odd[simulation_index//2][i] = diff_frob_norm(allU[simulation_index][test_index]\
+                        ,tH_allU[simulation_index][test_index]) 
+                        continue
                     elif(simulation_index==2 or simulation_index==3):
                         del_vec[simulation_index][i]=abs(U_vec[test_index]\
                         -allU_vec[simulation_index-2][test_index])/2 #checking if this works
@@ -192,8 +197,15 @@ def main():
 
                     oU_vec= U_vec[test_index]
                     prev_qU_vec=allU_vec[simulation_index-2][test_index]
+                    
+                    # if(simulation_index>3):
+                    #     if(simulation_index%4==1 or simulation_index%4 ==0):
+                    #         del_vec[simulation_index][i][gtheta_size:]=del_vec[simulation_index-2][i][gtheta_size:]
+                    #     else:
+                    #         del_vec[simulation_index][i][:gtheta_size]=del_vec[simulation_index-2][i][:gtheta_size]
+
                     qU_vec, beta=dpcm_pred(oU_vec,prev_qU_vec,del_vec[simulation_index][i])
-                    # pdb.set_trace() 
+                    # pdb.set_trace()
 
                     if(simulation_index>3):
                         if(simulation_index%4==1 or simulation_index%4 ==0):
@@ -203,22 +215,23 @@ def main():
                         else:
                             allU_vec[simulation_index][test_index][gtheta_size:]=allU_vec[simulation_index-2][test_index][gtheta_size:]
                             allU_vec[simulation_index][test_index][:gtheta_size]=qU_vec[:gtheta_size]
-                        # else:
-                        #     pdb.set_trace()
-                        #     allU_vec[simulation_index][test_index]=qU_vec
                     else:
+                        # pdb.set_trace()
                         allU_vec[simulation_index][test_index]=qU_vec  
                     beta_vec[simulation_index][i]=beta
                     allU[simulation_index][test_index]=givens_vec_to_semiunitary(qU_vec,Nt,Nr)
-
-                    Q_error[simulation_index][i] = stiefCD(allU[simulation_index][test_index]\
-                        ,tH_allU[simulation_index][test_index]) 
+                    if(simulation_index%2==0):
+                        Q_error_even[simulation_index//2][i] = diff_frob_norm(allU[simulation_index][test_index]\
+                             ,tH_allU[simulation_index][test_index]) 
+                    else:
+                        Q_error_odd[simulation_index//2][i] = diff_frob_norm(allU[simulation_index][test_index]\
+                             ,tH_allU[simulation_index][test_index]) 
 
                 if(simulation_index%10==0):
                     # pdb.set_trace()
                     print("---------------------------------------------------------------------------")
                     print("Simulation Index: " +str(simulation_index))
-                    print("Hop QT Error: "+str(np.mean(Q_error[simulation_index]))+\
+                    print("Hop QT Error: "+str(np.mean(Q_error_even[simulation_index//2]))+\
                     " Only T QT Error: "+str(np.mean(onlyt_Q_error[simulation_index])))
                     print(str(time.strftime("Elapsed Time %H:%M:%S",time.gmtime(time.time()-start_time)))\
                     +str(time.strftime(" Current Time %H:%M:%S",time.localtime(time.time()))))
@@ -241,30 +254,36 @@ def main():
 
                     oU_vec=U_vec[test_index]
                     qU_vec=qtiz_func(oU_vec,B,Nt,Nr)
+                    
                     allU_vec[simulation_index][test_index]=qU_vec
                     allU[simulation_index][test_index]=givens_vec_to_semiunitary(qU_vec, Nt, Nr)                    
-                    Q_error[simulation_index][i]=stiefCD(allU[simulation_index][test_index]\
+                    Q_error_even[simulation_index//2][i]=diff_frob_norm(allU[simulation_index][test_index]\
                         ,tH_allU[simulation_index][test_index])
                 # pdb.set_trace()
+
             prev_Uvec=U_vec
             prev_Ulist=U_list
             tHS[simulation_index]=sigma_list
-        # pdb.set_trace()
+        q_error[chan_index][::2]=np.mean(Q_error_even, axis=1)
+        q_error[chan_index][1::2]=np.mean(Q_error_odd, axis=1)
+        pdb.set_trace()
             
         if(save==True):
-            np.save('Precoders_generated/6bit_'+str(channel_type)+'/'+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy',tH_allH)
-            np.save('Precoders_generated/6bit_'+str(channel_type)+'/'+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy',tH_allU)
-            np.save('Precoders_generated/6bit_'+str(channel_type)+'/'+str(fdts)+'/th_allU_vec'+str(chan_index+chan_offset)+'.npy',tH_allU_vec)
-            np.save('Precoders_generated/6bit_'+str(channel_type)+'/'+str(fdts)+'/thS_'+str(chan_index+chan_offset)+'.npy',tHS)
-            np.save('Precoders_generated/6bit_'+str(channel_type)+'/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy',allU)
-            np.save('Precoders_generated/6bit_'+str(channel_type)+'/'+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy',allU_vec)
-            np.save('Precoders_generated/6bit_'+str(channel_type)+'/'+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy',interpS)
-
+            np.save('Precoders_generated_new/6bit_'+str(channel_type)+'/'+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy',tH_allH)
+            np.save('Precoders_generated_new/6bit_'+str(channel_type)+'/'+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy',tH_allU)
+            np.save('Precoders_generated_new/6bit_'+str(channel_type)+'/'+str(fdts)+'/th_allU_vec'+str(chan_index+chan_offset)+'.npy',tH_allU_vec)
+            np.save('Precoders_generated_new/6bit_'+str(channel_type)+'/'+str(fdts)+'/thS_'+str(chan_index+chan_offset)+'.npy',tHS)
+            np.save('Precoders_generated_new/6bit_'+str(channel_type)+'/'+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy',allU)
+            np.save('Precoders_generated_new/6bit_'+str(channel_type)+'/'+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy',allU_vec)
+            np.save('Precoders_generated_new/6bit_'+str(channel_type)+'/'+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy',interpS)
+    pdb.set_trace()
 
 if __name__ == '__main__':      
     main()
     pdb.set_trace()
-
+    x=np.mean(q_error,axis=0)
+    plt.plot(x)
+    plt.show()
 
 # plt.plot(onlyt_allU_vec[:,63,6])
 # plt.plot(tH_allU_vec[:,63,6])

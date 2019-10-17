@@ -42,8 +42,8 @@ def main():
     avg_maxcap=np.zeros(num_Cappar)
     # Eb_N0_dB=np.arange(-6,6,2)
 
-    # Eb_N0_dB=np.arange(-3,30,3)
-    Eb_N0_dB=np.arange(-3,36,3)
+    Eb_N0_dB=np.arange(-3,25,3)
+    # Eb_N0_dB=np.arange(-3,36,3)
     #Store BER here
     idealBER_QPSK=np.zeros(Eb_N0_dB.shape[0])
     hpBER_QPSK=np.zeros(Eb_N0_dB.shape[0])
@@ -54,8 +54,8 @@ def main():
     Nr=constants.Nr #2
     freq_quanta=constants.freq_quanta #4 - 5
     time_quanta=constants.time_quanta #1
-    # channel_type="Vehicular/"
-    channel_type="Pedestrian/"
+    channel_type="Vehicular/"
+    # channel_type="Pedestrian/"
     #---------------------------------------------------------------------------
     # Run Time variables
     # Stores the previously known estimates of the subcarriers
@@ -102,14 +102,14 @@ def main():
 
     chan_offset=0
     for chan_index in range(num_chan):
-        tH_allH=np.load('Precoders_generated/6bit_'+channel_type+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy')
-        tH_allU=np.load('Precoders_generated/6bit_'+channel_type+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy')
-        tH_allU_vec=np.load('Precoders_generated/6bit_'+channel_type+str(fdts)+'/th_allU_vec'+str(chan_index+chan_offset)+'.npy')        
-        tHS=np.load('Precoders_generated/6bit_'+channel_type+str(fdts)+'/thS_'+str(chan_index+chan_offset)+'.npy')
-        allU=np.load('./Precoders_generated/6bit_'+channel_type+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy')
-        allU_vec_copy=np.load('./Precoders_generated/6bit_'+channel_type+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy')
-        allU_vec=np.load('./Precoders_generated/6bit_'+channel_type+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy')        
-        interpS=np.load('Precoders_generated/6bit_'+channel_type+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy')
+        tH_allH=np.load('Precoders_generated_new/6bit_'+channel_type+str(fdts)+'/th_allH_'+str(chan_index+chan_offset)+'.npy')
+        tH_allU=np.load('Precoders_generated_new/6bit_'+channel_type+str(fdts)+'/th_allU_'+str(chan_index+chan_offset)+'.npy')
+        tH_allU_vec=np.load('Precoders_generated_new/6bit_'+channel_type+str(fdts)+'/th_allU_vec'+str(chan_index+chan_offset)+'.npy')        
+        tHS=np.load('Precoders_generated_new/6bit_'+channel_type+str(fdts)+'/thS_'+str(chan_index+chan_offset)+'.npy')
+        allU=np.load('./Precoders_generated_new/6bit_'+channel_type+str(fdts)+'/allU_'+str(chan_index+chan_offset)+'.npy')
+        allU_vec_copy=np.load('./Precoders_generated_new/6bit_'+channel_type+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy')
+        allU_vec=np.load('./Precoders_generated_new/6bit_'+channel_type+str(fdts)+'/allU_vec'+str(chan_index+chan_offset)+'.npy')        
+        interpS=np.load('Precoders_generated_new/6bit_'+channel_type+str(fdts)+'/interpS_'+str(chan_index+chan_offset)+'.npy')
         # pdb.set_trace(    )
         # for simulation_index in range(number_simulations-6):
         for simulation_index in range(1,number_simulations-1):
@@ -150,7 +150,7 @@ def main():
                 interpS[simulation_index][curr_freq_index+1:next_freq_index]=[(1-(t/diff_freq))*qcurr_S+(t/diff_freq)*qnext_S\
                  for t in range(1,diff_freq)]
             
-            if(simulation_index>0):
+            if(simulation_index>5):
                 # pdb.set_trace()
                 max_cap=[np.mean(leakage_analysis(tH_allH[simulation_index],tH_allU[simulation_index],\
                     tH_allU[simulation_index],num_subcarriers,\
@@ -174,17 +174,17 @@ def main():
                 
                 #----------------------------------------------------------------------
                 #BER tests
-                if(sil_BER==1):
-                    BER_ideal_QPSK=np.zeros(Eb_N0_dB.shape[0])
+                if(sil_BER==0):
+                    # BER_ideal_QPSK=np.zeros(Eb_N0_dB.shape[0])
                     BER_freqhop_QPSK=np.zeros(Eb_N0_dB.shape[0])
 
                     for i in range(Eb_N0_dB.shape[0]):
-                        BER_ideal_QPSK[i]=calculate_BER_performance_QPSK(np.array(tH_allH[simulation_index]),tH_allU[simulation_index],Eb_N0_dB[i])
+                        # BER_ideal_QPSK[i]=calculate_BER_performance_QPSK(np.array(tH_allH[simulation_index]),tH_allU[simulation_index],Eb_N0_dB[i])
                         BER_freqhop_QPSK[i]=calculate_BER_performance_QPSK(np.array(tH_allH[simulation_index]),allU[simulation_index],Eb_N0_dB[i])
                         
-                    idealBER_QPSK=(count*idealBER_QPSK+BER_ideal_QPSK)/(count+1)
+                    # idealBER_QPSK=(count*idealBER_QPSK+BER_ideal_QPSK)/(count+1)
                     hpBER_QPSK=(count*hpBER_QPSK+BER_freqhop_QPSK)/(count+1)
-                    print("ideal_ber = np."+str(repr(idealBER_QPSK)))
+                    # print("ideal_ber = np."+str(repr(idealBER_QPSK)))
                     print("hp_pred = np."+str(repr(hpBER_QPSK)))
                 
                 count=count+1

@@ -110,8 +110,10 @@ def calculate_BER_performance_QPSK(H_sequence, precoder_sequence, Eb_N0_dB,flag=
     channel_out=np.matmul(H_F_sequence, np.array(np.hsplit(QPSK_stream, N_subcarrier)))
     noise=(N0/2)*np.random.randn(channel_out.shape[0], channel_out.shape[1], channel_out.shape[2])+(1.0j)*(N0/2)*np.random.randn(channel_out.shape[0], channel_out.shape[1], channel_out.shape[2])
     channel_out_with_noise=channel_out+noise
+    # pdb.set_trace()
     est_output=apply_MMSE_decoder(H_F_sequence, Es, channel_out_with_noise,N0)
     #MMSE
+
     #print(est_output.shape)
     flattened_op=est_output
     flattened_op=flattened_op.flatten()
@@ -224,7 +226,7 @@ def apply_MMSE_decoder(H_F_sequence, Es, input_sequence, N0=1.0):
     N_subcarriers=H_F_sequence.shape[0]
     H_F_h_sequence=np.conjugate(np.transpose(H_F_sequence, (0,2,1)))
     A_sequence=np.matmul(H_F_h_sequence, H_F_sequence)
-    B_sequence=np.tile(input_sequence.shape[1]*(N0/Es)*np.eye(input_sequence.shape[1]), (N_subcarriers,1,1))
+    B_sequence=np.tile((N0/Es)*np.eye(input_sequence.shape[1]), (N_subcarriers,1,1))
     C_sequence=np.linalg.inv(A_sequence+B_sequence)
     G_sequence=np.matmul(C_sequence, H_F_h_sequence)
     output_sequence=np.matmul(G_sequence, input_sequence)

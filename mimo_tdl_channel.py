@@ -412,11 +412,11 @@ def qtiz_func(x_vec,B,m,n):
     # cdf = sin^(2l)(theta); icdf = arcsin(y^(1/2l))
     for l in range(m-1):
         theta_level[l]=np.arcsin(y[l]**(1/(2*(l+1))))    
-    phi_level=np.linspace(-np.pi,np.pi,2**B-2**5)
+    phi_level=np.linspace(-3*np.pi,3*np.pi,2**B)
     # pdb.set_trace()
-    phi_level_plus=np.linspace(np.pi,4*np.pi,2**4)
-    phi_level_minus=np.linspace(-4*np.pi,np.pi,2**4)
-    phi_level=np.concatenate((phi_level_minus,phi_level,phi_level_plus))
+    # phi_level_plus=np.linspace(np.pi,4*np.pi,2**4)
+    # phi_level_minus=np.linspace(-4*np.pi,np.pi,2**4)
+    # phi_level=np.concatenate((phi_level_minus,phi_level,phi_level_plus))
     g_theta=x_vec[:(2*m*n-n**2-n)//2]
     d_phi=x_vec[(2*m*n-n**2-n)//2:]
     qtiz_gtheta=np.zeros(np.size(g_theta))
@@ -466,7 +466,7 @@ def dpcm_pred(oU_vec,prev_qU_vec,del_vec):
 def calc_del(u_vec, qtiz_vec,beta,qtiz_rate, prev_del):
     delta=np.zeros(np.size(beta))
     for i in range(np.size(beta)):        
-        if(np.sign(u_vec[i]-qtiz_vec[i])==beta[i]):
+        if((np.sign(u_vec[i]-qtiz_vec[i])==beta[i])):
             delta[i]=qtiz_rate*prev_del[i]
         else:
             delta[i]=prev_del[i]/(qtiz_rate*2.5) # faster decay
