@@ -137,7 +137,20 @@
 % \noindent We consider problem of quantization and interpolation of
 % time and frequency varying precoding matrices in wireless MIMO
 \begin{abstract}
-In a limited feedback MIMO channel, the performance of the channel can improve significantly if the transmitter knows the channel state information(CSI). The receiver knows the channel information, and it feeds back to the transmitter. However, it is not possible to feedback complete information for a limited-feedback OFDM channel since the channel information for multiple subcarriers consumes a large amount of data. Therefore to resolve this problem, the orthonormality structure of the precoder matrix is exploited to make its one-to-one mapping to a minimal number of scalar parameters. The Precoder matrix is decomposed using Givens Rotation. For an i.i.d. flat-fading Rayleigh channel, these parameters are independent, which makes its quantization and interpolation easy. We propose an efficient method for quantization of the channel state information at the receiver by using adaptive delta modulation for successive time interval. We also propose a method for joint time-frequency interpolation of the channel information at the transmitter. 153-words
+% In a limited feedback MIMO channel, the performance of the channel can improve significantly if the transmitter knows the channel state information(CSI). The receiver knows the channel information, and it feeds back to the transmitter. However, it is not possible to feedback complete information for a limited-feedback OFDM channel since the channel information for multiple subcarriers consumes a large amount of data. Therefore to resolve this problem, the orthonormality structure of the precoder matrix is exploited to make its one-to-one mapping to a minimal number of scalar parameters. The Precoder matrix is decomposed using Givens Rotation. For an i.i.d. flat-fading Rayleigh channel, these parameters are independent, which makes its quantization and interpolation easy. We propose an efficient method for quantization of the channel state information at the receiver by using adaptive delta modulation for successive time interval. We also propose a method for joint time-frequency interpolation of the channel information at the transmitter. 153-words
+
+  In MIMO-OFDM systems, knowledge of the precoding matrix enables
+  effective resource allocation for high rates and low BER. However,
+  feeding back precoders for all subcarriers introduces large
+  overheads. Past work has shown that the orthonormal structure of the
+  precoder enables effective parameterization and quantization using
+  Givens rotations and Householder transformations. In addition, the
+  use of temporal and frequency correlations can further reduce the
+  feedback requirements.  We present a framework that utilizes
+  adaptive feedback with joint time-frequency prediction for precoder
+  construction at the transmitter.  Simulations reveal that the
+  proposed method achieves low BERs for various channel profiles
+  compared to other approaches.
 \end{abstract}
 
 \section{Introduction}
@@ -146,7 +159,27 @@ In a limited feedback MIMO channel, the performance of the channel can improve s
 
 The use of multiple antennas at the transmitter and receiver can significantly enhance the performance of wireless systems. Moreover, in these multiple-input multiple-output (MIMO) wireless systems, the transmitter can perform better resource allocation if channel state information (CSI) is made available at the transmitter, both to improve data rates and reduce BER~\cite{love2008overview}. To this end, feeding back the CSI from the receiver to the transmitter efficiently is necessary. In wireless systems that use orthogonal frequency division multiplexing (OFDM), the feedback needs to be provided to the transmitter across all subcarriers, and this places a large feedback demand. However, since the CSI varies gradually in both time and frequency, effective techniques to reduce feedback overheads exist, using frequency domain interpolation temporal prediction. In particular, knowledge of the precoding matrices (that are typically the orthonormal right singular vectors of the channel matrix) is essential to achieve link capacity, as well as to parallelize the channel. In this paper, we focus on the problem of tracking the precoders of a MIMO-OFDM system across time and frequency for efficient CSI feedback.
 
-The problem of effective quantization and feedback of precoders for MIMO-OFDM has attracted significant attention in recent years. Many approaches involve codebook design over the Grassmann manifold~\cite{mondal2007quantization,schwarz2013adaptive,5946308} or the Stiefel Manifold \cite{6891198,Gupt1905:Predictive}, wherein the manifold structure of the precoders is used to obtain tangents for predictive quantization and interpolation across time and frequency. While these methods have been shown to be very effective for precoder feedback,  they involve operations over higher dimensional manifolds. In particular, optimization and interpolation is complicated, especially for manifolds where geodesic paths for interpolation may be difficult to obtain, especially for joint time-frequency predictive coding. An alternate approach is to parametrize the precoding matrices using scalar parameters. The space of unitary matrices parameterized into independent scalar parameters that correspond to Givens rotations and Household Transformations of the unitary precoding matrices \cite{4114278,4556174}. These approaches have been combined with adaptive delta modulation effectively track precoding matrices both in the time~\cite{4114278} and frequency domains~\cite{4556174}, albeit separately.
+The problem of effective quantization and feedback of precoders for
+MIMO-OFDM has attracted significant attention in recent years. Many
+approaches involve codebook design over the Grassmann
+manifold~\cite{mondal2007quantization,schwarz2013adaptive,5946308},
+the Stiefel manifold \cite{6891198,Gupt1905:Predictive} and the Flag
+manifold~\cite{pitaval2013codebooks}, wherein the manifold structure
+of the precoders is used to obtain tangents for predictive
+quantization and interpolation across time and frequency. While these
+methods have been shown to be very effective for precoder feedback,
+they involve operations over higher dimensional manifolds. In
+particular, optimization and interpolation is complicated, especially
+for manifolds where geodesic paths for interpolation may be difficult
+to obtain, especially for joint time-frequency predictive coding. An
+alternate approach is to parametrize the precoding matrices using
+scalar parameters. The space of unitary matrices parameterized into
+independent scalar parameters that correspond to Givens rotations and
+Household Transformations of the unitary precoding matrices
+\cite{4114278,4556174}. These approaches have been combined with
+adaptive delta modulation effectively track precoding matrices both in
+the time~\cite{4114278} and frequency domains~\cite{4556174}, albeit
+separately.
 
 In this paper, we propose a method for exploiting the joint time-frequency correlation of the precoder's scalar parameters on the transmitter using CSI feedback. Typical approaches to predictive quantization and interpolation do not exploit the joint time-frequency correlation to enhance the precoder estimate at the transmitter. However, exploiting the correlations jointly not only reduces the feedback requirement, but also enhances the precoder reconstruction accuracy significantly. Further, the independence of the scalar parameters reduces the problem to interpolation of separate scalar valued function, as opposed to operations over tangent spaces in manifolds~\cite{Gupt1905:Predictive}. Simulations reveal that the proposed method offers matches the performance of manifold based approaches with a much lower implementation complexity and fewer number of bits.
 
@@ -329,21 +362,21 @@ limited to tracking the temporal evolution of the parameters.
 
 \section{Simulation and discussion}
 \label{section3}
-We present some simulations of the scalar feedback based joint
+We now present simulations of the scalar feedback based joint
 time-frequency predictive quantization outlined in the previous
 section. In particular, we analyze the performance of the proposed
 quantization and interpolation method for time-varying MIMO-OFDM
 systems. The channel is simulated using the typical Jakes Model for
-both the ITU Vehicular-A channel and ITU Pedestrian channel power
-delay profiles CITE. The BER achieved by the proposed predictive
+both the ITU Vehicular-A channel and ITU Pedestrian-A channel power
+delay profiles~\cite{recommendation1997guidelines}. The BER achieved by the proposed predictive
 quantization based precoder is compared against the ideal precoder for
 100 channel evolutions in each run and averaged. The normalised
 Doppler is assumed to be $f_dT_s = 3.5\times10^{-4}$, with symbol time
 period $T_s = 5\times10^{-8} s$. For both the Vehicular and Pedestrian
 channel profiles, we consider $N_T=4$ and $N_R=2$. Therefore, the
 total number of parameters that determine the precoder are
-$N_{R}(2N_{T} - N_{R}) = 12$, with 5$\theta_l$'s and
-7$\phi_i$'s. For the Vehicular channel profile, we assume that the
+$N_{R}(2N_{T} - N_{R}) = 12$, with 5$\theta_l$s and
+7$\phi_i$s. For the Vehicular channel profile, we assume that the
 number of subcarriers is 1024, while for the Pedestrian channel
 profile it is 64. We take the spacing between fed back subcarrier
 indices $p$ to be $33$ and $9$ for the Vehicular
@@ -352,17 +385,18 @@ profile, the subcarriers indices fed back would be $0, 33, 66, \ldots
 1023$ and for the Pedestrian, $0, 9, 18, \ldots 63$).
 
 For the first and the second simulation time instances, since the
-precoder is not available at the transmitter, we use 10 bits for
-quantizing each parameter for effective representation of the
+precoder is not available at the transmitter, we use 2 bits for
+initializing each parameter for effective representation of the
 precoder. Therefore, the number of bits for each subcarrier =
-$10\times12$ = 120. Quantization is performed as given in
+$10\times 2$ = 20 (we note that $\phi_0 = \phi_4 = 0$ due to the
+non-uniqueness of the SVD). Quantization is performed as given in
 Section~\ref{section2}. We note that this is not significant, since,
 amortized over long durations, this number becomes small. Subsequent
 quantization takes place in the time-domain using one bit for each
 parameter. Since the bit budget is small, if the channel varies
 sufficiently slowly, either the $\theta_l$ or the $\phi_i$ parameters
 are fed back alternately, while retaining the unsent parameters as
-being to their previous values, as shows in
+being to their previous values, as shown in
 Fig.~\ref{fig:adpm-fig}. Here, $\Theta$ is the the collection of all
 $\theta_l$s and $\Phi$ is the collection of all $\phi_i$s. This brings
 down the bit budget to an average of 5 bits(the length of $\Theta$)
@@ -371,65 +405,97 @@ thereby resulting in an average feedback budget of 5 bits.
 
 To enable adaptive tracking of the channel parameters, we start with
 an initialization of the step size for each parameter, as discussed in
-Equation~\ref{delta_eqn}, with $M = 1.4$ (the choice is motivated by
-the results in~\cite{5671092}), and track parameters with the temporal
-evolution of the channel, and we find that this choice effectively
-tracks the channel parameters.
+Equation~\ref{delta_eqn}. The value of $M$ was chosen to be $1.4$, and
+can be adjusted appropriately to track the temporal evolution of
+parameters for different Doppler frequencies.
+
+Fig.~\ref{fig:error_decay}, shows the rate at which error diminishes
+with time for the proposed approach and direct quantization on the
+Stiefel manifold using codebooks described
+in~\cite{Gupt1905:Predictive}. We see that, since the adaptation of
+independent scalar parameters causes the error to decay rapidly, the
+error is lower and the convergence is faster.
+\begin{figure}
+\includegraphics[width=0.5\textwidth]{images/stief_veh.pdf}
+\caption{\label{fig:error_decay}A comparison of the $4\times 2$ precoder quantization error vs. time instant for
+  the proposed approach (labelled ``TODO'') and direct quantization on
+the Stiefel manifold for the Vehicular channel profile.}
+\end{figure}
+
+TODO: Agrim and Mohit discuss and then fill this part.
+\begin{figure}
+\includegraphics[width=0.5\textwidth]{images/ber-pedestrian-35e-4}
+\caption{BER vs. SNR for QPSK transmission over the $4\times 2$ MIMO
+  channel with the ITU Pedestrian-A channel profile for $f_dT_s = 3.5\times 10^{-4}$.}
+\label{fig:ber_ped}
+\end{figure}
+
+Fig.~\ref{fig:ber_ped} compares the BER obtained using the proposed
+quantization method with that obtained using exact precoders. We can
+observe that the performance of the proposed method is very close to
+the performance with exact precoders. This can be attributed to the
+fact that even the 1 bit update to the scalar parameters is able to
+approximate the precoder very accurately. Since the channel variation
+across subcarriers is gradual, owing to relatively small delay spread
+of the Pedestrian channel profile, linear interpolation and prediction
+yields good performance. Moreover, this method outperforms the Stiefel
+manifold based approach to the fact that the adaptation is much more
+accurate for scalar parameters than the tangent space based adaptation
+used for the Stiefel manifold.
+
+Fig.~\ref{fig:ber_veh} shows a similar comparison for the Vehicular
+channel profile. The larger delay spread of the channel necessitates
+the use of a larger number of subcarriers (1024) than the Pedestrian
+channel (64). The larger number of subcarriers implies that the
+predictive quantization and interpolation needs to be performed across
+a larger frequency range, thereby reducing the accuracy. Even in this
+case, we observe that the scalar parameter based approach outperforms
+manifold based quantization by about 5 dB.
+
+\begin{figure}
+\includegraphics[width=0.5\textwidth]{images/ber-vehicular-35e-4}
+\caption{BER vs. SNR for QPSK transmission over the $4\times 2$ MIMO
+  channel with the ITU Vehicular-A channel profile for $f_dT_s = 3.5\times 10^{-4}$.}
+\label{fig:ber_veh}
+\end{figure}
 
 
-% Performance Measurements:
-% Since the Precoding matrices fundamentally lie on the Stiefel manifold, therefore, we are using the chordal distance parameter to measure the effectiveness of the quantization method used by us. Later we are comparing the BER rates with the ideal completely fed back subcarriers.
+% Since the Precoding matrices fundamentally lie on the Stiefel
+% manifold, therefore, we are using the chordal distance parameter to
+% measure the effectiveness of the quantization method used. Later we
+% are comparing the BER rates with the completely fed back
+% subcarriers. Or simulations and discussions part 2 criteria could be
+% used. Done similar work as in \cite{4114278} but along with that we
+% have joint interpolated in time and frequency at the transmitter using
+% the fundamental scalar parameters obtained. To lower the number of
+% bits we have used the method of interpolation and have achieved
+% significant improvement over predictive quantization method in
+% \cite{6891198} and also in \cite{Gupt1905:Predictive} which tried to
+% use joint interpolation over the tangent space in the Stiefel
+% Manifold. In fact, we use joint interpolation of the scalar parameters
+% which are easy to use and give better quantization than any of the
+% above methods.
+
+% The advantage they had over the number of bits due to the 6 bit codebook in \cite{6891198,Gupt1905:Predictive} is also achieved by us by using smart interpolation techniques, i.e. by dropping the feedback bits in alternating time instances as it is still going to follow the scalar parameters without much difference.
+
+% The problem of values hopping between $\pi$ and $-\pi$ is also tackled by wrapping the values around which we can show works nicely. The only drawback is that while initializing the parameter, they go out of their actual range and therefore using a uniform quantizer over the prescribed range does not work. But since most of the values lie between the given range we can use most of the initialization bits quantizing the parameters uniformly between the [-$\pi$ , $\pi$] and using smaller amount of bits between the range outside that which could go up to $-3\pi$ and $3\pi$, i.e. we are covering 300% more range outside the given area and that works mostly fine for the rest of the values.
 
 % Using the idea of joint interpolation given in the other paper.
 
-% %talk about this in the simulations, that would be more relevant
-% Since $\Delta_{n} = M\Delta_{n-1} or \Delta_{n-1}/m $, we found empirically that $m=2.5*M$ i.e. decay
-
-\begin{figure}
-\includegraphics[width=0.5\textwidth]{images/pedestrian.pdf}
-\caption{BER vs SNR for pedestrian channel}
-\label{ber_overview}
-\vspace{-5pt}
-\end{figure}
-
-Since the Precoding matrices fundamentally lie on the Stiefel
-manifold, therefore, we are using the chordal distance parameter to
-measure the effectiveness of the quantization method used. Later we
-are comparing the BER rates with the completely fed back
-subcarriers. Or simulations and discussions part 2 criteria could be
-used. Done similar work as in \cite{4114278} but along with that we
-have joint interpolated in time and frequency at the transmitter using
-the fundamental scalar parameters obtained. To lower the number of
-bits we have used the method of interpolation and have achieved
-significant improvement over predictive quantization method in
-\cite{6891198} and also in \cite{Gupt1905:Predictive} which tried to
-use joint interpolation over the tangent space in the Stiefel
-Manifold. In fact, we use joint interpolation of the scalar parameters
-which are easy to use and give better quantization than any of the
-above methods.
-
-The advantage they had over the number of bits due to the 6 bit codebook in \cite{6891198,Gupt1905:Predictive} is also achieved by us by using smart interpolation techniques, i.e. by dropping the feedback bits in alternating time instances as it is still going to follow the scalar parameters without much difference.
-
-The problem of values hopping between $\pi$ and $-\pi$ is also tackled by wrapping the values around which we can show works nicely. The only drawback is that while initializing the parameter, they go out of their actual range and therefore using a uniform quantizer over the prescribed range does not work. But since most of the values lie between the given range we can use most of the initialization bits quantizing the parameters uniformly between the [-$\pi$ , $\pi$] and using smaller amount of bits between the range outside that which could go up to $-3\pi$ and $3\pi$, i.e. we are covering 300% more range outside the given area and that works mostly fine for the rest of the values.
-
-Using the idea of joint interpolation given in the other paper.
-
-\begin{figure}
-\includegraphics[width=0.5\textwidth]{images/vehicular_ber.pdf}
-\caption{BER vehicular plot comparison between our method and \cite{Gupt1905:Predictive}}
-\label{ber_overview}
-\vspace{-5pt}
-\end{figure}
-%Qtisn error with 1000 chan evols
-%Qtisn error with 100 chan evols
-%BER
-%Achievable rat
-\section{Conclusions and Future Work}
+\section{Conclusion}
 \label{section4}
-
-We could reduce more by seeing the effect of sigma values (power distribution). We can save the bits by not sending for those which have very low sigma values. This could result in a very robust method.
-
-\vspace{-4pt}
+We have presented a predictive quantization based precoder
+reconstruction of a MIMO-OFDM system that employs scalar quantization
+based feedback of precoder parameters. By quantizing and adapting the
+Givens rotation and Householder trasnsformation parameters of the
+precoder, the receiver is able to send minimal feedback to the
+transmitter and yet enable effective precoder adaptation. Exploiting
+the temporal and frequency correlations jointly enhances precoder
+accuracy significantly. Simulations reveal that the proposed approach
+provides faster convergence and smaller errors in the precoder when
+compared to approaches that involve direct quantization on manifold
+tangent spaces. Future work would involve tuning the adaptation rate
+of the scalar parameters and extending this to TODO.
 
 
 
