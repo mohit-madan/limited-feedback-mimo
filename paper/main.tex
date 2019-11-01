@@ -260,7 +260,7 @@ the $(i, t)$ subscripts in the decomposition matrices)
 where $\bD_{k}$ is a diagonal matrix defined as
 $\bD_{k}\big(\phi_{k,k}, \ldots, \phi_{k,N_T } \big)$ =
 $\mbox{diag}\big( {\bf 1}_{k-1}, e^{j\phi_{k,k}},\ldots,
-e^{j\phi_{k,N_T }} \big)$, ${\bf 1}_{k-1}$ is represents $k-1$ ones,
+e^{j\phi_{k,N_T }} \big)$, ${\bf 1}_{k-1}$ represents $k-1$ ones,
 and the $N_R \times N_T$ matrix $\tilde{\bI}$ =
 $\big[\bI_{N_R }, {\bf 0}_{N_T ,N_T -N_R}\big]^{T}$. Here,
 ${\bf 0}_{N_T ,N_T -N_R }$ is an $N_T\times (N_T - N_R)$ matrix all of
@@ -268,10 +268,10 @@ whose elements are zero. Finally, we also have
 \begin{equation}
 \bG_{m-1,m}\big(\theta\big)  =
 \begin{bmatrix}
-I_{m-2} & & & \\
+\bI_{m-2} & & & \\
 & \cos\theta & -\sin\theta & \\
 & \sin\theta & \cos\theta & \\
-& & & I_{t-m}
+& & & \bI_{t-m}
 \end{bmatrix}
 \end{equation}
 Thus, for a $4 \times 2$ orthogonal matrix $\bV_{i,t}$, we have
@@ -288,24 +288,24 @@ their collection is captured in a vector referred to as
 $\Theta_{i,t}$. We note that $\Phi_{i,t}$ and $\Theta_{i,t}$ represent
 the phase and rotation angles for the $i$-th subcarrier at time
 instant $t$, as represented in Fig.~\ref{fig:adpm-fig}. It is known
-that $\phi_k \in (-\pi, + \pi]$ is uniformly distributed between the
-two extremes~\cite{4114278}, while $\theta_l$ is distributed as
+that $\phi_k \in (-\pi, \pi]$ is uniformly distributed between the
+two extremes~\cite{4114278}, while $\theta_l$ is distributed as~\cite{4114278}
 \begin{equation}
-2l(\sin\theta_l)^{2l-1}\cos\theta_l, \theta_l \in \left[0, \frac{\pi}{2}\right) \mbox{ , } l = 1,2,\ldots,N_T -1
+2l(\sin\theta_l)^{2l-1}\cos\theta_l, \mbox{  }\theta_l \in \left[0, \frac{\pi}{2}\right) \mbox{, } l = 1,2,\ldots,N_T -1
 \end{equation}
-The $\phi_k$ and $\theta_l$ are statistically independent, making this
-representation useful for tracking them separately across time, as
-explained in the following subsection. The total number of parameters
-obtained from the decomposition of a complex orthogonal matrix
-$N_{T} \times N_{R} $ is $N_{R}(2N_{T} - N_{R})$. The
-number of $\phi_k$ parameters is $N_{R}(2N_{T} - N_{R}-1)/2$ while the
-number of $\theta$ parameters is $N_{R}(2N_{T} - N_{R}+1)/2$. Thus, $\Phi_{i,t}$ is a vector of length $N_{R}(2N_{T} - N_{R}-1)/2$, while $\Theta_{i,t}$ has length $N_{R}(2N_{T} - N_{R}+1)/2$.
+In addition, $\phi_k$ and $\theta_l$ are statistically independent,
+making this representation useful for tracking them separately across
+time, as discussed below. The total number of
+parameters obtained from the decomposition of a complex orthogonal
+matrix $N_{T} \times N_{R} $ is $N_{R}(2N_{T} - N_{R})$. The number of
+$\phi_k$ parameters is $N_{R}(2N_{T} - N_{R}-1)/2$ while the number of
+$\theta$ parameters is $N_{R}(2N_{T} - N_{R}+1)/2$. Thus, $\Phi_{i,t}$
+is a vector of length $N_{R}(2N_{T} - N_{R}-1)/2$, while
+$\Theta_{i,t}$ has length $N_{R}(2N_{T} - N_{R}+1)/2$.
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{images/new-adpm.pdf}
 \caption{\label{fig:adpm-fig}Subcarriers which need to be quantized}
 \end{figure}
-% To exploit the interpolation of time \& frequency jointly at the transmitter, feedback bits are sent in an alternating fashion as shown in the figure.
-
 \subsection{Differential quantization and channel tracking}
 \label{quantiz}
 For channels that vary slowly with time, adaptive differential
@@ -317,8 +317,8 @@ move in order to track the parameter. This can be denoted by
 $\beta_{n} = \mbox{sign}(x_{n} - \hat{x}_{n-1})$, where $x_n$ is the
 unquantized value and $\hat{x}_{n-1}$ is the unquantized (accurate)
 value. Further, the step size for the move can be adapted based on the
-speed of channel variation as well the speed for convergence. If
-$\Delta_n$ is the step size, we define our adaptive quantizer as
+speed of channel variation as well the accuracy needed. If $\Delta_n$
+is the step size, we define our adaptive quantizer as
 \begin{equation}
 \hat{x}_{n} = \hat{x}_{n-1} + \beta_{n}\Delta_{n} \mbox{ where }
 \label{delta_eqn}
@@ -375,12 +375,13 @@ correlation jointly to enhance performance.
 
 One reason why a linear predictive quantization is preferred is
 because the underlying parameters can generally be thought to emerge
-from an autoregressive (AR) process. For such processes, it is well known
-that linear prediction based on past samples is optimal. Even though
-the $\Theta$ and $\Phi$ parameters do not manifest as AR processes,
-for small changes, a linear approximation works sufficiently
-well, as in the description in~\cite{4114278}, although that was
-limited to tracking the temporal evolution of the parameters.
+from an autoregressive (AR) process. For such processes, it is well
+known that linear prediction based on past samples is optimal. Even
+though the $\Theta$ and $\Phi$ parameters do not manifest as AR
+processes, for small changes, a linear approximation works
+sufficiently well, as described in~\cite{4114278}, although that
+consideration was limited to tracking the temporal evolution of the
+parameters.
 
 \section{Simulation and discussion}
 \label{section3}
