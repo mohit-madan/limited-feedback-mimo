@@ -220,30 +220,29 @@ The rest of this paper is organized as follows: Section~\ref{section2} describes
 
 \section{System Model}
 For a MIMO-OFDM system with $N_T$ transmitter and $N_R$ receiver
-antennas, each subcarrier $i$ with time instant $t$ could be modelled as a flat-fading MIMO channel. This flat-fading MIMO channel can be modelled as
+antennas, the channel for the $i$-th subcarrier at time instant $t$ could be modelled as a flat-fading MIMO channel. This flat-fading MIMO channel can be modelled as
 \label{section2}
 \begin{equation}
 \by_{i,t} = \bH_{i,t}\tilde{\bV}_{i,t} \bx_{i,t}+ \bf{\eta_{i,t}}
 \end{equation}
-where the channel matrix is
-$\bH_{i,t} \in \mathbb{C}^{N_R \times N_T}$; the input data vector is
-$\bx_{i,t} \in \mathbb{C}^{N_d}$; the output is
-$\by_{i,t} \in \mathbb{C}^{N_R}$; the unitary precoder matrix is
-$\tilde{\bV}_{i,t} \in \mathbb{C}^{N_T \times N_R}$; and the complex
-additive white Gaussian noise is $\eta$ whose distribution is
-${\mathcal{CN}}(0,I_{N_R})$. We consider the case where $N_R < N_T$
-and the data vector size $N_d = N_R$.  The ``thin'' SVD (that keeps
-only those right and left singular vectors that correspond to non-zero
-singular values) of $\bH$ is given by
+where $\bH_{i,t} \in \mathbb{C}^{N_R \times N_T}$ is the channel
+matrix, $\bx_{i,t} \in \mathbb{C}^{N_d}$ is the input data vector,
+$\by_{i,t} \in \mathbb{C}^{N_R}$ is the output vector,
+$\tilde{\bV}_{i,t} \in \mathbb{C}^{N_T \times N_R}$ is the unitary
+precoder, and $\eta$ is the complex additive white Gaussian noise
+distributed as ${\mathcal{CN}}(0,I_{N_R})$. We consider the case where
+$N_R < N_T$, and the data vector size $N_d = N_R$.  The ``thin'' SVD
+(that keeps only those right and left singular vectors that correspond
+to non-zero singular values) of $\bH$ is given by
 $\bH_{i,t} = \bU_{i,t} \Sigma_{i,t} \bV_{i,t}^{H}$, where
 $\bU_{i,t} \in \mathbb{C}^{N_R \times N_R}$,
 $\Sigma_{i,t} \in \mathbb{C}^{N_R \times N_R}$ and
 $\bV_{i,t} \in \mathbb{C}^{N_T \times N_R}$. $\bU_{i,t}$ and
 $\bV_{i,t}$ are matrices whose columns are orthonormal, and
 $\Sigma_{i,t}$ contains the singular values
-$\sigma_1 \geq \ldots \geq \sigma_{N_T} > 0$ of $\bH_{i,t}$. The
+$\sigma_1 \geq \ldots \geq \sigma_{N_R} > 0$ of $\bH_{i,t}$. The
 entries of $\bH_{i,t}$ are assumed to be distributed
-i.i.d. $\tilde{\mathcal{N}}(0,1)$. To obtain a precoder at the
+i.i.d. $\\mathcal{CN}(0,1)$. To obtain a precoder at the
 transmitter, we need to quantize and feed back information about
 $\bV_{i,t}$ for each subcarrier.
 
