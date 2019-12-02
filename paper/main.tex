@@ -193,7 +193,7 @@ to obtain, especially for joint time-frequency predictive coding. An
 alternate approach is to parametrize the precoding matrices using
 scalar parameters. The space of unitary matrices parameterized into
 independent scalar parameters that correspond to Givens rotations and
-Household Transformations of the unitary precoding matrices
+Householder transformations of the unitary precoding matrices
 \cite{4114278,4556174}. These approaches have been combined with
 adaptive delta modulation effectively track precoding matrices both in
 the time~\cite{4114278} and frequency domains~\cite{4556174}, albeit
@@ -215,12 +215,17 @@ proposed method matches the performance of manifold based approaches
 with a much lower implementation complexity and fewer number of bits
 for quantization.
 
-
-The rest of this paper is organized as follows: Section~\ref{section2} describes the system model and the precoder feedback and interpolation techniques. Section~\ref{section3} compares the BER and achievable rates for our proposed methods with other approaches. Finally, Section~\ref{section4} concludes with discussions on future work.
+The rest of this paper is organized as follows: Section~\ref{section2}
+describes the system model and the precoder feedback and interpolation
+techniques. Section~\ref{section3} compares the BER and achievable
+rates for our proposed methods with other approaches. Finally,
+Section~\ref{section4} concludes with discussions on future work.
 
 \section{System Model}
 For a MIMO-OFDM system with $N_T$ transmitter and $N_R$ receiver
-antennas, the channel for the $i$-th subcarrier at time instant $t$ could be modelled as a flat-fading MIMO channel. This flat-fading MIMO channel can be modelled as
+antennas, the channel for the $i$-th subcarrier at time instant $t$
+can be modelled as a flat-fading MIMO channel. This flat-fading MIMO
+channel can be modelled as
 \label{section2}
 \begin{equation}
 \by_{i,t} = \bH_{i,t}\tilde{\bV}_{i,t} \bx_{i,t}+ \bf{\eta_{i,t}}
@@ -244,7 +249,9 @@ $\sigma_1 \geq \ldots \geq \sigma_{N_R} > 0$ of $\bH_{i,t}$. The
 entries of $\bH_{i,t}$ are assumed to be distributed
 i.i.d. $\\mathcal{CN}(0,1)$. To obtain a precoder at the
 transmitter, we need to quantize and feed back information about
-$\bV_{i,t}$ for each subcarrier.
+$\bV_{i,t}$ for each subcarrier. However, the frequency coherence and
+temporal correlations would reduce the overall feedback requirement,
+as discussed in subsequent sections.
 
 \subsection{Scalar Parametrization}
 \label{givens}
@@ -252,8 +259,9 @@ The degrees of freedom in the $\tilde{\bV}_{i,t}$ matrices is smaller
 than the number of real entries in the matrix because of the
 geometrical structure between the columns of the
 matrix~\cite{4114278}. The orthonormal matrix $\tilde{\bV}_{i,t}$ with
-$N_T$ rows and $N_R$ columns can be decomposed as follows~\cite{4114278} (we suppress
-the $(i, t)$ subscripts in the decomposition matrices)
+$N_T$ rows and $N_R$ columns can be decomposed as
+follows~\cite{4114278} (we suppress the $(i, t)$ subscripts in the
+decomposition matrices)
 \begin{equation}
 \tilde{\bV}_{i,t} = \left[\prod_{k=1}^{N_{R}} \bD_{k} \left( \phi_{k,k},\ldots , \phi_{k,N_{R}} \right) \:  \prod_{l=1}^{N_{T}-k} \bG_{N_{T}-l,N_{T} -l+1} \big( \theta_{k,l}\big)  \right] \: \tilde{\bI}
 \end{equation}
@@ -288,8 +296,9 @@ their collection is captured in a vector referred to as
 $\Theta_{i,t}$. We note that $\Phi_{i,t}$ and $\Theta_{i,t}$ represent
 the phase and rotation angles for the $i$-th subcarrier at time
 instant $t$, as represented in Fig.~\ref{fig:adpm-fig}. It is known
-that $\phi_k \in (-\pi, \pi]$ is uniformly distributed between the
-two extremes~\cite{4114278}, while $\theta_l$ is distributed as~\cite{4114278}
+that $\phi_k \in (-\pi, \pi]$ is uniformly distributed between the two
+extremes~\cite{4114278}, while $\theta_l$ is distributed
+as~\cite{4114278}
 \begin{equation}
 2l(\sin\theta_l)^{2l-1}\cos\theta_l, \mbox{  }\theta_l \in \left[0, \frac{\pi}{2}\right) \mbox{, } l = 1,2,\ldots,N_T -1
 \end{equation}
@@ -304,7 +313,10 @@ is a vector of length $N_{R}(2N_{T} - N_{R}-1)/2$, while
 $\Theta_{i,t}$ has length $N_{R}(2N_{T} - N_{R}+1)/2$.
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{images/new-adpm.pdf}
-\caption{\label{fig:adpm-fig}Subcarriers which need to be quantized}
+\caption{\label{fig:adpm-fig}Subcarriers which need to be
+  quantized. In the figure, we see that the subcarrier indicated by
+  red arrows has a precoder whose parameters are determined jointly
+  using the neighbouring parameters, both in time and frequency.}
 \end{figure}
 \subsection{Differential quantization and channel tracking}
 \label{quantiz}
@@ -358,12 +370,14 @@ $N_{T}(2N_{T} - N_{R})/2$.
 One issue that is associated with the tracking the $\phi_i$ parameters
 is that they may change abruptly between $-\pi$ and
 $\pi$ due to jumps of $2\pi$. We have avoided this by unwrapping the
-phases to facilitate continuous tracking.
+phases to facilitate continuous tracking (i.e., we avoid jumps in
+phase of magnitude close to $2\pi$).
 \subsection{Joint Time Frequency Interpolation}
 \label{interp}
 After obtaining the $\beta$ values (using the single bit feedback) at
 the transmitter, we can construct the precoder at subcarrier indices
-$pk$ or $pk+q$. To construct the rest of the subcarriers, we will use
+$pk$ or $pk+q$, in keeping with the same notation as the previous
+section. To construct the rest of the subcarriers, we will use
 precoder parameters from both the past and future and time instances
 to do the interpolation (using backtracking to ensure causality). In
 Fig.~\ref{fig:adpm-fig}, each parameter is interpolated using the
@@ -390,22 +404,23 @@ time-frequency predictive quantization outlined in the previous
 section. In particular, we analyze the performance of the proposed
 quantization and interpolation method for time-varying MIMO-OFDM
 systems. The channel is simulated using the typical Jakes Model for
-both the ITU Vehicular-A channel and ITU Pedestrian-A channel power
-delay profiles~\cite{recommendation1997guidelines}. The BER achieved by the proposed predictive
-quantization based precoder is compared against the ideal precoder for
-100 channel evolutions in each run and averaged. The normalised
-Doppler is assumed to be $f_dT_s = 3.5\times10^{-4}$, with symbol time
-period $T_s = 5\times10^{-8} s$. For both the Vehicular and Pedestrian
+both the ITU Vehicular-A channel and the COST channel power delay
+profiles~\cite{recommendation1997guidelines,molisch2006cost259,cost1989cost}. The
+BER achieved by the proposed predictive quantization based precoder is
+compared against the ideal precoder for 100 channel evolutions in each
+run and averaged. The normalised Doppler is assumed to be
+$f_dT_s = 3.5\times10^{-4}$, with symbol time period
+$T_s = 5\times10^{-8} s$. For both the Vehicular and Pedestrian
 channel profiles, we consider $N_T=4$ and $N_R=2$. Therefore, the
-total number of parameters that determine the precoder are
-$N_{R}(2N_{T} - N_{R}) = 12$, with 5$\theta_l$s and
-7$\phi_i$s. For the Vehicular channel profile, we assume that the
-number of subcarriers is 1024, while for the Pedestrian channel
-profile it is 64. We take the spacing between fed back subcarrier
-indices $p$ to be $33$ and $9$ for the Vehicular
-and Pedestrian channel profiles respectively (i.e. for the Vehicular
-profile, the subcarriers indices fed back would be $0, 33, 66, \ldots
-1023$ and for the Pedestrian, $0, 9, 18, \ldots 63$).
+total number of parameters that determine the precoder is
+$N_{R}(2N_{T} - N_{R}) = 12$, with five $\theta_l$s and and seven
+$\phi_i$s. For the fast fading channels, we assume that the number of
+subcarriers is 1024, while for the slower varying channel profiles, we
+take 64 subcarriers. We assume that the spacing between fed back
+subcarrier indices $p$ to be $33$ and $9$ for the fast and slow
+channel profiles respectively (i.e. for the slower channels, the
+subcarriers indices fed back would be $0, 33, 66, \ldots 1023$ and for
+the Pedestrian, $0, 9, 18, \ldots 63$).
 
 For the first and the second simulation time instances, since the
 precoder is not available at the transmitter, we use 2 bits for
