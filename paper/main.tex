@@ -118,9 +118,9 @@
 
 %Authors List
 
- \author{\authorblockN{Author 1, Author 2, Author 3}
+ \author{\authorblockN{Author 1, Author 2, Author 3\\}
  \
- \authorblockA{Department of Electrical Engineering, Indian Institute of Technology Bombay}
+ \authorblockA{Department of Electrical Engineering\\Indian Institute of Technology Bombay}
 % \thanks{Parts of this work was supported by the Bharti Centre for Communication in
 % IIT Bombay, and the Visvesvaraya
 % PhD Scheme of Ministry of Electronics \& Information Technology,
@@ -318,6 +318,13 @@ $\Theta_{i,t}$ has length $N_{R}(2N_{T} - N_{R}+1)/2$.
   red arrows has a precoder whose parameters are determined jointly
   using the neighbouring parameters, both in time and frequency.}
 \end{figure}
+
+The quantization approach described above is related to the channel
+state information feedback present in several wireless standards,
+including 802.11ac~\cite{lou2013comparison}, although adaptive
+quantization and feedback are not discussed. We show in the further
+sections that the use of adaptive approaches can greatly enhance
+performance with only very minor modifications to the system.
 \subsection{Differential quantization and channel tracking}
 \label{quantiz}
 For channels that vary slowly with time, adaptive differential
@@ -404,23 +411,25 @@ time-frequency predictive quantization outlined in the previous
 section. In particular, we analyze the performance of the proposed
 quantization and interpolation method for time-varying MIMO-OFDM
 systems. The channel is simulated using the typical Jakes Model for
-both the ITU Vehicular-A channel and the COST channel power delay
-profiles~\cite{recommendation1997guidelines,molisch2006cost259,cost1989cost}. The
-BER achieved by the proposed predictive quantization based precoder is
-compared against the ideal precoder for 100 channel evolutions in each
-run and averaged. The normalised Doppler is assumed to be
-$f_dT_s = 3.5\times10^{-4}$, with symbol time period
-$T_s = 5\times10^{-8} s$. For both the Vehicular and Pedestrian
-channel profiles, we consider $N_T=4$ and $N_R=2$. Therefore, the
-total number of parameters that determine the precoder is
+for the COST207 channel power delay
+profiles~\cite{molisch2006cost259,cost1989cost}. The BER achieved by
+the proposed predictive quantization based precoder is compared
+against the ideal precoder for 100 channel evolutions in each run and
+averaged. Simulations are performed for normalised Doppler values of
+$f_dT_s = 3.5\times 10^{-6}$ (corresponding to a velocity of 36 km/h
+for $f_c = 1$ GHz) with 1024 subcarriers, and with
+$f_dT_s = \times 1.05 \times 10^{-5}$ (velocity of 108 km/h) with 64
+subcarriers. The sampling time period $T_s$ was $5\times10^{-8}$
+s. For both the situations, we considered $N_T=4$ transmit antennas
+and and $N_R=2$ receive antennas. Therefore, the total number of
+parameters that determine the precoder is
 $N_{R}(2N_{T} - N_{R}) = 12$, with five $\theta_l$s and and seven
-$\phi_i$s. For the fast fading channels, we assume that the number of
-subcarriers is 1024, while for the slower varying channel profiles, we
-take 64 subcarriers. We assume that the spacing between fed back
-subcarrier indices $p$ to be $33$ and $9$ for the fast and slow
-channel profiles respectively (i.e. for the slower channels, the
+$\phi_i$s. We assume that the spacing between fed back subcarrier
+indices $p$ to be $33$ and $9$ for the fast and slow channel profiles
+respectively (i.e. for the slower channels with 1024 subcarriers, the
 subcarriers indices fed back would be $0, 33, 66, \ldots 1023$ and for
-the Pedestrian, $0, 9, 18, \ldots 63$).
+the faster channel, with 64 subcarriers, $0, 9, 18, \ldots 63$ would
+be fed back).
 
 For the first and the second simulation time instances, since the
 precoder is not available at the transmitter, we use 2 bits for
@@ -460,11 +469,11 @@ error is lower and the convergence is faster.
 the Stiefel manifold for the Vehicular channel profile.}
 \end{figure}
 
-TODO: Agrim and Mohit discuss and then fill this part.
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{images/cost0035}
-\caption{BER vs. SNR for QPSK transmission over the $4\times 2$ MIMO
-  channel with the ITU Cost207-RA channel profile for $f_dT_s = 3.5\times 10^{-3}$.}
+\caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 1024
+  subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
+  for $f_dT_s = 3.5\times 10^{-6}$, corresponding to a velocity of 36 km/h.}
 \label{fig:ber_ped}
 \end{figure}
 
@@ -474,26 +483,27 @@ observe that the performance of the proposed method is very close to
 the performance with exact precoders. This can be attributed to the
 fact that even the 1 bit update to the scalar parameters is able to
 approximate the precoder very accurately. Since the channel variation
-across subcarriers is gradual, owing to relatively small delay spread
-of the Pedestrian channel profile, linear interpolation and prediction
-yields good performance. Moreover, this method outperforms the Stiefel
-manifold based approach to the fact that the adaptation is much more
+across subcarriers is gradual, owing to the limited delay spread of
+the channel profile, linear interpolation and prediction yields good
+performance. Moreover, this method outperforms the Stiefel manifold
+based approach due to the fact that the adaptation is much more
 accurate for scalar parameters than the tangent space based adaptation
-used for the Stiefel manifold.
+used over the Stiefel manifold.
 
-Fig.~\ref{fig:ber_veh} shows a similar comparison for the Vehicular
-channel profile. The larger delay spread of the channel necessitates
-the use of a larger number of subcarriers (1024) than the Pedestrian
-channel (64). The larger number of subcarriers implies that the
+Fig.~\ref{fig:ber_veh} shows a similar comparison for a similar
+situation with a higher speed. The faster variation of the channel
+taps with time necessitates the use of a smaller number of
+subcarriers. The smaller number of subcarriers implies that the
 predictive quantization and interpolation needs to be performed across
-a larger frequency range, thereby reducing the accuracy. Even in this
-case, we observe that the scalar parameter based approach outperforms
-manifold based quantization by about 5 dB.
+a larger frequency range, thereby potentially reducing the
+accuracy. Even in this case, we observe that the scalar parameter
+based approach outperforms manifold based quantization by about 5 dB.
 
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{images/cost01}
-\caption{BER vs. SNR for QPSK transmission over the $4\times 2$ MIMO
-  channel with the ITU COST207-RA channel profile for $f_dT_s = 1\times 10^{-2}$.}
+\caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 64
+  subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
+  for $f_dT_s = 1.05\times 10^{-5}$, corresponding to a velocity of 108 km/h.}
 \label{fig:ber_veh}
 \end{figure}
 
@@ -533,7 +543,8 @@ accuracy significantly. Simulations reveal that the proposed approach
 provides faster convergence and smaller errors in the precoder when
 compared to approaches that involve direct quantization on manifold
 tangent spaces. Future work would involve tuning the adaptation rate
-of the scalar parameters and extending this to TODO.
+of the scalar parameters and further reductions of quantization
+redundancy to reduce the feedback rates.
 
 
 
