@@ -144,9 +144,9 @@
   feeding back precoders for all subcarriers introduces large
   overheads. Past work has shown that the orthonormal structure of the
   precoder enables effective parameterization and quantization using
-  Givens rotations and Householder transformations. In addition, the
+  Givens rotations and Householder transformations. Also, the
   use of temporal and frequency correlations can further reduce the
-  feedback requirements.  We present a framework that utilizes
+  feedback requirements. We present a framework that utilizes
   adaptive feedback with joint time-frequency prediction for precoder
   construction at the transmitter.  Simulations reveal that the
   proposed method achieves lower BERs for various channel profiles
@@ -163,8 +163,8 @@ in these multiple-input multiple-output (MIMO) wireless systems, the
 transmitter can allocate resources more efficiently if the channel
 state information (CSI) is made available at the transmitter, both to
 improve data rates and to reduce BER~\cite{love2008overview}. To this
-end, feeding back the CSI from the receiver to the transmitter
-efficiently is necessary. In wireless systems that use orthogonal
+end, it is necessary to efficiently feedback the CSI from the receiver 
+to the transmitter. In wireless systems that use orthogonal
 frequency division multiplexing (OFDM), the feedback needs to be
 provided to the transmitter across all subcarriers, and this places a
 large feedback demand. However, since the CSI varies gradually in both
@@ -444,7 +444,7 @@ parameter. Since the bit budget is small, if the channel varies
 sufficiently slowly, either the $\theta_l$ or the $\phi_i$ parameters
 are fed back alternately, while retaining the unsent parameters as
 being to their previous values, as shown in
-Fig.~\ref{fig:adpm-fig}. Here, $\Theta$ is the the collection of all
+Fig.~\ref{fig:adpm-fig}. Here, $\Theta$ is the collection of all
 $\theta_l$s and $\Phi$ is the collection of all $\phi_i$s. This brings
 down the bit budget to an average of 5 bits(the length of $\Theta$)
 and 7 bits (the length of $\Phi$) over alternate feedback instances,
@@ -461,7 +461,7 @@ with time for the proposed approach and direct quantization on the
 Stiefel manifold using codebooks described
 in~\cite{Gupt1905:Predictive}. We see that, since the adaptation of
 independent scalar parameters causes the error to decay rapidly, the
-error is lower and the convergence is faster.
+error is lower, and the convergence is faster.
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{images/qerror.pdf}
 \caption{\label{fig:error_decay}A comparison of the $4\times 2$ precoder quantization error vs. time instant for
@@ -470,10 +470,10 @@ the Stiefel manifold for the Vehicular channel profile.}
 \end{figure}
 
 \begin{figure}
-\includegraphics[width=0.5\textwidth]{images/cost1024_0035}
+\includegraphics[width=0.5\textwidth]{images/ber1024_035}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 1024
   subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
-  for $f_dT_s = 3.5\times 10^{-6}$, corresponding to a velocity of 36 km/h.}
+  for $f_dT_s = 3.41\times 10^{-6}$, corresponding to a velocity of 37.8 km/h.}
 \label{fig:ber_ped}
 \end{figure}
 
@@ -481,7 +481,7 @@ Fig.~\ref{fig:ber_ped} compares the BER obtained using the proposed
 quantization method with that obtained using exact precoders. We can
 observe that the performance of the proposed method is very close to
 the performance with exact precoders. This can be attributed to the
-fact that even the 1 bit update to the scalar parameters is able to
+fact that even the 1-bit update to the scalar parameters is able to
 approximate the precoder very accurately. Since the channel variation
 across subcarriers is gradual, owing to the limited delay spread of
 the channel profile, linear interpolation and prediction yields good
@@ -496,14 +496,14 @@ taps with time necessitates the use of a smaller number of
 subcarriers. The smaller number of subcarriers implies that the
 predictive quantization and interpolation needs to be performed across
 a larger frequency range, thereby potentially reducing the
-accuracy. Even in this case, we observe that the scalar parameter
-based approach outperforms manifold based quantization by about 5 dB.
+accuracy. Even in this case, we observe that the scalar parameter-based 
+approach outperforms manifold based quantization by about 5 dB.
 
 \begin{figure}
-\includegraphics[width=0.5\textwidth]{images/cost64_001}
+\includegraphics[width=0.5\textwidth]{images/ber64_001}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 64
   subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
-  for $f_dT_s = 1.05\times 10^{-5}$, corresponding to a velocity of 108 km/h.}
+  for $f_dT_s = 1.56\times 10^{-5}$, corresponding to a velocity of 172.8 km/h.}
 \label{fig:ber_veh}
 \end{figure}
 
@@ -535,8 +535,8 @@ based approach outperforms manifold based quantization by about 5 dB.
 We have presented a predictive quantization based precoder
 reconstruction of a MIMO-OFDM system that employs scalar quantization
 based feedback of precoder parameters. By quantizing and adapting the
-Givens rotation and Householder trasnsformation parameters of the
-precoder, the receiver is able to send minimal feedback to the
+Givens rotation and Householder transformation parameters of the
+precoder, the receiver can send minimal feedback to the
 transmitter and yet enable effective precoder adaptation. Exploiting
 the temporal and frequency correlations jointly enhances precoder
 accuracy significantly. Simulations reveal that the proposed approach

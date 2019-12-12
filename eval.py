@@ -194,7 +194,7 @@ if __name__ == '__main__':
 
 plt.yscale("log")
 plt.plot(Eb_N0_dB,hpBER_QPSK, marker='o', label="freq_hop")
-plt.plot(Eb_N0_dB,idealBER_QPSK, marker='>', label="ideal")
+# plt.plot(Eb_N0_dB,idealBER_QPSK, marker='>', label="ideal")
 plt.legend()
 plt.ylabel("BER")
 plt.xlabel("Eb/N0(dB)")
