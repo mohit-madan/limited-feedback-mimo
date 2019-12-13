@@ -456,13 +456,16 @@ Equation~\ref{delta_eqn}. The value of $M$ was chosen to be $1.4$, and
 can be adjusted appropriately to track the temporal evolution of
 parameters for different Doppler frequencies.
 
-Fig.~\ref{fig:error_decay}, shows the rate at which error diminishes
+Fig.~\ref{fig:error_decay} depicts the rate at which error diminishes
 with time for the proposed approach and direct quantization on the
 Stiefel manifold using codebooks described
 in~\cite{Gupt1905:Predictive}. We see that, since the adaptation of
 independent scalar parameters causes the error to decay rapidly, the
 error is lower and the convergence is faster, even though the starting
-error is higher in the case of the scalar quantization approach.
+error is higher in the case of the scalar quantization approach. The
+independence of the parameters allows the convergence speed to be very
+fast. The Stiefel manifold based approach uses nested codebooks that
+may be suboptimal when compared to the parametrization using angles.
 
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{images/qerror.pdf}
@@ -481,26 +484,33 @@ error is higher in the case of the scalar quantization approach.
 \end{figure}
 
 Fig.~\ref{fig:ber_ped} compares the BER obtained using the proposed
-quantization method with that obtained using exact precoders. We can
-observe that the performance of the proposed method is very close to
-the performance with exact precoders. This can be attributed to the
-fact that even the 1-bit update to the scalar parameters is able to
-approximate the precoder very accurately. Since the channel variation
-across subcarriers is gradual, owing to the limited delay spread of
-the channel profile, linear interpolation and prediction yields good
+quantization method with that obtained using exact precoders for a
+$4\times 2$ 1024 subcarrier system a slow fading
+($f_dT_s = 3.41 \times 10^{-6}$). We can observe that the performance
+of the proposed method tracks the performance with exact precoders for
+a wide range of SNRs. This can be attributed to the fact that even the
+1-bit update to the scalar parameters is able to approximate the
+precoder very accurately. Since the channel variation across
+subcarriers is gradual, owing to the limited delay spread of the
+channel profile, linear interpolation and prediction yields good
 performance. Moreover, this method outperforms the Stiefel manifold
 based approach due to the fact that the adaptation is much more
 accurate for scalar parameters than the tangent space based adaptation
-used over the Stiefel manifold.
+used over the Stiefel manifold, and the outperformance is in excess of
+10 dB. The gap from the optimal precoder performance narrows further
+when the speed reduces.
 
 Fig.~\ref{fig:ber_veh} shows a similar comparison for a similar
 situation with a higher speed. The faster variation of the channel
-taps with time necessitates the use of a smaller number of
-subcarriers. The smaller number of subcarriers implies that the
-predictive quantization and interpolation needs to be performed across
-a larger frequency range, thereby potentially reducing the
-accuracy. Even in this case, we observe that the scalar parameter-based 
-approach outperforms manifold based quantization by about 5 dB.
+taps with time necessitates the use of a smaller number of subcarriers
+(viz. 64 subcarriers). The smaller number of subcarriers implies that
+the predictive quantization and interpolation needs to be performed
+across a larger frequency range, thereby potentially reducing the
+accuracy. Even in this case, we observe that the scalar
+parameter-based approach outperforms manifold based quantization by
+about 1 dB for higher SNRs. Naturally, the rate of channel variation
+is quite fast, which limits the efficacy of the proposed method in
+tracking the channel parameters.
 
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{images/ber64_001}
