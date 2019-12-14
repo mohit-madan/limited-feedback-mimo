@@ -26,13 +26,13 @@ plt.xlabel('Time')
 
 # plt.plot(stief_veh_mani,label='Vehicular Manifold')
 # plt.plot(stief_veh_scal, label='Vehicular Scalar')
-# plt.plot(stief_ped_mani,label='Pedestrian Manifold')
-# plt.plot(stief_ped_scal, label='Pedestrian Scalar')
+plt.plot(stief_ped_mani,label='Pedestrian Manifold')
+plt.plot(stief_ped_scal, label='Pedestrian Scalar')
 
 # plt.plot(frob_veh_mani,label='Vehicular Manifold')
 # plt.plot(frob_veh_scal, label='Vehicular Scalar')
-plt.plot(frob_ped_mani,label='Pedestrian Manifold')
-plt.plot(frob_ped_scal, label='Pedestrian Scalar')
+# plt.plot(frob_ped_mani,label='Pedestrian Manifold')
+# plt.plot(frob_ped_scal, label='Pedestrian Scalar')
 
 
 plt.grid(which='major', linewidth='0.5', color='black');
