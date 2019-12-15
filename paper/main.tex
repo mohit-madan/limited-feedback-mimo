@@ -247,7 +247,7 @@ $\bV_{i,t}$ are matrices whose columns are orthonormal, and
 $\Sigma_{i,t}$ contains the singular values
 $\sigma_1 \geq \ldots \geq \sigma_{N_R} > 0$ of $\bH_{i,t}$. The
 entries of $\bH_{i,t}$ are assumed to be distributed
-i.i.d. $\\mathcal{CN}(0,1)$. To obtain a precoder at the
+i.i.d. $\mathcal{CN}(0,1)$. To obtain a precoder at the
 transmitter, we need to quantize and feed back information about
 $\bV_{i,t}$ for each subcarrier. However, the frequency coherence and
 temporal correlations would reduce the overall feedback requirement,
@@ -416,16 +416,16 @@ profiles~\cite{molisch2006cost259,cost1989cost}. The BER achieved by
 the proposed predictive quantization based precoder is compared
 against the ideal precoder for 100 channel evolutions in each run and
 averaged. Simulations are performed for normalised Doppler values of
-$f_dT_s = 3.5\times 10^{-6}$ (corresponding to a velocity of 36 km/h
+$f_dT_s = 3.41\times 10^{-6}$ (corresponding to a velocity of 37.2 km/h
 for $f_c = 1$ GHz) with 1024 subcarriers, and with
-$f_dT_s = \times 1.05 \times 10^{-5}$ (velocity of 108 km/h) with 64
+$f_dT_s = 1.56 \times 10^{-5}$ (velocity of 172.8 km/h) with 64
 subcarriers. The sampling time period $T_s$ was $5\times10^{-8}$
 s. For both the situations, we considered $N_T=4$ transmit antennas
 and and $N_R=2$ receive antennas. Therefore, the total number of
 parameters that determine the precoder is
 $N_{R}(2N_{T} - N_{R}) = 12$, with five $\theta_l$s and and seven
 $\phi_i$s. We assume that the spacing between fed back subcarrier
-indices $p$ to be $33$ and $9$ for the fast and slow channel profiles
+indices $p$ to be $33$ and $9$ for the slow and fast channel profiles
 respectively (i.e. for the slower channels with 1024 subcarriers, the
 subcarriers indices fed back would be $0, 33, 66, \ldots 1023$ and for
 the faster channel, with 64 subcarriers, $0, 9, 18, \ldots 63$ would
@@ -448,7 +448,7 @@ Fig.~\ref{fig:adpm-fig}. Here, $\Theta$ is the collection of all
 $\theta_l$s and $\Phi$ is the collection of all $\phi_i$s. This brings
 down the bit budget to an average of 5 bits(the length of $\Theta$)
 and 7 bits (the length of $\Phi$) over alternate feedback instances,
-thereby resulting in an average feedback budget of 5 bits.
+thereby resulting in an average feedback budget of 6 bits.
 
 To enable adaptive tracking of the channel parameters, we start with
 an initialization of the step size for each parameter, as discussed in
