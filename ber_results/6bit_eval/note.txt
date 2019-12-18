@@ -1,2 +1,0 @@
-all are cubic while rest folders are mentioned
-here fdts=3.5e-4

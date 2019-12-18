@@ -1,2 +1,0 @@
-Old 6bit_vehicular folder is deleted and the 6bit_vehicular_fast is renamed to 6_bit veicular.
-There fast means decay rate = 2.5 times the growth rate.
