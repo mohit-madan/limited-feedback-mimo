@@ -83,6 +83,8 @@
 \newcommand{\highlight}[1]{%
   \colorbox{red!50}{$\displaystyle#1$}}
 
+\usepackage{mathtools}
+  \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 % \usepackage{parskip}
 % \setlength{\parskip}{0.02\baselineskip}
 
@@ -310,7 +312,7 @@ matrix $N_{T} \times N_{R} $ is $N_{R}(2N_{T} - N_{R})$. The number of
 $\phi_k$ parameters is $N_{R}(2N_{T} - N_{R}-1)/2$ while the number of
 $\theta$ parameters is $N_{R}(2N_{T} - N_{R}+1)/2$. Thus, $\Phi_{i,t}$
 is a vector of length $N_{R}(2N_{T} - N_{R}-1)/2$, while
-$\Theta_{i,t}$ has length $N_{R}(2N_{T} - N_{R}+1)/2$.
+$\Theta_{i,t}$ has length $N_{R}(2N_{T} - N_{R}+1)/2$.~\cite{4114278}
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{images/new-adpm.pdf}
 \caption{\label{fig:adpm-fig}Subcarriers which need to be
@@ -360,15 +362,15 @@ quantized. Every $p$-th subcarrier starting with $0$ is quantized for
 even time instances, where, $p$ is the gap between two quantized
 subcarrier indices. For odd time instances, subcarriers at the
 position $pk+q$ for $k = 0,1,..., \frac{N-1}{p}$ with $q =
-{\frac{p}{2}}$.
+{\floor*{\frac{p}{2}}}$.
 
 For the adaptive channel tracking scheme, the arrows in
 Fig.~\ref{fig:adpm-fig} show how previous quantized values along with
 the 1-bit enhancement are used to find the new quantized value. Since
 we use a single bit adaptation, the amount of feedback required is 1
 bit for each scalar parameter that is being tracked. On average, this
-can be reduced by half if we transmit only $\Theta$ values for
-one-time instance and only $\Phi$ values for the next time instant in
+can be reduced by half if we transmit only $\Theta$(collection of $\theta_{i}s$) values for
+one-time instance and only $\Phi$(collection of $\phi_{i}s$) values for the next time instant in
 an alternating fashion (the untransmitted value is assumed to be the
 same as that at the previous instant). In this case, the average
 number of bits required to quantize a channel matrix will be
@@ -415,9 +417,9 @@ for the COST207 channel power delay
 profiles~\cite{molisch2006cost259,cost1989cost}. The BER achieved by
 the proposed predictive quantization based precoder is compared
 against the ideal precoder for 100 channel evolutions in each run and
-averaged. Simulations are performed for normalised Doppler values of
-$f_dT_s = 3.41\times 10^{-6}$ (corresponding to a velocity of 37.2 km/h
-for $f_c = 1$ GHz) with 1024 subcarriers, and with
+averaged over 10 channel realizations. Simulations are performed for 
+normalised Doppler values of $f_dT_s = 3.41\times 10^{-6}$ (corresponding 
+to a velocity of 37.2 km/h for $f_c = 1$ GHz) with 1024 subcarriers, and with
 $f_dT_s = 1.56 \times 10^{-5}$ (velocity of 172.8 km/h) with 64
 subcarriers. The sampling time period $T_s$ was $5\times10^{-8}$
 s. For both the situations, we considered $N_T=4$ transmit antennas
@@ -476,7 +478,7 @@ may be suboptimal when compared to the parametrization using angles.
 \end{figure}
 
 \begin{figure}
-\includegraphics[width=0.5\textwidth]{images/ber1024_035}
+\includegraphics[width=0.5\textwidth]{images/1024timebased}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 1024
   subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
   for $f_dT_s = 3.41\times 10^{-6}$, corresponding to a velocity of 37.8 km/h.}
@@ -513,7 +515,7 @@ is quite fast, which limits the efficacy of the proposed method in
 tracking the channel parameters.
 
 \begin{figure}
-\includegraphics[width=0.5\textwidth]{images/ber64_001}
+\includegraphics[width=0.5\textwidth]{images/64timebased}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 64
   subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
   for $f_dT_s = 1.56\times 10^{-5}$, corresponding to a velocity of 172.8 km/h.}
