@@ -159,25 +159,26 @@
 \label{intro}
 % no need to write the numbers in your introduction. You start by explaining what is happening currently and then propose your solution.
 
-The use of multiple antennas at the transmitter and receiver can
-significantly enhance the performance of wireless systems. Moreover,
-in these multiple-input multiple-output (MIMO) wireless systems, the
-transmitter can allocate resources more efficiently if the channel
-state information (CSI) is made available at the transmitter, both to
-improve data rates and to reduce BER~\cite{love2008overview}. To this
-end, it is necessary to efficiently feedback the CSI from the receiver 
-to the transmitter. In wireless systems that use orthogonal
-frequency division multiplexing (OFDM), the feedback needs to be
-provided to the transmitter across all subcarriers, and this places a
-large feedback demand. However, since the CSI varies gradually in both
-time and frequency, effective techniques to reduce feedback overheads
-exist, using frequency domain interpolation temporal prediction. In
-particular, knowledge of the precoding matrices (that are typically
-the orthonormal right singular vectors of the channel matrix) is
-essential to achieve link capacity, as well as to parallelize the
-channel. In this paper, we focus on the problem of tracking the
-precoders of a MIMO-OFDM system across time and frequency for
-efficient CSI feedback by tracking a parametrized version of the matrices.
+The use of multiple antennas at the transmitter and receiver (MIMO)
+can significantly enhance the performance of wireless systems.  A
+typical step to get this performance enhancements is estimation of
+channel state information (CSI).  If transmitter also has the
+knowledge of CSI, it can allocate resources more efficiently, both to
+improve data rates and to reduce BER~\cite{love2008overview}.  To this
+end, it is necessary to efficiently feed back CSI from the receiver to
+the transmitter. In wireless systems that use orthogonal frequency
+division multiplexing (OFDM), the feedback needs to be provided to the
+transmitter across all subcarriers and in each OFDM frame, which
+places a large feedback demand. However, since the CSI varies
+gradually in both time and frequency, effective techniques to reduce
+feedback overheads exist, using frequency domain interpolation and
+temporal prediction [CITE?]. In particular, knowledge of the precoding
+matrices (that are typically the orthonormal right singular vectors of
+CSI matrix) is essential to achieve the link capacity, as well as to
+parallelize the channel. In this paper, we focus on the problem of
+tracking the precoders of a MIMO-OFDM system across time and frequency
+for efficient CSI feedback by tracking a parametrized version of the
+precoding matrices.
 
 The problem of effective quantization and feedback of precoders for
 MIMO-OFDM systems has attracted significant attention in recent
@@ -186,51 +187,61 @@ manifold~\cite{mondal2007quantization,schwarz2013adaptive,5946308},
 the Stiefel manifold \cite{6891198,Gupt1905:Predictive} and the Flag
 manifold~\cite{pitaval2013codebooks}, wherein the manifold structure
 of the precoders is used to obtain tangents for predictive
-quantization and interpolation across time and frequency. While these
-methods have been shown to be very effective for precoder feedback,
-they involve operations over higher dimensional manifolds. In
-particular, optimization and interpolation is complicated, especially
-for manifolds where geodesic paths for interpolation may be difficult
-to obtain, especially for joint time-frequency predictive coding. An
-alternate approach is to parametrize the precoding matrices using
-scalar parameters. The space of unitary matrices parameterized into
+quantization and interpolation across time and frequency.
+An alternate approach is to parametrize the precoding matrices using
+scalar parameters. The space of unitary matrices can be parameterized into
 independent scalar parameters that correspond to Givens rotations and
 Householder transformations of the unitary precoding matrices
-\cite{4114278,4556174}. These approaches have been combined with
-adaptive delta modulation effectively track precoding matrices both in
-the time~\cite{4114278} and frequency domains~\cite{4556174}, albeit
-separately.
+\cite{4114278,4556174}.
 
-In this paper, we propose a method for exploiting the joint
-time-frequency correlation of the precoder's scalar parameters on the
-transmitter using CSI feedback. Typical approaches to predictive
-quantization and interpolation do not exploit the joint time-frequency
-correlation to enhance the precoder estimate at the
+While the manifold based methods have been shown to be very effective
+for precoder feedback, they involve operations over higher dimensional
+manifolds. In particular, optimization and interpolation is
+complicated, especially for manifolds where geodesic paths for
+interpolation may be difficult to obtain, especially (don't repeat
+especially again) for joint time-frequency predictive coding.  In
+addition to being analytically more tractable, the scalar
+parametrization methods have also been implemented in 802.11ac
+standards \cite{porat2013improved}. Past work in utilizing scalar
+parametrization for precoder feedback have utilized adaptive delta
+modulation effectively track precoding matrices both in the
+time~\cite{4114278} and frequency domains~\cite{4556174}, albeit
+separately. In this paper, we propose a method for exploiting the
+joint time-frequency correlation of the precoder's scalar parameters
+on the transmitter using CSI feedback.  Typical approaches to
+predictive quantization and interpolation do not exploit the joint
+time-frequency correlation to enhance the precoder estimate at the
 transmitter. However, exploiting the correlations jointly not only
 reduces the feedback requirement, but also enhances the precoder
-reconstruction accuracy significantly. Further, the independence of
-the scalar parameters reduces the problem to one that involves
-interpolation of separate scalar valued functions, as opposed to
-operations over tangent spaces in
-manifolds~\cite{Gupt1905:Predictive}. Simulations reveal that the
-proposed method matches the performance of manifold based approaches
-with a much lower implementation complexity and fewer number of bits
+reconstruction accuracy significantly.
+
+Prior work that utilizing manifolds based quantization
+\cite{Gupt1905:Predictive,pitaval2013codebooks,6891198} and scalar
+parametrization \cite{4114278,4556174} compare their performance with
+other related quantization methods, but do not present a comparison to
+highlight the performance benefits of the chosen method.  In addition
+to a novel joint time-frequency feedback scheme, we also compare the
+results of our parametrization based adaptive scheme with an
+equivalent manifold based scheme, and illustrate the performance
+benefits entailed by utilizing the scalar parametrization method.
+Simulations reveal that the proposed method outperforms manifold based
+approaches with a much lower implementation complexity and fewer bits
 for quantization.
 
-The rest of this paper is organized as follows: Section~\ref{section2}
-describes the system model and the precoder feedback and interpolation
-techniques. Section~\ref{section3} compares the BER and achievable
-rates for our proposed methods with other approaches. Finally,
-Section~\ref{section4} concludes with discussions on future work.
+% The rest of this paper is organized as follows: Section~\ref{section2}
+% describes the system model and the precoder feedback and interpolation
+% techniques. Section~\ref{section3} compares the BER and achievable
+% rates for our proposed methods with other approaches. Finally,
+% Section~\ref{section4} concludes with discussions on future work.
 
 \section{System Model}
 For a MIMO-OFDM system with $N_T$ transmitter and $N_R$ receiver
 antennas, the channel for the $i$-th subcarrier at time instant $t$
 can be modelled as a flat-fading MIMO channel. This flat-fading MIMO
-channel can be modelled as
+channel can be written as
 \label{section2}
 \begin{equation}
-\by_{i,t} = \bH_{i,t}\tilde{\bV}_{i,t} \bx_{i,t}+ \bf{\eta_{i,t}}
+\by_{i,t} = \bH_{i,t}\tilde{\bV}_{i,t} \bx_{i,t}+ {\bf\eta}_{i,t}
 \end{equation}
 where $\bH_{i,t} \in \mathbb{C}^{N_R \times N_T}$ is the channel
 matrix, $\bx_{i,t} \in \mathbb{C}^{N_d}$ is the input data vector,
