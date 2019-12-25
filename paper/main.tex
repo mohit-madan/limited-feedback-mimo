@@ -159,39 +159,40 @@
 \label{intro}
 % no need to write the numbers in your introduction. You start by explaining what is happening currently and then propose your solution.
 
-The use of multiple antennas at the transmitter and receiver (MIMO)
-can significantly enhance the performance of wireless systems.  A
-typical step to get this performance enhancements is estimation of
-channel state information (CSI).  If transmitter also has the
-knowledge of CSI, it can allocate resources more efficiently, both to
-improve data rates and to reduce BER~\cite{love2008overview}.  To this
-end, it is necessary to efficiently feed back CSI from the receiver to
-the transmitter. In wireless systems that use orthogonal frequency
-division multiplexing (OFDM), the feedback needs to be provided to the
-transmitter across all subcarriers and in each OFDM frame, which
-places a large feedback demand. However, since the CSI varies
-gradually in both time and frequency, effective techniques to reduce
-feedback overheads exist, using frequency domain interpolation and
-temporal prediction [CITE?]. In particular, knowledge of the precoding
-matrices (that are typically the orthonormal right singular vectors of
-CSI matrix) is essential to achieve the link capacity, as well as to
-parallelize the channel. In this paper, we focus on the problem of
-tracking the precoders of a MIMO-OFDM system across time and frequency
-for efficient CSI feedback by tracking a parametrized version of the
-precoding matrices.
+Multiple-input multiple-output (MIMO) based wireless communication
+systems that use orthogonal frequency division multiplexing (OFDM)
+have been adapted in many modern wireless systems owing to their
+flexibility and ability to use the wideband channels effectively. One
+key requirement to utilize such channels effectively is for the
+transmitter to possess channel state information (CSI), since that
+permits channel parallelization for low-complexity decoders as well as
+the use of capacity achieving transmission
+strategies~\cite{love2008overview}. This primarily translates to the
+generation of unitary precoding matrices at the transmitter. However,
+feeding back CSI from the receiver to the transmitter requires large
+feedback overhead, since a precoder needs to be fed back for each OFDM
+subcarrier within each coherence interval. Typical past approaches
+have used manifold based approaches that exploit temporal and
+frequency correlation to reduce feedback overheads. Wireless standards
+have largely employed parametric quantization that uses Givens
+rotations based quantization~\cite{lou2013comparison,5671092}, though these do
+not involve any refinement of the estimates using channel
+correlations. In this paper, we propose a joint time-frequency
+interpolation approach that builds upon the parametric quantization
+techniques used by standards that manages to outperform typical
+manifold based quantization techniques.
 
-The problem of effective quantization and feedback of precoders for
-MIMO-OFDM systems has attracted significant attention in recent
-years. Many approaches involve codebook design over the Grassmann
+Most approaches for effective quantization and feedback of precoders
+for MIMO-OFDM systems involve codebook design over the Grassmann
 manifold~\cite{mondal2007quantization,schwarz2013adaptive,5946308},
 the Stiefel manifold \cite{6891198,Gupt1905:Predictive} and the Flag
 manifold~\cite{pitaval2013codebooks}, wherein the manifold structure
 of the precoders is used to obtain tangents for predictive
-quantization and interpolation across time and frequency.
-An alternate approach is to parametrize the precoding matrices using
-scalar parameters. The space of unitary matrices can be parameterized into
-independent scalar parameters that correspond to Givens rotations and
-Householder transformations of the unitary precoding matrices
+quantization and interpolation across time and frequency.  An
+alternate approach is to parametrize the precoding matrices using
+scalar parameters. The space of unitary matrices can be parameterized
+into independent scalar parameters that correspond to Givens rotations
+and Householder transformations of the unitary precoding matrices
 \cite{4114278,4556174}.
 
 While the manifold based methods have been shown to be very effective
@@ -202,16 +203,16 @@ interpolation may be difficult to obtain, especially (don't repeat
 especially again) for joint time-frequency predictive coding.  In
 addition to being analytically more tractable, the scalar
 parametrization methods have also been implemented in 802.11ac
-standards \cite{porat2013improved}. Past work in utilizing scalar
+standards \cite{lou2013comparison}. Past work in utilizing scalar
 parametrization for precoder feedback have utilized adaptive delta
 modulation effectively track precoding matrices both in the
 time~\cite{4114278} and frequency domains~\cite{4556174}, albeit
 separately. In this paper, we propose a method for exploiting the
 joint time-frequency correlation of the precoder's scalar parameters
-on the transmitter using CSI feedback.  Typical approaches to
-predictive quantization and interpolation do not exploit the joint
+on the transmitter using CSI feedback.  Typical approaches that feed
+back scalar precoder parameters problem do not exploit the joint
 time-frequency correlation to enhance the precoder estimate at the
-transmitter. However, exploiting the correlations jointly not only
+transmitter. We show that exploiting correlations jointly not only
 reduces the feedback requirement, but also enhances the precoder
 reconstruction accuracy significantly.
 
@@ -428,8 +429,8 @@ for the COST207 channel power delay
 profiles~\cite{molisch2006cost259,cost1989cost}. The BER achieved by
 the proposed predictive quantization based precoder is compared
 against the ideal precoder for 100 channel evolutions in each run and
-averaged over 10 channel realizations. Simulations are performed for 
-normalised Doppler values of $f_dT_s = 3.41\times 10^{-6}$ (corresponding 
+averaged over 10 channel realizations. Simulations are performed for
+normalised Doppler values of $f_dT_s = 3.41\times 10^{-6}$ (corresponding
 to a velocity of 37.2 km/h for $f_c = 1$ GHz) with 1024 subcarriers, and with
 $f_dT_s = 1.56 \times 10^{-5}$ (velocity of 172.8 km/h) with 64
 subcarriers. The sampling time period $T_s$ was $5\times10^{-8}$
