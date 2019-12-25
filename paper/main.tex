@@ -199,8 +199,8 @@ While the manifold based methods have been shown to be very effective
 for precoder feedback, they involve operations over higher dimensional
 manifolds. In particular, optimization and interpolation is
 complicated, especially for manifolds where geodesic paths for
-interpolation may be difficult to obtain, especially (don't repeat
-especially again) for joint time-frequency predictive coding.  In
+interpolation may be difficult to obtain, particularly 
+for joint time-frequency predictive coding.  In
 addition to being analytically more tractable, the scalar
 parametrization methods have also been implemented in 802.11ac
 standards \cite{lou2013comparison}. Past work in utilizing scalar
@@ -267,12 +267,15 @@ $\bV_{i,t}$ for each subcarrier. However, the frequency coherence and
 temporal correlations would reduce the overall feedback requirement,
 as discussed in subsequent sections.
 
+\section{Scalar joint time-frequency scheme}
 \subsection{Scalar Parametrization}
 \label{givens}
 The degrees of freedom in the $\tilde{\bV}_{i,t}$ matrices is smaller
 than the number of real entries in the matrix because of the
 geometrical structure between the columns of the
-matrix~\cite{4114278}. The orthonormal matrix $\tilde{\bV}_{i,t}$ with
+matrix~\cite{4114278}.  Therefore $\tilde{\bV}_{i,t}$ could be paramaterized 
+using fewer parameters.
+The orthonormal matrix $\tilde{\bV}_{i,t}$ with
 $N_T$ rows and $N_R$ columns can be decomposed as
 follows~\cite{4114278} (we suppress the $(i, t)$ subscripts in the
 decomposition matrices)
@@ -305,9 +308,9 @@ Thus, for a $4 \times 2$ orthogonal matrix $\bV_{i,t}$, we have
 \end{align*}
 Here, $\phi_{k}$s are referred to as phases, and their collection for
 the $i$-th subcarrier at time instant $t$ is captured in a vector
-denoted by $\Phi_{i,t}$. $\theta_{l}$s as called rotation angles, and
+denoted by $\bf{\Phi_{i,t}}$. $\theta_{l}$s are called rotation angles, and
 their collection is captured in a vector referred to as
-$\Theta_{i,t}$. We note that $\Phi_{i,t}$ and $\Theta_{i,t}$ represent
+$\bf{\Theta_{i,t}}$. We note that $\bf{\Phi_{i,t}}$ and $\bf{\Theta_{i,t}}$ represent
 the phase and rotation angles for the $i$-th subcarrier at time
 instant $t$, as represented in Fig.~\ref{fig:adpm-fig}. It is known
 that $\phi_k \in (-\pi, \pi]$ is uniformly distributed between the two
@@ -316,15 +319,17 @@ as~\cite{4114278}
 \begin{equation}
 2l(\sin\theta_l)^{2l-1}\cos\theta_l, \mbox{  }\theta_l \in \left[0, \frac{\pi}{2}\right) \mbox{, } l = 1,2,\ldots,N_T -1
 \end{equation}
+The given distribution of $\theta_l$ is used for non-uniform quantization
+of $\bf{\Theta}$ during their initialization to reduce the quantization error.  
 In addition, $\phi_k$ and $\theta_l$ are statistically independent,
 making this representation useful for tracking them separately across
 time, as discussed below. The total number of
 parameters obtained from the decomposition of a complex orthogonal
 matrix $N_{T} \times N_{R} $ is $N_{R}(2N_{T} - N_{R})$. The number of
 $\phi_k$ parameters is $N_{R}(2N_{T} - N_{R}-1)/2$ while the number of
-$\theta$ parameters is $N_{R}(2N_{T} - N_{R}+1)/2$. Thus, $\Phi_{i,t}$
+$\theta$ parameters is $N_{R}(2N_{T} - N_{R}+1)/2$. Thus, $\bf{\Phi_{i,t}}$
 is a vector of length $N_{R}(2N_{T} - N_{R}-1)/2$, while
-$\Theta_{i,t}$ has length $N_{R}(2N_{T} - N_{R}+1)/2$.~\cite{4114278}
+$\bf{\Theta_{i,t}}$ has length $N_{R}(2N_{T} - N_{R}+1)/2$.~\cite{4114278}
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{images/new-adpm.pdf}
 \caption{\label{fig:adpm-fig}Subcarriers which need to be
@@ -381,8 +386,8 @@ Fig.~\ref{fig:adpm-fig} show how previous quantized values along with
 the 1-bit enhancement are used to find the new quantized value. Since
 we use a single bit adaptation, the amount of feedback required is 1
 bit for each scalar parameter that is being tracked. On average, this
-can be reduced by half if we transmit only $\Theta$(collection of $\theta_{i}s$) values for
-one-time instance and only $\Phi$(collection of $\phi_{i}s$) values for the next time instant in
+can be reduced by half if we transmit only $\bf{\Theta}$ values for
+one-time instance and only $\bf{\Phi}$ values for the next time instant in
 an alternating fashion (the untransmitted value is assumed to be the
 same as that at the previous instant). In this case, the average
 number of bits required to quantize a channel matrix will be
@@ -412,7 +417,7 @@ One reason why a linear predictive quantization is preferred is
 because the underlying parameters can generally be thought to emerge
 from an autoregressive (AR) process. For such processes, it is well
 known that linear prediction based on past samples is optimal. Even
-though the $\Theta$ and $\Phi$ parameters do not manifest as AR
+though the $\bf{\Theta}$ and $\bf{\Phi}$ parameters do not manifest as AR
 processes, for small changes, a linear approximation works
 sufficiently well, as described in~\cite{4114278}, although that
 consideration was limited to tracking the temporal evolution of the
@@ -458,10 +463,11 @@ parameter. Since the bit budget is small, if the channel varies
 sufficiently slowly, either the $\theta_l$ or the $\phi_i$ parameters
 are fed back alternately, while retaining the unsent parameters as
 being to their previous values, as shown in
-Fig.~\ref{fig:adpm-fig}. Here, $\Theta$ is the collection of all
-$\theta_l$s and $\Phi$ is the collection of all $\phi_i$s. This brings
-down the bit budget to an average of 5 bits(the length of $\Theta$)
-and 7 bits (the length of $\Phi$) over alternate feedback instances,
+Fig.~\ref{fig:adpm-fig}. 
+% Here, $\bf{\Theta}$ is the collection of all
+% $\theta_l$s and $\bf{\Phi}$ is the collection of all $\phi_i$s. 
+This brings down the bit budget to an average of 5 bits(the length of $\bf{\Theta}$)
+and 7 bits (the length of $\bf{\Phi}$) over alternate feedback instances,
 thereby resulting in an average feedback budget of 6 bits.
 
 To enable adaptive tracking of the channel parameters, we start with
@@ -525,7 +531,9 @@ parameter-based approach outperforms manifold based quantization by
 about 1 dB for higher SNRs. Naturally, the rate of channel variation
 is quite fast, which limits the efficacy of the proposed method in
 tracking the channel parameters.
-
+In both the situations, the only-time based interpolation using manifold
+has the worst performance as it is not utilizing the joint time $\&$ frequency 
+correlations. 
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{images/64timebased}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 64
