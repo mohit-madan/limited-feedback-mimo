@@ -83,6 +83,8 @@
 \newcommand{\highlight}[1]{%
   \colorbox{red!50}{$\displaystyle#1$}}
 
+\usepackage{mathtools}
+  \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 % \usepackage{parskip}
 % \setlength{\parskip}{0.02\baselineskip}
 
@@ -157,75 +159,53 @@
 \label{intro}
 % no need to write the numbers in your introduction. You start by explaining what is happening currently and then propose your solution.
 
-The use of multiple antennas at the transmitter and receiver (MIMO) can
-significantly enhance the performance of wireless systems. 
-A typical step to get this performance enhancements is estimation of channel
-state information (CSI).
-If transmitter also has the knowledge of CSI, it can allocate 
-resources more efficiently, both to
-improve data rates and to reduce BER~\cite{love2008overview}. 
+% Multiple-input multiple-output (MIMO) based wireless communication
+% systems that use orthogonal frequency division multiplexing (OFDM)
+% have been adapted in many modern wireless systems owing to their
+% flexibility and ability to use the wideband channels effectively. One
+% key requirement to utilize such channels effectively is for the
+% transmitter to possess channel state information (CSI), since that
+% permits channel parallelization for low-complexity decoders as well as
+% the use of capacity achieving transmission
+% strategies~\cite{love2008overview}. This primarily translates to the
+% generation of unitary precoding matrices at the transmitter. However,
+% feeding back CSI from the receiver to the transmitter requires large
+% feedback overhead, since a precoder needs to be fed back for each OFDM
+% subcarrier within each coherence interval. Typical past approaches
+% have used manifold based approaches that exploit temporal and
+% frequency correlation to reduce feedback overheads. Wireless standards
+% have largely employed parametric quantization that uses Givens
+% rotations based quantization~\cite{lou2013comparison,5671092}, though these do
+% not involve any refinement of the estimates using channel
+% correlations. In this paper, we propose a joint time-frequency
+% interpolation approach that builds upon the parametric quantization
+% techniques used by standards that manages to outperform typical
+% manifold based quantization techniques.
 
-To this end, it is necessary to efficiently feedback the CSI from the receiver 
-to the transmitter. In wireless systems that use orthogonal
-frequency division multiplexing (OFDM), the feedback needs to be
-provided to the transmitter across all subcarriers and in each OFDM frame, 
-which places a large feedback demand. However, since the CSI varies gradually in both
-time and frequency, effective techniques to reduce feedback overheads
-exist, using frequency domain interpolation and temporal prediction [CITE?]. In
-particular, knowledge of the precoding matrices (that are typically
-the orthonormal right singular vectors of CSI matrix) is
-essential to achieve the link capacity, as well as to parallelize the
-channel. In this paper, we focus on the problem of tracking the
-precoders of a MIMO-OFDM system across time and frequency for
-efficient CSI feedback by tracking a parametrized version of the precoding matrices.
+Multiple-input multiple-output (MIMO) based wireless communication
+systems that use orthogonal frequency division multiplexing (OFDM)
+have been adapted in many modern wireless systems owing to increased 
+data rate and channel capacity. One key requirement to achieve the channel capacity is to leverage spatial multiplexing gains obtained by precoding transmissions by Singular Value Decomposition (SVD) of the MIMO channel matrix ~\cite{love2008overview}. 
+However, this requires the receiver to feed back the unitary matrix obtained by SVD, to the transmitter. 
+Given that the channel matrix varies with both frequency and time, this feedback has to be ideally done for each subcarrier and time instance, leading to massive feedback overhead. To reduce the feedback overhead, past work taps in the inherent temporal and frequency correlations in SVD precoders, in order to perform effective quantization with just a few bits by utilizing predictive quantization \cite{Gupt1905:Predictive,6891198,7370793,sacristan2010differential,5946308,6545375,4114278,4556174}, and reducing number of fed back subcarriers by utilizing interpolation algorithms \cite{Gupt1905:Predictive,5671092,khaled2005quantized}. 
 
-The problem of effective quantization and feedback of precoders for
-MIMO-OFDM systems has attracted significant attention in recent
-years. Many approaches involve codebook design over the Grassmann
-manifold~\cite{mondal2007quantization,schwarz2013adaptive,5946308},
-the Stiefel manifold \cite{6891198,Gupt1905:Predictive} and the Flag
-manifold~\cite{pitaval2013codebooks}, wherein the manifold structure
-of the precoders is used to obtain tangents for predictive
-quantization and interpolation across time and frequency. 
-An alternate approach is to parametrize the precoding matrices using
-scalar parameters. The space of unitary matrices parameterized into
-independent scalar parameters that correspond to Givens rotations and
-Householder transformations of the unitary precoding matrices
-\cite{4114278,4556174} [?].   
 
-While the manifold based methods have been shown to be very effective for precoder feedback,
-they involve operations over higher dimensional manifolds. In
-particular, optimization and interpolation is complicated, especially
-for manifolds where geodesic paths for interpolation may be difficult
-to obtain, especially (don't repeat especially again) for joint time-frequency predictive coding.
-In addition to being analytically more tractable, the scalar parametrization methods have also been
-implemented in 802.11ac standards \cite{porat2013improved}. Past work in utilizing
-scalar parametrization for precoder feedback have utilized
-adaptive delta modulation effectively track precoding matrices both in
-the time~\cite{4114278} and frequency domains~\cite{4556174}, albeit
-separately. In this paper, we propose a method for exploiting the joint
-time-frequency correlation of the precoder's scalar parameters on the
-transmitter using CSI feedback. 
-Typical approaches to predictive
-quantization and interpolation do not exploit the joint time-frequency
-correlation to enhance the precoder estimate at the
-transmitter. However, exploiting the correlations jointly not only
-reduces the feedback requirement, but also enhances the precoder
-reconstruction accuracy significantly.
+An underlying challenge in framing the predictive quantization and interpolation algorithms has been the high dimensional unitary structure of the SVD precoders. A large body of works utilizes the manifold geometry endowed by the unitary structure to frame such algorithms directly on the non-linear manifold ~\cite{mondal2007quantization,schwarz2013adaptive,5946308,6891198,Gupt1905:Predictive,pitaval2013codebooks}. On the other hand, there are numerous works which utilize scalar parametrization of the unitary precoders, given by Givens rotations and Householder transformations \cite{4114278,4556174,lou2013comparison}. While the manifold based methods offer a clean solution and have been shown to be very effective in reducing the feedback overhead, they are analytically terse and 
+involve operations over higher dimensional manifolds. The scalar parametrization algorithms enable usage of the traditional signal processing algorithms over scalars and vectors, and hence are analytically simpler. 
+The scalar parametrization methods have also been implemented in 802.11ac standards \cite{lou2013comparison}. Surprisingly, there have been no performance comparisons between these two body of works, hence it is not quantifiable from past work if there are performance gains/losses by operating over scalar parametrization instead of manifold. In this paper, we propose a joint time-frequency interpolation approach that builds upon the existing parametric quantization techniques. One of the key results of our work is that the proposed method actually outperforms an equivalent manifold based technique \cite{Gupt1905:Predictive}, at the same time being analytically more tractable.
 
-Most of the papers utilizing manifolds \cite{Gupt1905:Predictive,pitaval2013codebooks,6891198}  and scalar parametrization \cite{4114278,4556174} compare the performance to other manifold/scalar parametrization methods, but don't do the cross comparison to highlight the performance benefits of the chosen method.
-In addition to a novel joint time-frequency feedback scheme, we compare also the results of our
-algorithm with an equivalent manifold based scheme, and illustrate the performance
-benefits entailed by utilizing the scalar parametrization method. 
-%  Further, the independence of
-% the scalar parameters reduces the problem to one that involves
-% interpolation of separate scalar valued functions, as opposed to
-% operations over tangent spaces in
-% manifolds~\cite{Gupt1905:Predictive}. 
-Simulations reveal that the
-proposed method matches the performance of manifold based approaches
-with a much lower implementation complexity and fewer number of bits
-for quantization.
+Past work in utilizing scalar
+parametrization for precoder feedback have utilized adaptive delta
+modulation effectively track precoding matrices both in the
+time~\cite{4114278} and frequency domains~\cite{4556174}, albeit
+separately. Typical natural wireless channels don't just have independent time-frequency correlations, but also posses some novel time-frequency cross correlations. \cite{Gupt1905:Predictive} framed an equivalent manifold based approach to utilize joint time-frequency correlations for predictive quantization and interpolation, and showed performance benefits compared to utilizing time-frequency correlations independently \cite{6891198,khaled2005quantized}.
+Intuitively, \cite{Gupt1905:Predictive} observes the performance benefits since utilizing joint correlations not only exploits the existing independent correlations, but also the novel cross correlations in time-frequency arising from the underlying channel models.
+
+Hence, our key contributions are two-fold.  We first propose a method for exploiting the
+joint time-frequency correlation of the precoder's scalar parameters
+on the transmitter using the quantized feedback. 
+Secondly, instead of comparing to similar algorithms in the chosen body of work (viz. scalar parametrization), as has been the case with past works, we instead compare our proposed algorithm with an equivalent manifold based approach, and show drastic performance benefits over the manifold approach.
+
 
 % The rest of this paper is organized as follows: Section~\ref{section2}
 % describes the system model and the precoder feedback and interpolation
@@ -265,12 +245,15 @@ $\bV_{i,t}$ for each subcarrier. However, the frequency coherence and
 temporal correlations would reduce the overall feedback requirement,
 as discussed in subsequent sections.
 
+\section{Scalar joint time-frequency scheme}
 \subsection{Scalar Parametrization}
 \label{givens}
 The degrees of freedom in the $\tilde{\bV}_{i,t}$ matrices is smaller
 than the number of real entries in the matrix because of the
 geometrical structure between the columns of the
-matrix~\cite{4114278}. The orthonormal matrix $\tilde{\bV}_{i,t}$ with
+matrix~\cite{4114278}.  Therefore $\tilde{\bV}_{i,t}$ could be paramaterized 
+using fewer parameters.
+The orthonormal matrix $\tilde{\bV}_{i,t}$ with
 $N_T$ rows and $N_R$ columns can be decomposed as
 follows~\cite{4114278} (we suppress the $(i, t)$ subscripts in the
 decomposition matrices)
@@ -303,9 +286,9 @@ Thus, for a $4 \times 2$ orthogonal matrix $\bV_{i,t}$, we have
 \end{align*}
 Here, $\phi_{k}$s are referred to as phases, and their collection for
 the $i$-th subcarrier at time instant $t$ is captured in a vector
-denoted by $\Phi_{i,t}$. $\theta_{l}$s as called rotation angles, and
+denoted by $\bf{\Phi_{i,t}}$. $\theta_{l}$s are called rotation angles, and
 their collection is captured in a vector referred to as
-$\Theta_{i,t}$. We note that $\Phi_{i,t}$ and $\Theta_{i,t}$ represent
+$\bf{\Theta_{i,t}}$. We note that $\bf{\Phi_{i,t}}$ and $\bf{\Theta_{i,t}}$ represent
 the phase and rotation angles for the $i$-th subcarrier at time
 instant $t$, as represented in Fig.~\ref{fig:adpm-fig}. It is known
 that $\phi_k \in (-\pi, \pi]$ is uniformly distributed between the two
@@ -314,15 +297,17 @@ as~\cite{4114278}
 \begin{equation}
 2l(\sin\theta_l)^{2l-1}\cos\theta_l, \mbox{  }\theta_l \in \left[0, \frac{\pi}{2}\right) \mbox{, } l = 1,2,\ldots,N_T -1
 \end{equation}
+The given distribution of $\theta_l$ is used for non-uniform quantization
+of $\bf{\Theta}$ during their initialization to reduce the quantization error.  
 In addition, $\phi_k$ and $\theta_l$ are statistically independent,
 making this representation useful for tracking them separately across
 time, as discussed below. The total number of
 parameters obtained from the decomposition of a complex orthogonal
 matrix $N_{T} \times N_{R} $ is $N_{R}(2N_{T} - N_{R})$. The number of
 $\phi_k$ parameters is $N_{R}(2N_{T} - N_{R}-1)/2$ while the number of
-$\theta$ parameters is $N_{R}(2N_{T} - N_{R}+1)/2$. Thus, $\Phi_{i,t}$
+$\theta$ parameters is $N_{R}(2N_{T} - N_{R}+1)/2$. Thus, $\bf{\Phi_{i,t}}$
 is a vector of length $N_{R}(2N_{T} - N_{R}-1)/2$, while
-$\Theta_{i,t}$ has length $N_{R}(2N_{T} - N_{R}+1)/2$.
+$\bf{\Theta_{i,t}}$ has length $N_{R}(2N_{T} - N_{R}+1)/2$.~\cite{4114278}
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{images/new-adpm.pdf}
 \caption{\label{fig:adpm-fig}Subcarriers which need to be
@@ -372,15 +357,15 @@ quantized. Every $p$-th subcarrier starting with $0$ is quantized for
 even time instances, where, $p$ is the gap between two quantized
 subcarrier indices. For odd time instances, subcarriers at the
 position $pk+q$ for $k = 0,1,..., \frac{N-1}{p}$ with $q =
-{\frac{p}{2}}$.
+{\floor*{\frac{p}{2}}}$.
 
 For the adaptive channel tracking scheme, the arrows in
 Fig.~\ref{fig:adpm-fig} show how previous quantized values along with
 the 1-bit enhancement are used to find the new quantized value. Since
 we use a single bit adaptation, the amount of feedback required is 1
 bit for each scalar parameter that is being tracked. On average, this
-can be reduced by half if we transmit only $\Theta$ values for
-one-time instance and only $\Phi$ values for the next time instant in
+can be reduced by half if we transmit only $\bf{\Theta}$ values for
+one-time instance and only $\bf{\Phi}$ values for the next time instant in
 an alternating fashion (the untransmitted value is assumed to be the
 same as that at the previous instant). In this case, the average
 number of bits required to quantize a channel matrix will be
@@ -410,7 +395,7 @@ One reason why a linear predictive quantization is preferred is
 because the underlying parameters can generally be thought to emerge
 from an autoregressive (AR) process. For such processes, it is well
 known that linear prediction based on past samples is optimal. Even
-though the $\Theta$ and $\Phi$ parameters do not manifest as AR
+though the $\bf{\Theta}$ and $\bf{\Phi}$ parameters do not manifest as AR
 processes, for small changes, a linear approximation works
 sufficiently well, as described in~\cite{4114278}, although that
 consideration was limited to tracking the temporal evolution of the
@@ -427,9 +412,9 @@ for the COST207 channel power delay
 profiles~\cite{molisch2006cost259,cost1989cost}. The BER achieved by
 the proposed predictive quantization based precoder is compared
 against the ideal precoder for 100 channel evolutions in each run and
-averaged. Simulations are performed for normalised Doppler values of
-$f_dT_s = 3.41\times 10^{-6}$ (corresponding to a velocity of 37.2 km/h
-for $f_c = 1$ GHz) with 1024 subcarriers, and with
+averaged over 10 channel realizations. Simulations are performed for
+normalised Doppler values of $f_dT_s = 3.41\times 10^{-6}$ (corresponding
+to a velocity of 37.2 km/h for $f_c = 1$ GHz) with 1024 subcarriers, and with
 $f_dT_s = 1.56 \times 10^{-5}$ (velocity of 172.8 km/h) with 64
 subcarriers. The sampling time period $T_s$ was $5\times10^{-8}$
 s. For both the situations, we considered $N_T=4$ transmit antennas
@@ -456,10 +441,11 @@ parameter. Since the bit budget is small, if the channel varies
 sufficiently slowly, either the $\theta_l$ or the $\phi_i$ parameters
 are fed back alternately, while retaining the unsent parameters as
 being to their previous values, as shown in
-Fig.~\ref{fig:adpm-fig}. Here, $\Theta$ is the collection of all
-$\theta_l$s and $\Phi$ is the collection of all $\phi_i$s. This brings
-down the bit budget to an average of 5 bits(the length of $\Theta$)
-and 7 bits (the length of $\Phi$) over alternate feedback instances,
+Fig.~\ref{fig:adpm-fig}. 
+% Here, $\bf{\Theta}$ is the collection of all
+% $\theta_l$s and $\bf{\Phi}$ is the collection of all $\phi_i$s. 
+This brings down the bit budget to an average of 5 bits(the length of $\bf{\Theta}$)
+and 7 bits (the length of $\bf{\Phi}$) over alternate feedback instances,
 thereby resulting in an average feedback budget of 6 bits.
 
 To enable adaptive tracking of the channel parameters, we start with
@@ -488,7 +474,7 @@ may be suboptimal when compared to the parametrization using angles.
 \end{figure}
 
 \begin{figure}
-\includegraphics[width=0.5\textwidth]{images/ber1024_035}
+\includegraphics[width=0.5\textwidth]{images/1024timebased}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 1024
   subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
   for $f_dT_s = 3.41\times 10^{-6}$, corresponding to a velocity of 37.8 km/h.}
@@ -523,9 +509,11 @@ parameter-based approach outperforms manifold based quantization by
 about 1 dB for higher SNRs. Naturally, the rate of channel variation
 is quite fast, which limits the efficacy of the proposed method in
 tracking the channel parameters.
-
+In both the situations, the only-time based interpolation using manifold
+has the worst performance as it is not utilizing the joint time $\&$ frequency 
+correlations. 
 \begin{figure}
-\includegraphics[width=0.5\textwidth]{images/ber64_001}
+\includegraphics[width=0.5\textwidth]{images/64timebased}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 64
   subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
   for $f_dT_s = 1.56\times 10^{-5}$, corresponding to a velocity of 172.8 km/h.}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2019.8.26)  16 DEC 2019 18:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2019.8.26)  26 DEC 2019 20:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -761,54 +761,74 @@ Package footmisc Info: Declaring symbol style lamport-robust on input line 883.
 Package footmisc Info: Declaring symbol style lamport* on input line 903.
 Package footmisc Info: Declaring symbol style lamport*-robust on input line 924
 .
-) (/home/wcsng9/Documents/limited-feedback-mimo-Mohit/paper/main.aux)
+) (/usr/share/texlive/texmf-dist/tex/latex/mathtools/mathtools.sty
+Package: mathtools 2015/11/12 v1.18 mathematical typesetting tools
+
+(/usr/share/texlive/texmf-dist/tex/latex/mathtools/mhsetup.sty
+Package: mhsetup 2010/01/21 v1.2a programming setup (MH)
+)
+LaTeX Info: Thecontrolsequence`\('isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
+\g_MT_multlinerow_int=\count140
+\l_MT_multwidth_dim=\dimen263
+\origjot=\skip63
+\l_MT_shortvdotswithinadjustabove_dim=\dimen264
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen265
+\l_MT_above_intertext_sep=\dimen266
+\l_MT_below_intertext_sep=\dimen267
+\l_MT_above_shortintertext_sep=\dimen268
+\l_MT_below_shortintertext_sep=\dimen269
+)
+(/home/wcsng9/Documents/limited-feedback-mimo-Mohit/paper/main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/ntxmi/m/it on input line 112.
+LaTeX Font Info:    Checking defaults for OML/ntxmi/m/it on input line 114.
 LaTeX Font Info:    Try loading font information for OML+ntxmi on input line 11
-2.
+4.
 
 (/usr/share/texlive/texmf-dist/tex/latex/newtx/omlntxmi.fd
 File: omlntxmi.fd 2015/08/25 Fontinst v1.933 font definitions for OML/ntxmi.
 )
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OMS/ntxsy/m/n on input line 112.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for OMS/ntxsy/m/n on input line 114.
 LaTeX Font Info:    Try loading font information for OMS+ntxsy on input line 11
-2.
+4.
 
 (/usr/share/texlive/texmf-dist/tex/latex/newtx/omsntxsy.fd
 File: omsntxsy.fd 2012/11/14 Fontinst v1.933 font definitions for OMS/ntxsy.
 )
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for U/ntxexa/m/n on input line 112.
-LaTeX Font Info:    Try loading font information for U+ntxexa on input line 112
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for U/ntxexa/m/n on input line 114.
+LaTeX Font Info:    Try loading font information for U+ntxexa on input line 114
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/newtx/untxexa.fd
 File: untxexa.fd 2012/04/16 Fontinst v1.933 font definitions for U/ntxexa.
 )
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for LMX/ntxexx/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    ... okay on input line 114.
+LaTeX Font Info:    Checking defaults for LMX/ntxexx/m/n on input line 114.
+LaTeX Font Info:    ... okay on input line 114.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count140
-\scratchdimen=\dimen263
+\scratchcounter=\count141
+\scratchdimen=\dimen270
 \scratchbox=\box50
-\nofMPsegments=\count141
-\nofMParguments=\count142
+\nofMPsegments=\count142
+\nofMParguments=\count143
 \everyMPshowfont=\toks42
-\MPscratchCnt=\count143
-\MPscratchDim=\dimen264
-\MPnumerator=\count144
-\makeMPintoPDFobject=\count145
+\MPscratchCnt=\count144
+\MPscratchDim=\dimen271
+\MPnumerator=\count145
+\makeMPintoPDFobject=\count146
 \everyMPtoPDFconversion=\toks43
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
@@ -861,38 +881,43 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 80.
 )
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 112.
+(lastpage)             ! on input line 114.
 
 ABD: EveryShipout initializing macros
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 
-** ATTENTION: \authorblockN is deprecated (line 130). Use \IEEEauthorblockN ins
+** ATTENTION: \authorblockN is deprecated (line 132). Use \IEEEauthorblockN ins
 tead.
-** ATTENTION: \authorblockA is deprecated (line 130). Use \IEEEauthorblockA ins
+** ATTENTION: \authorblockA is deprecated (line 132). Use \IEEEauthorblockA ins
 tead.
-** ATTENTION: \authorblockN is deprecated (line 130). Use \IEEEauthorblockN ins
+** ATTENTION: \authorblockN is deprecated (line 132). Use \IEEEauthorblockN ins
 tead.
-** ATTENTION: \authorblockA is deprecated (line 130). Use \IEEEauthorblockA ins
+** ATTENTION: \authorblockA is deprecated (line 132). Use \IEEEauthorblockA ins
 tead.
+
+Underfull \hbox (badness 2229) in paragraph at lines 185--191
+[]\OT1/ptm/m/n/10 Multiple-input multiple-output (MIMO) based wire-less
+ []
+
 LaTeX Font Info:    Try loading font information for OT1+ntxtlf on input line 2
-37.
+17.
 (/usr/share/texlive/texmf-dist/tex/latex/newtx/ot1ntxtlf.fd
 File: ot1ntxtlf.fd 2015/01/17 v1.0 font definition file for OT1/ntx/tlf
 )
-LaTeX Font Info:    Try loading font information for U+ntxmia on input line 237
+LaTeX Font Info:    Try loading font information for U+ntxmia on input line 217
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/newtx/untxmia.fd
 File: untxmia.fd 2012/04/16 Fontinst v1.933 font definitions for U/ntxmia.
 )
-LaTeX Font Info:    Try loading font information for U+ntxsym on input line 237
+LaTeX Font Info:    Try loading font information for U+ntxsym on input line 217
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/newtx/untxsym.fd
 File: untxsym.fd 2015/03/20 Fontinst v1.933 font definitions for U/ntxsym.
 )
-LaTeX Font Info:    Try loading font information for U+ntxsyc on input line 237
+LaTeX Font Info:    Try loading font information for U+ntxsyc on input line 217
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/newtx/untxsyc.fd
@@ -905,10 +930,10 @@ File: untxsyc.fd 2012/04/12 Fontinst v1.933 font definitions for U/ntxsyc.
 File: images/new-adpm.pdf Graphic file (type pdf)
 
 <use images/new-adpm.pdf>
-Package pdftex.def Info: images/new-adpm.pdf used on input line 327.
+Package pdftex.def Info: images/new-adpm.pdf used on input line 312.
 (pdftex.def)             Requested size: 258.0pt x 148.63127pt.
 
-Overfull \hbox (6.0pt too wide) in paragraph at lines 327--331
+Overfull \hbox (6.0pt too wide) in paragraph at lines 312--316
 [][] 
  []
 
@@ -916,58 +941,62 @@ Overfull \hbox (6.0pt too wide) in paragraph at lines 327--331
 f>] <images/qerror.pdf, id=40, 578.16pt x 433.62pt>
 File: images/qerror.pdf Graphic file (type pdf)
  <use images/qerror.pdf>
-Package pdftex.def Info: images/qerror.pdf used on input line 483.
+Package pdftex.def Info: images/qerror.pdf used on input line 469.
 (pdftex.def)             Requested size: 258.0pt x 193.49953pt.
 
-Overfull \hbox (6.0pt too wide) in paragraph at lines 483--487
+Overfull \hbox (6.0pt too wide) in paragraph at lines 469--473
 [][] 
  []
 
-<images/ber1024_035.pdf, id=41, 578.16pt x 433.62pt>
-File: images/ber1024_035.pdf Graphic file (type pdf)
+<images/1024timebased.pdf, id=41, 578.16pt x 433.62pt>
+File: images/1024timebased.pdf Graphic file (type pdf)
 
-<use images/ber1024_035.pdf>
-Package pdftex.def Info: images/ber1024_035.pdf used on input line 491.
+<use images/1024timebased.pdf>
+Package pdftex.def Info: images/1024timebased.pdf used on input line 477.
 (pdftex.def)             Requested size: 258.0pt x 193.49953pt.
 
-Overfull \hbox (6.0pt too wide) in paragraph at lines 491--494
+Overfull \hbox (6.0pt too wide) in paragraph at lines 477--480
 [][] 
  []
 
-[3] <images/ber64_001.pdf, id=45, 578.16pt x 433.62pt>
-File: images/ber64_001.pdf Graphic file (type pdf)
+[3] <images/64timebased.pdf, id=45, 578.16pt x 433.62pt>
+File: images/64timebased.pdf Graphic file (type pdf)
 
-<use images/ber64_001.pdf>
-Package pdftex.def Info: images/ber64_001.pdf used on input line 528.
+<use images/64timebased.pdf>
+Package pdftex.def Info: images/64timebased.pdf used on input line 516.
 (pdftex.def)             Requested size: 258.0pt x 193.49953pt.
 
-Overfull \hbox (6.0pt too wide) in paragraph at lines 528--531
+Overfull \hbox (6.0pt too wide) in paragraph at lines 516--519
 [][] 
  []
+
+
+Underfull \vbox (badness 5431) has occurred while \output is active []
+
 
 (/home/wcsng9/Documents/limited-feedback-mimo-Mohit/paper/main.bbl [4 </home/wc
 sng9/Documents/limited-feedback-mimo-Mohit/paper/images/qerror.pdf> </home/wcsn
-g9/Documents/limited-feedback-mimo-Mohit/paper/images/ber1024_035.pdf
+g9/Documents/limited-feedback-mimo-Mohit/paper/images/1024timebased.pdf
 
 pdfTeX warning: pdflatex (file /home/wcsng9/Documents/limited-feedback-mimo-Moh
-it/paper/images/ber1024_035.pdf): PDF inclusion: multiple pdfs with page group 
+it/paper/images/1024timebased.pdf): PDF inclusion: multiple pdfs with page grou
+p included in a single page
+> </home/wcsng9/Documents/limited-feedback-mimo-Mohit/paper/images/64timebased.
+pdf
+
+pdfTeX warning: pdflatex (file /home/wcsng9/Documents/limited-feedback-mimo-Moh
+it/paper/images/64timebased.pdf): PDF inclusion: multiple pdfs with page group 
 included in a single page
-> </home/wcsng9/Documents/limited-feedback-mimo-Mohit/paper/images/ber64_001.pd
-f
-
-pdfTeX warning: pdflatex (file /home/wcsng9/Documents/limited-feedback-mimo-Moh
-it/paper/images/ber64_001.pdf): PDF inclusion: multiple pdfs with page group in
-cluded in a single page
 >]) 
 AED: lastpage setting LastPage
 [5
 
 ] (/home/wcsng9/Documents/limited-feedback-mimo-Mohit/paper/main.aux) ) 
 Here is how much of TeX's memory you used:
- 17388 strings out of 493029
- 325151 string characters out of 6136234
- 379126 words of memory out of 5000000
- 20505 multiletter control sequences out of 15000+600000
+ 17861 strings out of 493029
+ 333837 string characters out of 6136234
+ 390324 words of memory out of 5000000
+ 20971 multiletter control sequences out of 15000+600000
  88784 words of font info for 198 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,12n,92p,1077b,380s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -997,9 +1026,9 @@ ype1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
 utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
 Output written on /home/wcsng9/Documents/limited-feedback-mimo-Mohit/paper/main
-.pdf (5 pages, 443475 bytes).
+.pdf (5 pages, 446609 bytes).
 PDF statistics:
- 200 PDF objects out of 1000 (max. 8388607)
+ 202 PDF objects out of 1000 (max. 8388607)
  153 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  33 words of extra memory for PDF output out of 10000 (max. 10000000)

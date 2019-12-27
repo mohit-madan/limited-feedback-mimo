@@ -26,34 +26,33 @@ D.~J. Love, R.~W. Heath, V.~K. Lau, D.~Gesbert, B.~D. Rao, and M.~Andrews,
   ``{An overview of limited feedback in wireless communication systems},''
   \emph{{IEEE} J. Sel. Areas Commun.}, vol.~26, no.~8, 2008.
 
-\bibitem{mondal2007quantization}
-B.~Mondal, S.~Dutta, and R.~W. Heath, ``Quantization on the grassmann
-  manifold,'' \emph{{IEEE} Trans. Signal Process.}, vol.~55, no.~8, pp.
-  4208--4216, 2007.
-
-\bibitem{schwarz2013adaptive}
-S.~Schwarz, R.~W. Heath, and M.~Rupp, ``Adaptive quantization on a
-  grassmann-manifold for limited feedback beamforming systems,'' \emph{{IEEE}
-  Trans. Signal Process.}, vol.~61, no.~18, pp. 4450--4462, 2013.
-
-\bibitem{5946308}
-T.~Inoue and R.~W. Heath, ``{Grassmannian predictive coding for limited
-  feedback multiuser MIMO systems},'' in \emph{ICASSP}, 2011, pp. 3076--3079.
-
-\bibitem{6891198}
-S.~Schwarz and M.~Rupp, ``{Predictive Quantization on Stiefel Manifold},''
-  \emph{{IEEE} Signal Process. Lett.}, vol.~22, no.~2, pp. 234--238, Feb 2015.
-
 \bibitem{Gupt1905:Predictive}
 A.~Gupta, K.~Appaiah, and R.~Vaze, ``Predictive quantization and joint
   {Time-Frequency} interpolation technique for {MIMO-OFDM} precoding,'' in
   \emph{IEEE ICC'19 - WC Symposium}, Shanghai, P.R. China, May 2019.
 
-\bibitem{pitaval2013codebooks}
-R.-A. Pitaval, A.~Srinivasan, and O.~Tirkkonen, ``{Codebooks in flag manifolds
-  for limited feedback MIMO precoding},'' in \emph{9th ITG Conference on
-  Systems, Communication and Coding}.\hskip 1em plus 0.5em minus 0.4em\relax
-  VDE, 2013, pp. 1--5.
+\bibitem{6891198}
+S.~Schwarz and M.~Rupp, ``{Predictive Quantization on Stiefel Manifold},''
+  \emph{{IEEE} Signal Process. Lett.}, vol.~22, no.~2, pp. 234--238, Feb 2015.
+
+\bibitem{7370793}
+Y.~Jeon, H.~Kim, Y.~Cho, and G.~Im, ``{Time-Domain Differential Feedback for
+  Massive MISO-OFDM Systems in Correlated Channels},'' \emph{{IEEE} Trans.
+  Commun.}, vol.~64, no.~2, pp. 630--642, Feb 2016.
+
+\bibitem{sacristan2010differential}
+D.~Sacrist{\'a}n-Murga and A.~Pascual-Iserte, ``{Differential feedback of MIMO
+  channel Gram matrices based on geodesic curves},'' \emph{{IEEE} Trans.
+  Wireless Commun.}, vol.~9, no.~12, pp. 3714--3727, 2010.
+
+\bibitem{5946308}
+T.~Inoue and R.~W. Heath, ``{Grassmannian predictive coding for limited
+  feedback multiuser MIMO systems},'' in \emph{ICASSP}, 2011, pp. 3076--3079.
+
+\bibitem{6545375}
+S.~Schwarz, R.~W. Heath, and M.~Rupp, ``{Adaptive Quantization on a
+  Grassmann-Manifold for Limited Feedback Beamforming Systems},'' \emph{{IEEE}
+  Trans. Signal Process.}, vol.~61, no.~18, pp. 4450--4462, Sept 2013.
 
 \bibitem{4114278}
 J.~C. {Roh} and B.~D. {Rao}, ``Efficient feedback methods for mimo channels
@@ -66,11 +65,31 @@ J.~C. {Roh} and B.~D. {Rao}, ``Efficient feedback methods for mimo channels
   International Symposium on Wireless Pervasive Computing}, May 2008, pp.
   97--100.
 
-\bibitem{porat2013improved}
-R.~Porat, E.~Ojard, N.~Jindal, M.~Fischer, and V.~Erceg, ``Improved mu-mimo
-  performance for future 802.11 systems using differential feedback,'' in
-  \emph{2013 Information Theory and applications workshop (ITA)}.\hskip 1em
-  plus 0.5em minus 0.4em\relax IEEE, 2013, pp. 1--5.
+\bibitem{5671092}
+Y.~Chou and T.~Sang, ``{Efficient interpolation of precoding matrices in
+  MIMO-OFDM systems},'' in \emph{SPAWC, 2010}, June 2010, pp. 1--4.
+
+\bibitem{khaled2005quantized}
+N.~Khaled, B.~Mondal, R.~W. Heath, G.~Leus, and F.~Petr{\'e}, ``{Quantized
+  multi-mode precoding for spatial multiplexing MIMO-OFDM systems},'' in
+  \emph{IEEE 62nd Vehic. Technol. Conf.}, vol.~2.\hskip 1em plus 0.5em minus
+  0.4em\relax IEEE, 2005, pp. 867--871.
+
+\bibitem{mondal2007quantization}
+B.~Mondal, S.~Dutta, and R.~W. Heath, ``Quantization on the grassmann
+  manifold,'' \emph{{IEEE} Trans. Signal Process.}, vol.~55, no.~8, pp.
+  4208--4216, 2007.
+
+\bibitem{schwarz2013adaptive}
+S.~Schwarz, R.~W. Heath, and M.~Rupp, ``Adaptive quantization on a
+  grassmann-manifold for limited feedback beamforming systems,'' \emph{{IEEE}
+  Trans. Signal Process.}, vol.~61, no.~18, pp. 4450--4462, 2013.
+
+\bibitem{pitaval2013codebooks}
+R.-A. Pitaval, A.~Srinivasan, and O.~Tirkkonen, ``{Codebooks in flag manifolds
+  for limited feedback MIMO precoding},'' in \emph{9th ITG Conference on
+  Systems, Communication and Coding}.\hskip 1em plus 0.5em minus 0.4em\relax
+  VDE, 2013, pp. 1--5.
 
 \bibitem{lou2013comparison}
 H.~Lou, M.~Ghosh, P.~Xia, and R.~Olesen, ``{A comparison of implicit and
