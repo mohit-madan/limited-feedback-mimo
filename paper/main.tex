@@ -162,25 +162,26 @@
 Multiple-input multiple-output (MIMO) based wireless communication
 systems that use orthogonal frequency division multiplexing (OFDM)
 have been adapted in many modern wireless systems owing to their
-flexibility and ability to use the wideband channels effectively. One
-key requirement to utilize such channels effectively is for the
-transmitter to possess channel state information (CSI), since that
-permits channel parallelization for low-complexity decoders as well as
-the use of capacity achieving transmission
+flexibility and ability to use the wideband channels effectively. To
+utilize such channels effectively, the transmitter needs to have the
+channel state information (CSI), since this permits channel
+parallelization for low-complexity decoders as well as the use of
+capacity achieving transmission
 strategies~\cite{love2008overview}. This primarily translates to the
 generation of unitary precoding matrices at the transmitter. However,
-feeding back CSI from the receiver to the transmitter requires large
-feedback overhead, since a precoder needs to be fed back for each OFDM
-subcarrier within each coherence interval. Typical past approaches
-have used manifold based approaches that exploit temporal and
-frequency correlation to reduce feedback overheads. Wireless standards
-have largely employed parametric quantization that uses Givens
-rotations based quantization~\cite{lou2013comparison,5671092}, though these do
-not involve any refinement of the estimates using channel
-correlations. In this paper, we propose a joint time-frequency
-interpolation approach that builds upon the parametric quantization
-techniques used by standards that manages to outperform typical
-manifold based quantization techniques.
+feeding back CSI from the receiver to the transmitter needs large
+feedback overheads, since a precoder needs to be fed back for each
+OFDM subcarrier within each coherence interval. Past approaches have
+typically used manifold based quantization techniques that exploit
+temporal and frequency correlation to reduce feedback
+overheads. Wireless standards have largely employed parametric
+quantization that uses Givens rotations based
+quantization~\cite{lou2013comparison,5671092}, though these do not
+involve any refinement of the estimates using channel correlations. In
+this paper, we propose a joint time-frequency interpolation approach
+that builds upon the parametric quantization techniques used by
+standards that manages to outperform typical manifold based
+quantization techniques.
 
 Most approaches for effective quantization and feedback of precoders
 for MIMO-OFDM systems involve codebook design over the Grassmann
