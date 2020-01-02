@@ -73,7 +73,6 @@ def main():
     net_fb_indices=np.sort(np.append(fb_indices,prev_indices))
     unsorted_net_fb_indices=np.append(fb_indices,prev_indices)
 
-    total_fb_indices=[]
     total_fb_indices=np.array([unsorted_net_fb_indices for i in range(number_simulations//2)]).reshape([-1])
     temp=np.concatenate((np.zeros(np.size(fb_indices)),np.ones(np.size(prev_indices))))
     points=np.array([temp+2*i for i in range(number_simulations//2)]).reshape([-1]).astype(int)
@@ -138,7 +137,9 @@ def main():
 
             allU_vec_copy[simulation_index]=gridz[1]
             allU[simulation_index]=givens_frame_to_unitary(allU_vec_copy[simulation_index],Nt,Nr)
-            
+            pdb.set_trace()            
+            onlyt_allU = griddata(points)
+
             for indice_index in range(fb_indices.shape[0]-1):    
                 curr_freq_index=fb_indices[indice_index]
                 next_freq_index=fb_indices[indice_index+1]
@@ -152,6 +153,12 @@ def main():
             
             if(simulation_index>5):
                 # pdb.set_trace()
+                ot_cap=[np.mean(leakage_analysis(tH_allH[simulation_index],tH_allU[simulation_index],\
+                    onlyt_allU[simulation_index],num_subcarriers,\
+                    waterfilling(tHS[simulation_index].flatten(),10**(0.1*p_dB)*num_subcarriers),\
+                    waterfilling(interpS[simulation_index].flatten(),10**(0.1*p_dB)*num_subcarriers),\
+                    Nt,Nr,ret_abs=True)) for p_dB in 5*np.arange(num_Cappar)]
+
                 max_cap=[np.mean(leakage_analysis(tH_allH[simulation_index],tH_allU[simulation_index],\
                     tH_allU[simulation_index],num_subcarriers,\
                     waterfilling(tHS[simulation_index].flatten(),10**(0.1*p_dB)*num_subcarriers),\
@@ -163,27 +170,39 @@ def main():
                     waterfilling(interpS[simulation_index].flatten(),10**(0.1*p_dB)*num_subcarriers),\
                     Nt,Nr,ret_abs=True)) for p_dB in 5*np.arange(num_Cappar)]
 
+                avg_otcap=(count*avg_otcap+np.array(ot_cap))/(count+1)
                 avg_hpcap=(count*avg_hpcap+np.array(hp_cap))/(count+1)
                 avg_maxcap=(count*avg_maxcap+np.array(max_cap))/(count+1)
 
+                print("Avg. Onlyt Capacity " +str(repr(avg_otcap)))
                 print("Avg. Max Capacity "+str(repr(avg_maxcap)))
                 print("Avg. Freq Hopping Capacity "+str(repr(avg_hpcap)))
+                
                 hp_neterr=np.mean([stiefCD(tH_allU[simulation_index][i],allU[simulation_index][i])\
                     for i in range(num_subcarriers)])
                 hp_Neterr[simulation_index]=(chan_index*hp_Qerr[simulation_index]+hp_qterr)/(chan_index+1)
                 
+                ot_neterr=np.mean([stiefCD(tH_allU[simulation_index][i],onlyt_allU[simulation_index][i])\
+                    for i in range(num_subcarriers)])
+                ot_Neterr[simulation_index]=(chan_index*ot_Qerr[simulation_index]+ot_qterr)/(chan_index+1)
+                
                 #----------------------------------------------------------------------
                 #BER tests
                 if(sil_BER==0):
-                    # BER_ideal_QPSK=np.zeros(Eb_N0_dB.shape[0])
+                    BER_onlyt_QPSK=np.zeros(Eb_N0_dB.shape[0])
+                    BER_ideal_QPSK=np.zeros(Eb_N0_dB.shape[0])
                     BER_freqhop_QPSK=np.zeros(Eb_N0_dB.shape[0])
 
                     for i in range(Eb_N0_dB.shape[0]):
-                        # BER_ideal_QPSK[i]=calculate_BER_performance_QPSK(np.array(tH_allH[simulation_index]),tH_allU[simulation_index],Eb_N0_dB[i])
+                        BER_onlyt_QPSK[i]=calculate_BER_performance_QPSK(np.array(tH_allH[simulation_index]),onlyt_allU[simulation_index],Eb_N0_dB[i])
+                        BER_ideal_QPSK[i]=calculate_BER_performance_QPSK(np.array(tH_allH[simulation_index]),tH_allU[simulation_index],Eb_N0_dB[i])
                         BER_freqhop_QPSK[i]=calculate_BER_performance_QPSK(np.array(tH_allH[simulation_index]),allU[simulation_index],Eb_N0_dB[i])
                         
-                    # idealBER_QPSK=(count*idealBER_QPSK+BER_ideal_QPSK)/(count+1)
+                    idealBER_QPSK=(count*idealBER_QPSK+BER_ideal_QPSK)/(count+1)
                     hpBER_QPSK=(count*hpBER_QPSK+BER_freqhop_QPSK)/(count+1)
+                    otBER_QPSK=(count*otBER_QPSK+BER_onlyt_QPSK)/(count+1)
+                    
+                    print("ot_pred = np."+str(repr(otBER_QPSK)))
                     # print("ideal_ber = np."+str(repr(idealBER_QPSK)))
                     print("hp_pred = np."+str(repr(hpBER_QPSK)))
                 
