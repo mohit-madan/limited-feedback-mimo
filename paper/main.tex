@@ -159,76 +159,60 @@
 \label{intro}
 % no need to write the numbers in your introduction. You start by explaining what is happening currently and then propose your solution.
 
+% Multiple-input multiple-output (MIMO) based wireless communication
+% systems that use orthogonal frequency division multiplexing (OFDM)
+% have been adapted in many modern wireless systems owing to their
+% flexibility and ability to use the wideband channels effectively. One
+% key requirement to utilize such channels effectively is for the
+% transmitter to possess channel state information (CSI), since that
+% permits channel parallelization for low-complexity decoders as well as
+% the use of capacity achieving transmission
+% strategies~\cite{love2008overview}. This primarily translates to the
+% generation of unitary precoding matrices at the transmitter. However,
+% feeding back CSI from the receiver to the transmitter requires large
+% feedback overhead, since a precoder needs to be fed back for each OFDM
+% subcarrier within each coherence interval. Typical past approaches
+% have used manifold based approaches that exploit temporal and
+% frequency correlation to reduce feedback overheads. Wireless standards
+% have largely employed parametric quantization that uses Givens
+% rotations based quantization~\cite{lou2013comparison,5671092}, though these do
+% not involve any refinement of the estimates using channel
+% correlations. In this paper, we propose a joint time-frequency
+% interpolation approach that builds upon the parametric quantization
+% techniques used by standards that manages to outperform typical
+% manifold based quantization techniques.
+
 Multiple-input multiple-output (MIMO) based wireless communication
 systems that use orthogonal frequency division multiplexing (OFDM)
-have been adapted in many modern wireless systems owing to their
-flexibility and ability to use the wideband channels effectively. To
-utilize such channels effectively, the transmitter needs to have the
-channel state information (CSI), since this permits channel
-parallelization for low-complexity decoders as well as the use of
-capacity achieving transmission
-strategies~\cite{love2008overview}. This primarily translates to the
-generation of unitary precoding matrices at the transmitter. However,
-feeding back CSI from the receiver to the transmitter needs large
-feedback overheads, since a precoder needs to be fed back for each
-OFDM subcarrier within each coherence interval. Past approaches have
-typically used manifold based quantization techniques that exploit
-temporal and frequency correlation to reduce feedback
-overheads. Wireless standards have largely employed parametric
-quantization that uses Givens rotations based
-quantization~\cite{lou2013comparison,5671092}, though these do not
-involve any refinement of the estimates using channel correlations. In
-this paper, we propose a joint time-frequency interpolation approach
-that builds upon the parametric quantization techniques used by
-standards that manages to outperform typical manifold based
-quantization techniques.
+have been adapted in many modern wireless systems owing to increased
+data rate and channel capacity. One key requirement to achieve the channel capacity is to leverage spatial multiplexing gains obtained by precoding transmissions by Singular Value Decomposition (SVD) of the MIMO channel matrix ~\cite{love2008overview}.
+However, this requires the receiver to feed back the unitary matrix obtained by SVD, to the transmitter.
+Given that the channel matrix varies with both frequency and time, this feedback has to be ideally done for each subcarrier and time instance, leading to massive feedback overhead. To reduce the feedback overhead, past work taps in the inherent temporal and frequency correlations in SVD precoders, in order to perform effective quantization with just a few bits by utilizing predictive quantization \cite{Gupt1905:Predictive,6891198,7370793,sacristan2010differential,5946308,6545375,4114278,4556174}, and reducing number of fed back subcarriers by utilizing interpolation algorithms \cite{Gupt1905:Predictive,5671092,khaled2005quantized}.
 
-Most approaches for effective quantization and feedback of precoders
-for MIMO-OFDM systems involve codebook design over the Grassmann
-manifold~\cite{mondal2007quantization,schwarz2013adaptive,5946308},
-the Stiefel manifold \cite{6891198,Gupt1905:Predictive} and the Flag
-manifold~\cite{pitaval2013codebooks}, wherein the manifold structure
-of the precoders is used to obtain tangents for predictive
-quantization and interpolation across time and frequency.  An
-alternate approach is to parametrize the precoding matrices using
-scalar parameters. The space of unitary matrices can be parameterized
-into independent scalar parameters that correspond to Givens rotations
-and Householder transformations of the unitary precoding matrices
-\cite{4114278,4556174}.
 
-While the manifold based methods have been shown to be very effective
-for precoder feedback, they involve operations over higher dimensional
-manifolds. In particular, optimization and interpolation is
-complicated, especially for manifolds where geodesic paths for
-interpolation may be difficult to obtain, particularly 
-for joint time-frequency predictive coding.  In
-addition to being analytically more tractable, the scalar
-parametrization methods have also been implemented in 802.11ac
-standards \cite{lou2013comparison}. Past work in utilizing scalar
+An underlying challenge in framing the predictive quantization and interpolation algorithms has been the high dimensional unitary structure of the SVD precoders. A large body of works utilizes the manifold geometry endowed by the unitary structure to frame such algorithms directly on the non-linear manifold ~\cite{mondal2007quantization,schwarz2013adaptive,5946308,6891198,Gupt1905:Predictive,pitaval2013codebooks}. On the other hand, there are numerous works which utilize scalar parametrization of the unitary precoders, given by Givens rotations and Householder transformations \cite{4114278,4556174,lou2013comparison}. While the manifold based methods offer a clean solution and have been shown to be very effective in reducing the feedback overhead, they are analytically terse and
+involve operations over higher dimensional manifolds. The scalar parametrization algorithms enable usage of the traditional signal processing algorithms over scalars and vectors, and hence are analytically simpler.
+Such methods have also been implemented in 802.11ac standards
+\cite{lou2013comparison}. We are not aware of performance comparisons
+between these two bodies of works, thereby making it difficult to
+quantify from past work whether performance gains/losses can accrue by operating over scalar parametrization instead of manifolds. In this paper, we propose a joint time-frequency interpolation approach that builds upon the existing parametric quantization techniques. One of the key results of our work is that the proposed method actually outperforms an equivalent manifold based technique \cite{Gupt1905:Predictive}, at the same time being analytically more tractable.
+
+Past work in utilizing scalar
 parametrization for precoder feedback have utilized adaptive delta
 modulation effectively track precoding matrices both in the
 time~\cite{4114278} and frequency domains~\cite{4556174}, albeit
-separately. In this paper, we propose a method for exploiting the
-joint time-frequency correlation of the precoder's scalar parameters
-on the transmitter using CSI feedback.  Typical approaches that feed
-back scalar precoder parameters problem do not exploit the joint
-time-frequency correlation to enhance the precoder estimate at the
-transmitter. We show that exploiting correlations jointly not only
-reduces the feedback requirement, but also enhances the precoder
-reconstruction accuracy significantly.
+separately. Natural wireless channels not only have temporal and
+frequency correlations, but also possess joint time-frequency
+correlations. Prior work \cite{Gupt1905:Predictive} has framed an equivalent manifold based approach to utilize joint time-frequency correlations for predictive quantization and interpolation, and showed performance benefits compared to utilizing time-frequency correlations independently \cite{6891198,khaled2005quantized}.
+Intuitively, these performance arise since utilizing joint
+correlations not only exploits the existing independent correlations,
+but also the joint correlations in time-frequency arising from the underlying channels.
 
-Prior work that utilizing manifolds based quantization
-\cite{Gupt1905:Predictive,pitaval2013codebooks,6891198} and scalar
-parametrization \cite{4114278,4556174} compare their performance with
-other related quantization methods, but do not present a comparison to
-highlight the performance benefits of the chosen method.  In addition
-to a novel joint time-frequency feedback scheme, we also compare the
-results of our parametrization based adaptive scheme with an
-equivalent manifold based scheme, and illustrate the performance
-benefits entailed by utilizing the scalar parametrization method.
-Simulations reveal that the proposed method outperforms manifold based
-approaches with a much lower implementation complexity and fewer bits
-for quantization.
+Hence, our key contributions are two-fold.  We first propose a method for exploiting the
+joint time-frequency correlation of the precoder's scalar parameters
+on the transmitter using the quantized feedback.
+Secondly, instead of comparing similar algorithms in the chosen body of work (viz. scalar parametrization), as has been the case with past work, we instead compare our proposed algorithm with equivalent manifold based approaches, and show signficant performance benefits over manifold approaches.
+
 
 % The rest of this paper is organized as follows: Section~\ref{section2}
 % describes the system model and the precoder feedback and interpolation
@@ -274,7 +258,7 @@ as discussed in subsequent sections.
 The degrees of freedom in the $\tilde{\bV}_{i,t}$ matrices is smaller
 than the number of real entries in the matrix because of the
 geometrical structure between the columns of the
-matrix~\cite{4114278}.  Therefore $\tilde{\bV}_{i,t}$ could be paramaterized 
+matrix~\cite{4114278}.  Therefore $\tilde{\bV}_{i,t}$ could be paramaterized
 using fewer parameters.
 The orthonormal matrix $\tilde{\bV}_{i,t}$ with
 $N_T$ rows and $N_R$ columns can be decomposed as
@@ -321,7 +305,7 @@ as~\cite{4114278}
 2l(\sin\theta_l)^{2l-1}\cos\theta_l, \mbox{  }\theta_l \in \left[0, \frac{\pi}{2}\right) \mbox{, } l = 1,2,\ldots,N_T -1
 \end{equation}
 The given distribution of $\theta_l$ is used for non-uniform quantization
-of $\bf{\Theta}$ during their initialization to reduce the quantization error.  
+of $\bf{\Theta}$ during their initialization to reduce the quantization error.
 In addition, $\phi_k$ and $\theta_l$ are statistically independent,
 making this representation useful for tracking them separately across
 time, as discussed below. The total number of
