@@ -448,9 +448,9 @@ parameter. Since the bit budget is small, if the channel varies
 sufficiently slowly, either the $\theta_l$ or the $\phi_i$ parameters
 are fed back alternately, while retaining the unsent parameters as
 being to their previous values, as shown in
-Fig.~\ref{fig:adpm-fig}. 
+Fig.~\ref{fig:adpm-fig}.
 % Here, $\bf{\Theta}$ is the collection of all
-% $\theta_l$s and $\bf{\Phi}$ is the collection of all $\phi_i$s. 
+% $\theta_l$s and $\bf{\Phi}$ is the collection of all $\phi_i$s.
 This brings down the bit budget to an average of 5 bits(the length of $\bf{\Theta}$)
 and 7 bits (the length of $\bf{\Phi}$) over alternate feedback instances,
 thereby resulting in an average feedback budget of 6 bits.
@@ -461,30 +461,30 @@ Equation~\ref{delta_eqn}. The value of $M$ was chosen to be $1.4$, and
 can be adjusted appropriately to track the temporal evolution of
 parameters for different Doppler frequencies.
 
-Fig.~\ref{fig:error_decay} depicts the rate at which error diminishes
+Fig.~\ref{fig:error_decay} shows the rate at which error diminishes
 with time for the proposed approach and direct quantization on the
-Stiefel manifold using codebooks described
-in~\cite{Gupt1905:Predictive}. We see that, since the adaptation of
-independent scalar parameters causes the error to decay rapidly, the
-error is lower and the convergence is faster, even though the starting
-error is higher in the case of the scalar quantization approach. The
-independence of the parameters allows the convergence speed to be very
-fast. The Stiefel manifold based approach uses nested codebooks that
-may be suboptimal when compared to the parametrization using angles.
+Stiefel manifold as described in~\cite{Gupt1905:Predictive}. Since the
+adaptation of independent scalar parameters causes the error to decay
+rapidly, the error is lower and the convergence is faster, even though
+the starting error is higher in the case of the scalar quantization
+approach. The independence of the parameters enables fast
+convergence. The Stiefel manifold based approach uses nested codebooks
+that may be suboptimal when compared to the parametrization using
+angles.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.37\textwidth]{images/qerror.pdf}
+\includegraphics[width=0.33\textwidth]{images/qerror.pdf}
 \caption{\label{fig:error_decay}Comparison of the $4\times 2$
-  precoder quantization error vs. time instant for the proposed
-  approach (labelled ``Cost207\_RA Scalar'') and direct quantization
-  on the Stiefel manifold (labelled ``Cost207\_RA Manifold'') for the COST207 channel profile.}
+  precoder quantization error vs. time for the proposed
+  approach (labelled ``Cost207\_RA Scalar'') and direct Stiefel
+  manifold quantization (``Cost207\_RA Manifold'') for the COST207 channel.}
 \end{center}
 \end{figure}
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.37\textwidth]{images/1024final_withtime}
+\includegraphics[width=0.35\textwidth]{images/1024final_withtime}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 1024
   subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
   for $f_dT_s = 3.41\times 10^{-6}$, corresponding to a velocity of 37.8 km/h.}
@@ -508,8 +508,7 @@ interpolation and prediction yields good performance. Moreover, this
 method outperforms the Stiefel manifold based approach due to the fact
 that the adaptation is much more accurate for scalar parameters than
 the tangent space based adaptation used over the Stiefel manifold. The
-proposed approach outperforms the manifold based approach
-significantly, and performance is close to the optimal precoder when speeds reduce.
+obtained performance is close to the optimal precoder when speeds reduce.
 
 Fig.~\ref{fig:ber_veh} shows a similar comparison for a similar
 situation with a higher speed. The faster variation of the channel
@@ -526,7 +525,7 @@ based interpolation using manifold has the poorest performance since it does
 not utilize the joint time and frequency correlations.
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.37\textwidth]{images/64final_withtime}
+\includegraphics[width=0.35\textwidth]{images/64final_withtime}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 64
   subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
   for $f_dT_s = 1.56\times 10^{-5}$, corresponding to a velocity of 172.8 km/h.}
@@ -560,18 +559,18 @@ not utilize the joint time and frequency correlations.
 \section{Conclusion}
 \label{section4}
 We have presented a predictive quantization based precoder
-reconstruction of a MIMO-OFDM system that employs scalar quantization
+reconstruction for MIMO-OFDM systems that employs scalar quantization
 based feedback of precoder parameters. By quantizing and adapting the
 Givens rotation and Householder transformation parameters of the
-precoder, the receiver can send minimal feedback to the
-transmitter and yet enable effective precoder adaptation. Exploiting
-the temporal and frequency correlations jointly enhances precoder
-accuracy significantly. Simulations reveal that the proposed approach
-provides faster convergence and smaller errors in the precoder when
-compared to approaches that involve direct quantization on manifold
-tangent spaces. Future work would involve tuning the adaptation rate
-of the scalar parameters and further reductions of quantization
-redundancy to reduce the feedback rates.
+precoder, the receiver feedback to the transmitter can be minimized
+while retaining effective precoder adaptation. Exploiting the temporal
+and frequency correlations jointly enhances performance
+significantly. Simulations reveal that the proposed approach provides
+faster convergence and smaller errors when compared to
+approaches that involve direct quantization on manifold tangent
+spaces. Future work would involve tuning the adaptation rate of the
+scalar parameters and further reduction of quantization redundancy to
+reduce the feedback rates.
 
 
 
