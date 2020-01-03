@@ -1,5 +1,5 @@
 #all: main.pdf
-all: main.pdf main-onecolumn.pdf
+all: main.pdf main-onecolumn.pdf cover_letter.pdf
 
 MAINFILES := main.tex
 
@@ -19,6 +19,9 @@ main-onecolumn.pdf: main.bib $(MAINFILES) $(IMAGEPDFS)
 	$(RM) main-onecolumn.tex
 
 
+cover_letter.pdf: cover_letter.tex
+	pdflatex cover_letter.tex
+
 .PHONY: clean
 clean:
 	$(RM) $(IMAGEPDFS) main.aux \
@@ -32,4 +35,9 @@ main-onecolumn.bbl \
 main-onecolumn.blg \
 main-onecolumn.log \
 main-onecolumn.out \
-main-onecolumn.pdf
+main-onecolumn.pdf \
+cover_letter.aux \
+cover_letter.log \
+cover_letter.out \
+cover_letter.pdf
+
