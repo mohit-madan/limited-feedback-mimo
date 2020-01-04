@@ -508,7 +508,12 @@ interpolation and prediction yields good performance. Moreover, this
 method outperforms the Stiefel manifold based approach due to the fact
 that the adaptation is much more accurate for scalar parameters than
 the tangent space based adaptation used over the Stiefel manifold. The
-obtained performance is close to the optimal precoder when speeds reduce.
+obtained performance is close to the optimal precoder when speeds reduce. 
+Also, similar to results showed in \cite{Gupt1905:Predictive}, the joint time-frequency 
+method outperforms the independent time-frequency method, illustrating the benefits of exploiting 
+joint correlations versus just the independent correlations.
+
+ 
 
 Fig.~\ref{fig:ber_veh} shows a similar comparison for a similar
 situation with a higher speed. The faster variation of the channel
@@ -520,9 +525,7 @@ accuracy. Even in this case, we observe that the scalar
 parameter-based approach outperforms manifold based quantization by
 about 1 dB for higher SNRs. Naturally, the rate of channel variation
 is quite fast, which limits the efficacy of the proposed method in
-tracking the channel parameters. In both the situations, the temporal-only
-based interpolation using manifold has the poorest performance since it does
-not utilize the joint time and frequency correlations.
+tracking the channel parameters.
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.35\textwidth]{images/64final_withtime}
@@ -573,7 +576,7 @@ scalar parameters and further reduction of quantization redundancy to
 reduce the feedback rates.
 
 
-
+\vspace{-10pt}
 % \section{Acknowledgment}
 
 % % \label {section6}
