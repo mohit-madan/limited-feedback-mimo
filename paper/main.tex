@@ -317,7 +317,7 @@ is a vector of length $N_{R}(2N_{T} - N_{R}-1)/2$, while
 $\bf{\Theta_{i,t}}$ has length $N_{R}(2N_{T} - N_{R}+1)/2$.~\cite{4114278}
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.4\textwidth]{images/new-adpm.pdf}
+\includegraphics[width=0.8\columnwidth]{images/new-adpm.pdf}
 \caption{\label{fig:adpm-fig}Subcarriers that need to be
   quantized. We see that the subcarrier indicated by
   red arrows has a precoder whose parameters are determined jointly
@@ -474,7 +474,7 @@ angles.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.33\textwidth]{images/qerror.pdf}
+\includegraphics[width=0.66\columnwidth]{images/qerror.pdf}
 \caption{\label{fig:error_decay}Comparison of the $4\times 2$
   precoder quantization error vs. time for the proposed
   approach (labelled ``Cost207\_RA Scalar'') and direct Stiefel
@@ -484,7 +484,7 @@ angles.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.35\textwidth]{images/1024final_withtime}
+\includegraphics[width=0.78\columnwidth]{images/1024final_withtime}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 1024
   subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
   for $f_dT_s = 3.41\times 10^{-6}$, corresponding to a velocity of 37.8 km/h.}
@@ -499,36 +499,33 @@ $4\times 2$ 1024 subcarrier system a slow fading
 correspond to temporal prediction using the manifold as well as scalar
 parameter based approaches without utilizing the joint time-frequency
 correlations. We can observe that the performance of the proposed
-method tracks the performance with exact precoders over a wide range
-of SNRs. This can be attributed to the fact that even the 1-bit update
-to the scalar parameters is able to approximate the precoder very
-accurately. Since the channel variation across subcarriers is gradual,
-owing to the limited delay spread of the channel profile, linear
-interpolation and prediction yields good performance. Moreover, this
-method outperforms the Stiefel manifold based approach due to the fact
-that the adaptation is much more accurate for scalar parameters than
-the tangent space based adaptation used over the Stiefel manifold. The
-obtained performance is close to the optimal precoder when speeds reduce. 
-Also, similar to results showed in \cite{Gupt1905:Predictive}, the joint time-frequency 
-method outperforms the independent time-frequency method, illustrating the benefits of exploiting 
-joint correlations versus just the independent correlations.
+method is close to the performance with exact precoders over a wide
+range of SNRs. This can be attributed to the fact that even the 1-bit
+update to the scalar parameters is able to approximate the precoder
+very accurately. Since the channel variation across subcarriers is
+gradual, owing to the limited delay spread of the channel profile,
+linear interpolation and prediction yields good performance. Moreover,
+this method outperforms the Stiefel manifold based approach since
+adaptation of scalar parameters is more accurate than tangent space
+based adaptation used over the Stiefel manifold. The obtained
+performance moves closer to the optimal precoder when speeds reduce.
+Also, similar to results shown in \cite{Gupt1905:Predictive}, the
+joint time-frequency method outperforms the independent time-frequency
+method, illustrating the benefits of exploiting joint correlations
+versus just the independent correlations.
 
- 
-
-Fig.~\ref{fig:ber_veh} shows a similar comparison for a similar
-situation with a higher speed. The faster variation of the channel
-taps with time necessitates the use of a smaller number of subcarriers
-(viz. 64 subcarriers). The smaller number of subcarriers implies that
-the predictive quantization and interpolation needs to be performed
-across a larger frequency range, thereby potentially reducing the
-accuracy. Even in this case, we observe that the scalar
-parameter-based approach outperforms manifold based quantization by
-about 1 dB for higher SNRs. Naturally, the rate of channel variation
-is quite fast, which limits the efficacy of the proposed method in
-tracking the channel parameters.
+Fig.~\ref{fig:ber_veh} shows a similar comparison for a situation with
+a higher speed. The faster variation of the channel taps with time
+necessitates the use of a smaller number of subcarriers (viz. 64
+subcarriers), thereby permitting more accurate tracking of precoders
+on a per subcarrier basis. As in the previous case, we observe that
+the scalar parameter-based approach outperforms manifold based
+quantization by about 1 dB for higher SNRs. Naturally, the rate of
+channel variation is quite fast, which limits the efficacy of the
+proposed method in tracking the channel parameters.
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.35\textwidth]{images/64final_withtime}
+\includegraphics[width=0.78\columnwidth]{images/64final_withtime}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 64
   subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
   for $f_dT_s = 1.56\times 10^{-5}$, corresponding to a velocity of 172.8 km/h.}
