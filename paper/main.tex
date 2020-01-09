@@ -378,11 +378,11 @@ one-time instance and only $\bf{\Phi}$ values for the next time
 instant in an alternating fashion (the untransmitted value is assumed
 to be the same as that at the previous instant). In this case, the
 average number of bits required to quantize a channel matrix will be
-$N_{T}(2N_{T} - N_{R})/2$. While tracking the $\phi_i$ parameters, is
-must be noted they may change abruptly between $-\pi$ and $\pi$ due to
-jumps of $2\pi$. This is avoided by unwrapping the phases to
-facilitate continuous tracking (i.e., jumps in phase of
-magnitude close to $2\pi$ have been eliminated).
+$(N_{R}(2N_{T} - 1) - N_R^2)/2$ (from~\cite{4114278}). While tracking
+the $\phi_i$ parameters, is must be noted they may change abruptly
+between $-\pi$ and $\pi$ due to jumps of $2\pi$. This is avoided by
+unwrapping the phases to facilitate continuous tracking (i.e., jumps
+in phase of magnitude close to $2\pi$ have been eliminated).
 \subsection{Joint Time Frequency Interpolation}
 \label{interp}
 After obtaining the $\beta$ values (using the single bit feedback) at
@@ -425,9 +425,9 @@ to a velocity of 37.2 km/h for $f_c = 1$ GHz) with 1024 subcarriers, and with
 $f_dT_s = 1.56 \times 10^{-5}$ (velocity of 172.8 km/h) with 64
 subcarriers. The sampling time period $T_s$ was $5\times10^{-8}$
 s. For both the situations, we considered $N_T=4$ transmit antennas
-and and $N_R=2$ receive antennas. Therefore, the total number of
-parameters that determine the precoder is
-$N_{R}(2N_{T} - N_{R}) = 12$, with five $\theta_l$s and and seven
+and and $N_R=2$ receive antennas. Therefore, using the approach
+outlined in~\cite{4114278}, the parameters that determine the precoder is
+$N_{R}(2N_{T} - 1) - N_R^2 = 10$, with five $\theta_l$s and and seven
 $\phi_i$s. We assume that the spacing between fed back subcarrier
 indices $p$ to be $33$ and $9$ for the slow and fast channel profiles
 respectively (i.e. for the slower channels with 1024 subcarriers, the
@@ -451,9 +451,10 @@ being to their previous values, as shown in
 Fig.~\ref{fig:adpm-fig}.
 % Here, $\bf{\Theta}$ is the collection of all
 % $\theta_l$s and $\bf{\Phi}$ is the collection of all $\phi_i$s.
-This brings down the bit budget to an average of 5 bits(the length of $\bf{\Theta}$)
-and 7 bits (the length of $\bf{\Phi}$) over alternate feedback instances,
-thereby resulting in an average feedback budget of 6 bits.
+This brings down the bit budget to an average of 5 bits (the length of
+$\bf{\Theta}$) and 5 bits (the number of non-zero elements in
+$\bf{\Phi}$) over alternate feedback instances, thereby resulting in
+an average feedback budget of 5 bits.
 
 To enable adaptive tracking of the channel parameters, we start with
 an initialization of the step size for each parameter, as discussed in
