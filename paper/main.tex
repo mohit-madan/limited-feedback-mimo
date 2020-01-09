@@ -484,7 +484,7 @@ angles.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.78\columnwidth]{images/1024final_withtime}
+\includegraphics[width=0.72\columnwidth]{images/1024final_withtime}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 1024
   subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
   for $f_dT_s = 3.41\times 10^{-6}$, corresponding to a velocity of 37.8 km/h.}
@@ -520,12 +520,14 @@ necessitates the use of a smaller number of subcarriers (viz. 64
 subcarriers), thereby permitting more accurate tracking of precoders
 on a per subcarrier basis. As in the previous case, we observe that
 the scalar parameter-based approach outperforms manifold based
-quantization by about 1 dB for higher SNRs. Naturally, the rate of
-channel variation is quite fast, which limits the efficacy of the
-proposed method in tracking the channel parameters.
+quantization by about 1 dB for higher SNRs. Since, on a per subcarrier
+basis, the channel variation is slower, the precoder tracking is
+better than the previous case. Naturally, the rate of channel
+variation is quite fast, which limits the efficacy of the proposed
+method in tracking the channel parameters.
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.78\columnwidth]{images/64final_withtime}
+\includegraphics[width=0.72\columnwidth]{images/64final_withtime}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 64
   subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
   for $f_dT_s = 1.56\times 10^{-5}$, corresponding to a velocity of 172.8 km/h.}
