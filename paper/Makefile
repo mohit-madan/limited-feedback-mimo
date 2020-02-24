@@ -19,6 +19,9 @@ main-onecolumn.pdf: main.bib $(MAINFILES) $(IMAGEPDFS)
 	$(RM) main-onecolumn.tex
 
 
+response_letter.pdf: response_letter.tex
+	pdflatex response_letter
+
 cover_letter.pdf: cover_letter.tex
 	pdflatex cover_letter.tex
 
@@ -39,5 +42,8 @@ main-onecolumn.pdf \
 cover_letter.aux \
 cover_letter.log \
 cover_letter.out \
-cover_letter.pdf
-
+cover_letter.pdf \
+response_letter.aux \
+response_letter.log \
+response_letter.out \
+response_letter.pdf
