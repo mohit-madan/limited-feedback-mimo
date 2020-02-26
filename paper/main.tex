@@ -227,13 +227,13 @@ can be modelled as a flat-fading MIMO channel. This flat-fading MIMO
 channel can be written as
 \label{section2}
 \begin{equation}
-\by_{i,t} = \bH_{i,t}\tilde{\bV}_{i,t} \bx_{i,t}+ \bf{\eta_{i,t}}
+\by_{i,t} = \bH_{i,t}\tilde{\bV}_{i,t} \bx_{i,t}+ {\bf{\eta}}_{i,t}
 \end{equation}
 where $\bH_{i,t} \in \mathbb{C}^{N_R \times N_T}$ is the channel
 matrix, $\bx_{i,t} \in \mathbb{C}^{N_d}$ is the input data vector,
 $\by_{i,t} \in \mathbb{C}^{N_R}$ is the output vector,
 $\tilde{\bV}_{i,t} \in \mathbb{C}^{N_T \times N_R}$ is the unitary
-precoder, and $\eta$ is the complex additive white Gaussian noise
+precoder, and $\bf{\eta}$ is the complex additive white Gaussian noise
 distributed as ${\mathcal{CN}}(0,I_{N_R})$. We consider the case where
 $N_R < N_T$, and the data vector size $N_d = N_R$.  The ``thin'' SVD
 (that keeps only those right and left singular vectors that correspond
@@ -271,9 +271,9 @@ where $\bD_{k}$ is a diagonal matrix defined as
 $\bD_{k}\big(\phi_{k,k}, \ldots, \phi_{k,N_T } \big)$ =
 $\mbox{diag}\big( {\bf 1}_{k-1}, e^{j\phi_{k,k}},\ldots,
 e^{j\phi_{k,N_T }} \big)$, ${\bf 1}_{k-1}$ represents $k-1$ ones,
-and the $N_R \times N_T$ matrix $\tilde{\bI}$ =
-$\big[\bI_{N_R }, {\bf 0}_{N_T ,N_T -N_R}\big]^{T}$. Here,
-${\bf 0}_{N_T ,N_T -N_R }$ is an $N_T\times (N_T - N_R)$ matrix all of
+and the $N_T \times N_R$ matrix $\tilde{\bI}$ =
+$\big[\bI_{N_R }, {\bf 0}_{N_R ,N_T -N_R}\big]^{T}$. Here,
+${\bf 0}_{N_R ,N_T -N_R }$ is an $N_R\times (N_T - N_R)$ matrix all of
 whose elements are zero. Finally, we also have
 \begin{equation}
 \bG_{m-1,m}\big(\theta\big)  =
@@ -291,30 +291,32 @@ Thus, for a $4 \times 2$ orthogonal matrix $\bV_{i,t}$, we have
   \bG_{2,3}(\theta_{1,2}) \bG_{1,2}(\theta_{1,3})\times\\
 & \bD_{2}(\phi_{2,2},\phi_{2,3},\phi_{2,4}) \bG_{3,4}(\theta_{2,1}) \bG_{2,3}(\theta_{2,2})\tilde{\bI}
 \end{align*}
-Here, $\phi_{k}$s are referred to as phases, and their collection for
+Here, $\phi_{k,l}$s are referred to as phases, and their collection for
 the $i$-th subcarrier at time instant $t$ is captured in a vector
-denoted by $\bf{\Phi_{i,t}}$. $\theta_{l}$s are called rotation angles, and
+denoted by $\bf{\Phi}$$_{i,t}$. $\theta_{k,l}$s are called rotation angles, and
 their collection is captured in a vector referred to as
-$\bf{\Theta_{i,t}}$. We note that $\bf{\Phi_{i,t}}$ and $\bf{\Theta_{i,t}}$ represent
+$\bf{\Theta}$$_{i,t}$. We note that $\bf{\Phi}$$_{i,t}$ and $\bf{\Theta}$$_{i,t}$ represent
 the phase and rotation angles for the $i$-th subcarrier at time
 instant $t$, as represented in Fig.~\ref{fig:adpm-fig}. It is known
-that $\phi_k \in (-\pi, \pi]$ is uniformly distributed between the two
-extremes~\cite{4114278}, while $\theta_l$ is distributed
+that $\phi_{k,l} \in (-\pi, \pi]$ for all k and l's is uniformly distributed 
+between the two
+extremes~\cite{4114278}, while $\theta_{k,l}$ is distributed
 as~\cite{4114278}
 \begin{equation}
-2l(\sin\theta_l)^{2l-1}\cos\theta_l, \mbox{  }\theta_l \in \left[0, \frac{\pi}{2}\right) \mbox{, } l = 1,2,\ldots,N_T -1
+2l(\sin\theta_{k,l})^{2l-1}\cos\theta_{k,l}, \mbox{  }\theta_{k,l} \in \left[0, \frac{\pi}{2}\right) \mbox{, }1\leq k \leq N_R, 1\leq l 
+\leq N_T -k
 \end{equation}
-The given distribution of $\theta_l$ is used for non-uniform quantization
+The given distribution of $\theta_{k,l}$ is used for non-uniform quantization
 of $\bf{\Theta}$ during their initialization to reduce the quantization error.
-In addition, $\phi_k$ and $\theta_l$ are statistically independent,
+In addition, $\phi_{k,l}$ and $\theta_{k,l}$ are statistically independent,
 making this representation useful for tracking them separately across
 time, as discussed below. The total number of
 parameters obtained from the decomposition of a complex orthogonal
 matrix $N_{T} \times N_{R} $ is $N_{R}(2N_{T} - N_{R})$. The number of
-$\phi_k$ parameters is $N_{R}(2N_{T} - N_{R}-1)/2$ while the number of
-$\theta$ parameters is $N_{R}(2N_{T} - N_{R}+1)/2$. Thus, $\bf{\Phi_{i,t}}$
-is a vector of length $N_{R}(2N_{T} - N_{R}-1)/2$, while
-$\bf{\Theta_{i,t}}$ has length $N_{R}(2N_{T} - N_{R}+1)/2$.~\cite{4114278}
+$\phi_{k,l}$ parameters is $N_{R}(2N_{T} - N_{R}+1)/2$ while the number of
+$\theta{k,l}$ parameters is $N_{R}(2N_{T} - N_{R}-1)/2$. Thus, ${\bf{\Phi}}_{i,t}$
+is a vector of length $N_{R}(2N_{T} - N_{R}+1)/2$, while
+${\bf{\Theta}}_{i,t}$ has length $N_{R}(2N_{T} - N_{R}-1)/2$.~\cite{4114278}
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.7\columnwidth]{images/new-adpm.pdf}
@@ -340,7 +342,7 @@ while tracking a slowly varying discrete random process $x_n$ at time
 $n$, the one bit can be used to determine the direction in which to
 move in order to track the parameter. This can be denoted by
 $\beta_{n} = \mbox{sign}(x_{n} - \hat{x}_{n-1})$, where $x_n$ is the
-unquantized value and $\hat{x}_{n-1}$ is the unquantized (accurate)
+unquantized (accurate) value and $\hat{x}_{n-1}$ is the quantized
 value. Further, the step size for the move can be adapted based on the
 speed of channel variation as well the accuracy needed. If $\Delta_n$
 is the step size, we define our adaptive quantizer as
@@ -414,7 +416,7 @@ We now present simulations of the scalar feedback based joint
 time-frequency predictive quantization outlined in the previous
 section. In particular, we analyze the performance of the proposed
 quantization and interpolation method for time-varying MIMO-OFDM
-systems. The channel is simulated using the typical Jakes Model for
+systems. The channel is simulated using the typical Jakes Model 
 for the COST207 channel power delay
 profiles~\cite{molisch2006cost259,cost1989cost}. The BER achieved by
 the proposed predictive quantization based precoder is compared
@@ -427,8 +429,8 @@ subcarriers. The sampling time period $T_s$ was $5\times10^{-8}$
 s. For both the situations, we considered $N_T=4$ transmit antennas
 and and $N_R=2$ receive antennas. Therefore, using the approach
 outlined in~\cite{4114278}, the parameters that determine the precoder is
-$N_{R}(2N_{T} - 1) - N_R^2 = 10$, with five $\theta_l$s and and seven
-$\phi_i$s. We assume that the spacing between fed back subcarrier
+$N_{R}(2N_{T} - 2N_R )/2 = 12$, with five $\theta_{k,l}$s and and seven
+$\phi_{k,l}$s. We assume that the spacing between fed back subcarrier
 indices $p$ to be $33$ and $9$ for the slow and fast channel profiles
 respectively (i.e. for the slower channels with 1024 subcarriers, the
 subcarriers indices fed back would be $0, 33, 66, \ldots 1023$ and for
