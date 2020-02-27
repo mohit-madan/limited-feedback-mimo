@@ -327,7 +327,7 @@ ${\bf{\Theta}}_{i,t}$ has length $N_{R}(2N_{T} - N_{R}-1)/2$.~\cite{4114278}
 \end{center}
 \end{figure}
 
-The quantization approach described above is related to the channel
+The parameterization approach described above is related to the channel
 state information feedback present in several wireless standards,
 including 802.11ac~\cite{lou2013comparison}, although adaptive
 quantization and feedback are not discussed. Further
@@ -380,8 +380,8 @@ one-time instance and only $\bf{\Phi}$ values for the next time
 instant in an alternating fashion (the untransmitted value is assumed
 to be the same as that at the previous instant). In this case, the
 average number of bits required to quantize a channel matrix will be
-$(N_{R}(2N_{T} - 1) - N_R^2)/2$ (from~\cite{4114278}). While tracking
-the $\phi_i$ parameters, is must be noted they may change abruptly
+$N_{R}(2N_{T} - N_R )/2$ (from~\cite{4114278}). While tracking
+the $\phi_{k,l}$ parameters, it must be noted they may change abruptly
 between $-\pi$ and $\pi$ due to jumps of $2\pi$. This is avoided by
 unwrapping the phases to facilitate continuous tracking (i.e., jumps
 in phase of magnitude close to $2\pi$ have been eliminated).
