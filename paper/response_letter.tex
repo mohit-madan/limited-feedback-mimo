@@ -115,4 +115,44 @@ time instances to do the interpolation... "}
 \textbf{5. "the parameters that determine the precoder is ...  = 10, ... "}
 
 \textbf{Response:}
+
+
+\textbf{Reviewer 2}\\
+
+\textbf{1. There are several mistakes and typos in the manuscript. Here are some examples.}
+
+\textbf{(a) In the manuscript, boldface letters are used to denote column vectors and matrices and non-bold letters are used to denote scalars. Therefore, the subscripts of $\boldsymbol{\eta_{i,t}}$, $\boldsymbol{\Theta_{i,t}}$ and $\boldsymbol{\Phi_{i,t}}$ should be non-bold, and the covariance matrix of $\boldsymbol{\eta}$, should be boldface.}
+
+\textbf{(b) Because the matrix $\tilde{V_{i,t}}$ is $N_T$ by $N_R$ and the vector $x_{i,t}$ is $N_d$ by 1, the product $V_{i,t}x_{i,t}$ in (1) is not well defined}
+
+\textbf{(c) Because the matrix $I_{N_R}$ is $N_R$ by $N_R$ and the matrix $0_{N_T , N_T - N_R }$ is $N_T$ by $N_T - N_R$, the matrix $\tilde{I}$ = [$I_{N_R}, 0_{N_T, N_T - N_R }$] , in (2) is not well-defined}
+
+\textbf{(d) The right-hand side of (3) is a function of t but the left-hand side of (3) is independent of t.}
+
+\textbf{(e) Do $\theta_l$ and $\phi_k$ represent the same things as $\theta_{k,l}$ and $\phi_{k,l}$ , respectively.}
+
+\textbf{(f) It is mentioned in Subsection III.A that the number of $\phi_k$ parameters is $N_R(2N_T - N_R -1 )/2$ while the number of $\theta$ parameters is $N_R(2N_T -N_R + 1)/2$." However, in the provided example with $N_T$ = 4 and $N_R$ = 2, there are 7 $\phi_{k,l}$ 's and 5 $\theta_{k,l}$'s.}
+
+\textbf{(g) It is mentioned in Subsection III.B that where $x_n$ is the unquantized value and $\tilde{x}_{n-1}$ is the unquantized (accurate) value." What does this mean?}
+
+\textbf{(h) It is mentioned in Subsection III.B that where M is the increment used during the positive and negative moves." However, M is not an increment in (5).}
+
+\textbf{(i) (Section IV) "The channel is simulated using the typical Jakes Model for for the COST207 channel power delay profiles." Here is a typo.}
+
+\textbf{(j) (Section IV) the parameters that determine the precoder is $N_R (2N_T - 1) - N^{2}_R$ = 10, with five $\theta_l$s and and seven $\phi_i$s." Here is a typo because 10 $\neq$ 5 + 7.}
+
+\textbf{(k) What does the sentence "The time based predictive approaches correspond to temporal prediction using the manifold as well as scalar parameter based approaches without utilizing the joint time frequency correlations." in Section IV mean?}
+
+\textbf{Response:}
+
+\textbf{2. The quantization of $\phi_{k,l}$'s and $\theta_{k,l}$'s mentioned in Subsection III.A and the interpolation
+process mentioned in Subsection III.C should be explained more clearly.}
+
+\textbf{3. As mentioned in Fig. 1 and Subsection III.C, the future precoder parameters are required to conduct the interpolation. How can we obtain the future precoder parameters?}
+
+\textbf{4. Only 10 channel realizations are used to evaluate the BER characteristics. Is it enough?}
+
+\textbf{5. In the manuscript, the time-frequency correlation is used for precoder tracking. Because it is mentioned in Section I that the precoder tracking have been discussed in [8] (based on temporal correlation) and [9] (based on frequency correlation), the difference among the proposed method and the methods in [8] and [9] should be explained and compared in the manuscript.}
+
+\textbf{6. The reference format is not consistent and there are several typos. The title of the manuscript is not in IEEE format.}
 \end{document}

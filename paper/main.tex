@@ -220,6 +220,9 @@ Secondly, instead of just comparing similar algorithms in the chosen body of wor
 % rates for our proposed methods with other approaches. Finally,
 % Section~\ref{section4} concludes with discussions on future work.
 
+
+% It has been shown in Agrimcite that jointly exploiting the time and frequency correlation in MIMO-OFDM systems can significantly enhance performance and reduce the feedback burden. However, using a manifold based approach complicates quantized interpolation and prediction. The use of matrix codebooks and performing arithmetic on manifolds in the time-frequency grid is significantly more complicated than in the case of scalar parameters. The approach that we suggest in this paper exploits the fact that the independent parameterization breaks the problem into several smaller scalar quantization and tracking problems. It has been shown that such approaches yield good performance for temporal  cite8 and frequency cite9 domain prediction individually. In our work, we perform prediction in the time domain, and use this for joint interpolation on the time frequency grid. We show that this allows us to exploit the time and frequency coherence jointly. We go on to show that this yields much better performance than individual time and frequency domain prediction, without the complexity of manifold based codebooks.
+
 \section{System Model}
 For a MIMO-OFDM system with $N_T$ transmitter and $N_R$ receiver
 antennas, the channel for the $i$-th subcarrier at time instant $t$
@@ -227,7 +230,7 @@ can be modelled as a flat-fading MIMO channel. This flat-fading MIMO
 channel can be written as
 \label{section2}
 \begin{equation}
-\by_{i,t} = \bH_{i,t}\tilde{\bV}_{i,t} \bx_{i,t}+ {\bf{\eta}}_{i,t}
+\by_{i,t} = \bH_{i,t}\tilde{\bV}_{i,t} \bx_{i,t}+ {\boldsymbol{\eta}}_{i,t}
 \end{equation}
 where $\bH_{i,t} \in \mathbb{C}^{N_R \times N_T}$ is the channel
 matrix, $\bx_{i,t} \in \mathbb{C}^{N_d}$ is the input data vector,
@@ -429,7 +432,7 @@ subcarriers. The sampling time period $T_s$ was $5\times10^{-8}$
 s. For both the situations, we considered $N_T=4$ transmit antennas
 and and $N_R=2$ receive antennas. Therefore, using the approach
 outlined in~\cite{4114278}, the parameters that determine the precoder is
-$N_{R}(2N_{T} - 2N_R )/2 = 12$, with five $\theta_{k,l}$s and and seven
+$N_{R}(2N_{T} - N^{2}_R )/2 = 12$, with five $\theta_{k,l}$s and and seven
 $\phi_{k,l}$s. We assume that the spacing between fed back subcarrier
 indices $p$ to be $33$ and $9$ for the slow and fast channel profiles
 respectively (i.e. for the slower channels with 1024 subcarriers, the
