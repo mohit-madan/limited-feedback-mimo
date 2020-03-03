@@ -1,5 +1,5 @@
 #all: main.pdf
-all: main.pdf main-onecolumn.pdf cover_letter.pdf
+all: main.pdf main-onecolumn.pdf cover_letter.pdf response_letter.pdf
 
 MAINFILES := main.tex
 
