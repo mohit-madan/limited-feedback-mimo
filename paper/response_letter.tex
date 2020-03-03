@@ -73,7 +73,13 @@ Mohit Madan
   [9] should be explained and compared, so as to make the
   contributions more clear.}
 
-\textbf{Response:} Response here
+\textbf{Response:} Thanks for pointing this out. The temporal based precoder tracking discussed in [8] and [9]
+have discussed about precoder tracking in time and requency respectively without any interpolation. 
+We have approached this differently by performing prediction in the time domain and using this for joint interpolation 
+on the time freqeuncy grid. This helps to build a framework for reducing the total bit bandwidth by a huge amount keeping the
+performace similar.
+We have altered the text in the introduction to make this point more clear. The corrections are as follows:
+``\emph{In our work, we perform prediction in time domain, and use this for joint interpolation on the time frequency grid.}''
 
 \textbf{Reviewer 1}\\
 
@@ -87,6 +93,7 @@ Mohit Madan
 equivalent for methods in comparison. The comparison must be fair.}
 
 \textbf{Response:}
+Thanks for pointing this out. We have used an average of 5 bits in our method. While the number of feedback bits used in agrimcite is 6 bits on an average. We have in fact less number of average bits and still we have got a lower BER than agrim's paper.
 
 \textbf{ The so-called time-frequency interpolation method is just a
   straightforward two-dim filter. So I assume the that the more
@@ -99,6 +106,14 @@ equivalent for methods in comparison. The comparison must be fair.}
 
 \textbf{Response:}
 
+Thanks for pointing this out.
+First of all the interpolation is simple and accurate as compared to manifold based interpolation which uses complex interpolation methods in the manifold space. It is also easier to track the scalar parameters with fewer bits as compared to codebook based method which cannot track its parameters with such high accuracy. As mentioned in figure 2, the quantization error is much smaller in given's based parametrization which results in higher accuracy as compared to manifolds with similar number of bits.
+
+Additions have been made in the conclusion section as follows `` \emph{With lesser quantization error compared to manifold based method, the 
+errors in feedback are reduced. Moreover, they are further 
+handled easily by using a simple 2d-interpolation over the scalar parameters.}''
+
+
 \textbf{There are some typos/errors to be fixed:}
 
 \textbf{1. Work/works got mixed up for many times.}
@@ -107,15 +122,23 @@ equivalent for methods in comparison. The comparison must be fair.}
   parameterization is described without presenting the quantizing
   method.}
 
+\textbf{Response:} Thanks for pointing this out. It has been changed to "The parametrization approach described above..."
+
 \textbf{3. "While tracking the $\phi_i$ parameters, is must be noted... "}
+
+\textbf{Response:} It has been corrected to "While tracking the $\phi_i$ parameters, it must be noted... "
 
 \textbf{4. "we will use precoder parameters from both the past and future and
 time instances to do the interpolation... "}
 
+\textbf{Response:} The typo have been corrected to "we will use precoder parameters from both the past and future
+time instances to do the interpolation... "
+
 \textbf{5. "the parameters that determine the precoder is ...  = 10, ... "}
 
-\textbf{Response:}
-
+\textbf{Response:} Thanks for pointing this out. It has been corrected to ``\emph{...the parameters that determine the precoder is
+$N_{R}(2N_{T} - N_R) = 12$, with five $\theta_{k,l}$s and and seven
+$\phi_{k,l}$s.}''
 
 \textbf{Reviewer 2}\\
 
@@ -123,36 +146,105 @@ time instances to do the interpolation... "}
 
 \textbf{(a) In the manuscript, boldface letters are used to denote column vectors and matrices and non-bold letters are used to denote scalars. Therefore, the subscripts of $\boldsymbol{\eta_{i,t}}$, $\boldsymbol{\Theta_{i,t}}$ and $\boldsymbol{\Phi_{i,t}}$ should be non-bold, and the covariance matrix of $\boldsymbol{\eta}$, should be boldface.}
 
+\textbf{Response:} Thanks for pointing out this typo. The subscripts of the symbols have been corrected wherever they have incurred. Also the covariance symbol has been made bold.
+
 \textbf{(b) Because the matrix $\tilde{V_{i,t}}$ is $N_T$ by $N_R$ and the vector $x_{i,t}$ is $N_d$ by 1, the product $V_{i,t}x_{i,t}$ in (1) is not well defined}
+
+\textbf{Response:} Thanks for pointing this out. 
+It was \emph{We consider the case where $N_R < N_T$, and the data vector size $N_d = N_R$}
+which makes $x_{i,t}$ dimensions as $N_R$ which makes it well defined.
 
 \textbf{(c) Because the matrix $I_{N_R}$ is $N_R$ by $N_R$ and the matrix $0_{N_T , N_T - N_R }$ is $N_T$ by $N_T - N_R$, the matrix $\tilde{I}$ = [$I_{N_R}, 0_{N_T, N_T - N_R }$] , in (2) is not well-defined}
 
+\textbf{Response:} Thanks for pointing this out. 
+It has been corrected to ``\emph{and the $N_T \times N_R$ matrix $\tilde{\textbf{I}}$ = $\big[\textbf{I}_{N_R }, {\boldsymbol{0}}_{N_R ,N_T -N_R}\big]^{T}$}''
+
 \textbf{(d) The right-hand side of (3) is a function of t but the left-hand side of (3) is independent of t.}
+
+\textbf{Response:} ``t'' has been changed to ``$N_T$''. This makes the right-hand side a square matrix of size $N_T \times N_T$
+which is indeed the size of the matrix $G_{m-1,m}\big(\theta\big)$ on the left-hand side.
 
 \textbf{(e) Do $\theta_l$ and $\phi_k$ represent the same things as $\theta_{k,l}$ and $\phi_{k,l}$ , respectively.}
 
+\textbf{Response:} Thanks for pointing this out. Yes, $\theta_l$ and $\phi_k$ represent the same things as $\theta_{k,l}$ and $\phi_{k,l}$. Therefore those have been corrected wherever they have come. Also equation 8 has been modified as follows:
+$$2l(\sin\theta_{k,l})^{2l-1}\cos\theta_{k,l}, \mbox{  }\theta_{k,l} \in \left[0, \frac{\pi}{2}\right) \mbox{, }1\leq k \leq N_R, 1\leq l 
+\leq N_T -k$$
+
 \textbf{(f) It is mentioned in Subsection III.A that the number of $\phi_k$ parameters is $N_R(2N_T - N_R -1 )/2$ while the number of $\theta$ parameters is $N_R(2N_T -N_R + 1)/2$." However, in the provided example with $N_T$ = 4 and $N_R$ = 2, there are 7 $\phi_{k,l}$ 's and 5 $\theta_{k,l}$'s.}
 
+\textbf{Response:} There was an interchange in the expression of number of parameters. Therefore, it has been corrected as follows: ``\emph{The number of
+$\phi_{k,l}$ parameters is $N_{R}(2N_{T} - N_{R}+1)/2$ while the number of
+$\theta_{k,l}$ parameters is $N_{R}(2N_{T} - N_{R}-1)/2$.}''
+
 \textbf{(g) It is mentioned in Subsection III.B that where $x_n$ is the unquantized value and $\tilde{x}_{n-1}$ is the unquantized (accurate) value." What does this mean?}
+\textbf{Response:} It has been corrected to ``\emph{where $x_n$ is the
+unquantized (accurate) value and $\tilde{x}_{n-1}$ is the quantized value}''
+
 
 \textbf{(h) It is mentioned in Subsection III.B that where M is the increment used during the positive and negative moves." However, M is not an increment in (5).}
 
+\textbf{Response:} Thanks for pointing this out. M is the scaling factor and it has been corrected as follows: ``\emph{...where M is the scaling factor used during the positive and...}''
+
+
 \textbf{(i) (Section IV) "The channel is simulated using the typical Jakes Model for for the COST207 channel power delay profiles." Here is a typo.}
+
+\textbf{Response:} It has been corrected to ``\emph{The channel is simulated using the typical Jakes Model for the COST207 channel power delay profiles.}''
+
 
 \textbf{(j) (Section IV) the parameters that determine the precoder is $N_R (2N_T - 1) - N^{2}_R$ = 10, with five $\theta_l$s and and seven $\phi_i$s." Here is a typo because 10 $\neq$ 5 + 7.}
 
+\textbf{Response:} Thanks for pointing out this typo. the formula for calculating the precoder is corrected to ``\emph{
+$N_{R}(2N_{T} - N_R) = 12$ , with five $\theta_{k,l}$s and and seven
+$\phi_{k,l}$s.}''
+
+
 \textbf{(k) What does the sentence "The time based predictive approaches correspond to temporal prediction using the manifold as well as scalar parameter based approaches without utilizing the joint time frequency correlations." in Section IV mean?}
 
-\textbf{Response:}
+\textbf{Response:} Thanks for pointing out this error. The time based predictive approach implied the independent time-frequency based approach. The text in the paper has been corrected as follows: 
+``\emph{Independent time-frequency based approaches correspond to the method without joint-time frequency interpolation i.e. with prediction in time domain along with interpolation in the frequency domain.}''
 
 \textbf{2. The quantization of $\phi_{k,l}$'s and $\theta_{k,l}$'s mentioned in Subsection III.A and the interpolation
 process mentioned in Subsection III.C should be explained more clearly.}
 
+\textbf{Response:} 
+Thanks for pointing this out. The explanation of quantization process is explained more clearly by altering the text in III.A as follows: ``\emph{Say for n bits initialization for each parameter respectively, the interval $(-\pi,\pi]$ 
+is equally divided into $2^n$ parts for quantizing $\phi_{k,l}$'s and interval $[0,\frac{\pi}{2})$
+is divided into $2^n$ different quantization levels for quantizing $\theta_{k,l}$'s in order to minimize
+the mean square error.}''\\
+III.C is also altered as follows to make it more clear:
+\emph{``By future time instances it means that
+the precoder estimation is improved at a later time instant i.e.
+after receiving the feedback of the next set of subcarriers.''}
+
 \textbf{3. As mentioned in Fig. 1 and Subsection III.C, the future precoder parameters are required to conduct the interpolation. How can we obtain the future precoder parameters?}
+
+Response: Thank you for this comment. By using the phrase future time instances we mean 
+that we are waiting for the feedback of the next time instance and then improving upon our current 
+precoder estimation using that feedback. 
+
+We have altered the text in the subsection III.C as follows: 
+``By future time instances it means that the precoder estimation is improved 
+at a later time instant i.e. after receiving the feedback of the next set of
+subcarriers.''
 
 \textbf{4. Only 10 channel realizations are used to evaluate the BER characteristics. Is it enough?}
 
+Thank you for this comment. Although we simulate over 10 realizations, the channel evolves beginning with each realization, resulting in sufficient averaging over various channel characteristics. Therefore, the results that we present represent simulation over a sufficiently large number of bits transmitted over enough channel variations. We have now altered the text in the simulation section to reflect this as follows:
+
+\emph{The BER achieved by
+the proposed predictive quantization based precoder is compared
+against the ideal precoder for 100 channel evolutions in each run and
+averaged over 10 channel realizations (translating to averaging over $250,000$ bits). The error properties obtained by simulating transmission over these varying channels is sufficient to obtain good average performance properties.}
+
 \textbf{5. In the manuscript, the time-frequency correlation is used for precoder tracking. Because it is mentioned in Section I that the precoder tracking have been discussed in [8] (based on temporal correlation) and [9] (based on frequency correlation), the difference among the proposed method and the methods in [8] and [9] should be explained and compared in the manuscript.}
+
+\textbf{Response:} Thanks for pointing this out.
+First of all the interpolation is simple and accurate as compared to manifold based interpolation which uses complex interpolation methods in the manifold space. It is also easier to track the scalar parameters with fewer bits as compared to codebook based method which cannot track its parameters with such high accuracy. As mentioned in figure 2, the quantization error is much smaller in given's based parametrization which results in higher accuracy as compared to manifolds with similar number of bits.
+
+Additions have been made in the conclusion section as follows `` \emph{With lesser quantization error compared to manifold based method, the 
+errors in feedback are reduced. Moreover, they are further 
+handled easily by using a simple 2d-interpolation over the scalar parameters.}''
+
 
 \textbf{6. The reference format is not consistent and there are several typos. The title of the manuscript is not in IEEE format.}
 \end{document}

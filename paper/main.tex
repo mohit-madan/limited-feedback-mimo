@@ -197,13 +197,14 @@ Such methods have also been implemented in 802.11 ac and ax standards
 between these two bodies of works, thereby making it difficult to
 quantify from past work whether performance gains/losses can accrue by operating over scalar parametrization instead of manifolds. In this paper, we propose a joint time-frequency interpolation approach that builds upon the existing parametric quantization techniques. One of the key results of our work is that the proposed scalar parametrization method actually outperforms an equivalent manifold based technique \cite{Gupt1905:Predictive}, at the same time being analytically more tractable.
 
-Past work in utilizing scalar
-parametrization for precoder feedback have utilized adaptive delta
+Parametrization for precoder feedback have utilized adaptive delta
 modulation effectively track precoding matrices both in the
 time~\cite{4114278} and frequency domains~\cite{4556174}, albeit
-separately. Natural wireless channels not only have temporal and
+separately. In our work, we perform prediction in time domain, and use this for joint interpolation on the time frequency grid. 
+Natural wireless channels not only have temporal and
 frequency correlations, but also possess joint time-frequency
-correlations. Prior work \cite{Gupt1905:Predictive} has framed an equivalent manifold based approach to utilize joint time-frequency correlations for predictive quantization and interpolation, and showed performance benefits compared to utilizing time-frequency correlations independently \cite{6891198,khaled2005quantized}.
+correlations. 
+Prior work \cite{Gupt1905:Predictive} has framed an equivalent manifold based approach to utilize joint time-frequency correlations for predictive quantization and interpolation, and showed performance benefits compared to utilizing time-frequency correlations independently \cite{6891198,khaled2005quantized}.
 Intuitively, these performance benefits arise because utilization of joint
 correlations not only exploits the existing independent correlations,
 but also the joint correlations in time-frequency arising from the underlying channels.
@@ -268,23 +269,24 @@ $N_T$ rows and $N_R$ columns can be decomposed as
 follows~\cite{4114278} (we suppress the $(i, t)$ subscripts in the
 decomposition matrices)
 \begin{equation}
+\label{eq:decompose}
 \tilde{\bV}_{i,t} = \left[\prod_{k=1}^{N_{R}} \bD_{k} \left( \phi_{k,k},\ldots , \phi_{k,N_{R}} \right) \:  \prod_{l=1}^{N_{T}-k} \bG_{N_{T}-l,N_{T} -l+1} \big( \theta_{k,l}\big)  \right] \: \tilde{\bI}
 \end{equation}
 where $\bD_{k}$ is a diagonal matrix defined as
 $\bD_{k}\big(\phi_{k,k}, \ldots, \phi_{k,N_T } \big)$ =
 $\mbox{diag}\big( {\bf 1}_{k-1}, e^{j\phi_{k,k}},\ldots,
-e^{j\phi_{k,N_T }} \big)$, ${\bf 1}_{k-1}$ represents $k-1$ ones,
+e^{j\phi_{k,N_T }} \big)$ where  dimension $N_T \times N_T$. ${\bf 1}_{k-1}$ represents $k-1$ ones,
 and the $N_T \times N_R$ matrix $\tilde{\bI}$ =
 $\big[\bI_{N_R }, {\bf 0}_{N_R ,N_T -N_R}\big]^{T}$. Here,
 ${\bf 0}_{N_R ,N_T -N_R }$ is an $N_R\times (N_T - N_R)$ matrix all of
-whose elements are zero. Finally, we also have
+whose elements are zero. Finally $\bG_{m-1,m}\big(\theta\big)$ is a matrix with dimension $N_T \times N_T$ and is given as follows:
 \begin{equation}
 \bG_{m-1,m}\big(\theta\big)  =
 \begin{bmatrix}
 \bI_{m-2} & & & \\
 & \cos\theta & -\sin\theta & \\
 & \sin\theta & \cos\theta & \\
-& & & \bI_{t-m}
+& & & \bI_{N_T -m}
 \end{bmatrix}
 \end{equation}
 Thus, for a $4 \times 2$ orthogonal matrix $\bV_{i,t}$, we have
@@ -311,13 +313,17 @@ as~\cite{4114278}
 \end{equation}
 The given distribution of $\theta_{k,l}$ is used for non-uniform quantization
 of $\bf{\Theta}$ during their initialization to reduce the quantization error.
+Say for n bits initialization for each parameter respectively, the interval $(-\pi,\pi]$ 
+is equally divided into $2^n$ parts for quantizing $\phi_{k,l}$'s and interval $[0,\frac{\pi}{2})$
+is divided into $2^n$ different quantization levels for quantizing $\theta_{k,l}$'s in order to minimize
+the mean square error.
 In addition, $\phi_{k,l}$ and $\theta_{k,l}$ are statistically independent,
 making this representation useful for tracking them separately across
 time, as discussed below. The total number of
 parameters obtained from the decomposition of a complex orthogonal
 matrix $N_{T} \times N_{R} $ is $N_{R}(2N_{T} - N_{R})$. The number of
 $\phi_{k,l}$ parameters is $N_{R}(2N_{T} - N_{R}+1)/2$ while the number of
-$\theta{k,l}$ parameters is $N_{R}(2N_{T} - N_{R}-1)/2$. Thus, ${\bf{\Phi}}_{i,t}$
+$\theta_{k,l}$ parameters is $N_{R}(2N_{T} - N_{R}-1)/2$. Thus, ${\bf{\Phi}}_{i,t}$
 is a vector of length $N_{R}(2N_{T} - N_{R}+1)/2$, while
 ${\bf{\Theta}}_{i,t}$ has length $N_{R}(2N_{T} - N_{R}-1)/2$.~\cite{4114278}
 \begin{figure}
@@ -357,7 +363,7 @@ is the step size, we define our adaptive quantizer as
     \Delta_{n-1}/M , & \text{if $\beta_{n} \neq \beta_{n-1}$}.
   \end{cases}
 \end{equation}
-where $M$ is the increment used during the positive and negative
+where $M$ is the scaling factor used during the positive and negative
 moves. We initialize $\Delta_1$ as $\Delta_1 = |x_{2}-\hat{x}_1|$. We
 note that this is performed separately for each of the quantized
 parameters.
@@ -395,11 +401,16 @@ the transmitter, we can construct the precoder at subcarrier indices
 $pk$ or $pk+q$, in keeping with the same notation as the previous
 section. To construct the rest of the subcarriers, we will use
 precoder parameters from both the past and future and time instances
-to do the interpolation (using backtracking to ensure causality). In
+to do the interpolation (using backtracking to ensure causality). 
+By future time instances it means that the precoder estimation is 
+improved at a later time instant i.e. after receiving the feedback of the next set of
+subcarriers. In
 Fig.~\ref{fig:adpm-fig}, each parameter is interpolated using the
 neighbouring subcarriers using bilinear interpolation (equivalent to
-linear interpolation in two dimensions). These interpolated values and
-then used to reconstruct the precoding matrices all together. Thus,
+linear interpolation in two dimensions). These interpolated values are
+then used to reconstruct the precoding matrices all together by applying 
+the reverse transformation of breaking the precoder into independent parameters as 
+given in Equation~\ref{eq:decompose}. Thus,
 the approach here is able to exploit the time and frequency
 correlation jointly to enhance performance.
 
@@ -424,7 +435,7 @@ for the COST207 channel power delay
 profiles~\cite{molisch2006cost259,cost1989cost}. The BER achieved by
 the proposed predictive quantization based precoder is compared
 against the ideal precoder for 100 channel evolutions in each run and
-averaged over 10 channel realizations. Simulations are performed for
+averaged over 10 channel realizations (translating to averaging over $250,000$ bits). The error properties obtained by simulating transmission over these varying channels is sufficient to obtain good average performance properties. Simulations are performed for
 normalised Doppler values of $f_dT_s = 3.41\times 10^{-6}$ (corresponding
 to a velocity of 37.2 km/h for $f_c = 1$ GHz) with 1024 subcarriers, and with
 $f_dT_s = 1.56 \times 10^{-5}$ (velocity of 172.8 km/h) with 64
@@ -432,7 +443,7 @@ subcarriers. The sampling time period $T_s$ was $5\times10^{-8}$
 s. For both the situations, we considered $N_T=4$ transmit antennas
 and and $N_R=2$ receive antennas. Therefore, using the approach
 outlined in~\cite{4114278}, the parameters that determine the precoder is
-$N_{R}(2N_{T} - N^{2}_R )/2 = 12$, with five $\theta_{k,l}$s and and seven
+$N_{R}(2N_{T} - N_R) = 12$, with five $\theta_{k,l}$s and and seven
 $\phi_{k,l}$s. We assume that the spacing between fed back subcarrier
 indices $p$ to be $33$ and $9$ for the slow and fast channel profiles
 respectively (i.e. for the slower channels with 1024 subcarriers, the
@@ -501,10 +512,12 @@ angles.
 Fig.~\ref{fig:ber_ped} compares the BER obtained using the proposed
 quantization method with that obtained using exact precoders for a
 $4\times 2$ 1024 subcarrier system a slow fading
-($f_dT_s = 3.41 \times 10^{-6}$). The time based predictive approaches
-correspond to temporal prediction using the manifold as well as scalar
-parameter based approaches without utilizing the joint time-frequency
-correlations. We can observe that the performance of the proposed
+($f_dT_s = 3.41 \times 10^{-6}$). Independent time-frequency based approaches correspond to the method without joint-time frequency interpolation i.e. with prediction in time domain along with interpolation in the frequency domain.
+ % The time based predictive approaches
+% correspond to temporal prediction using the manifold as well as scalar
+% parameter based approaches without utilizing the joint time-frequency
+% correlations. 
+We can observe that the performance of the proposed
 method is close to the performance with exact precoders over a wide
 range of SNRs. This can be attributed to the fact that even the 1-bit
 update to the scalar parameters is able to approximate the precoder
@@ -571,12 +584,16 @@ reconstruction for MIMO-OFDM systems that employs scalar quantization
 based feedback of precoder parameters. By quantizing and adapting the
 Givens rotation and Householder transformation parameters of the
 precoder, the receiver feedback to the transmitter can be minimized
-while retaining effective precoder adaptation. Exploiting the temporal
+while retaining effective precoder adaptation. 
+Exploiting the temporal
 and frequency correlations jointly enhances performance
 significantly. Simulations reveal that the proposed approach provides
 faster convergence and smaller errors when compared to
 approaches that involve direct quantization on manifold tangent
-spaces. Future work would involve tuning the adaptation rate of the
+spaces. With lesser quantization error compared to manifold based method, the 
+errors in feedback are reduced. Moreover, they are further 
+handled easily by using a simple 2d-interpolation over the scalar parameters.
+Future work would involve tuning the adaptation rate of the
 scalar parameters and further reduction of quantization redundancy to
 reduce the feedback rates.
 

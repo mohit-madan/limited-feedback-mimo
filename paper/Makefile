@@ -20,7 +20,7 @@ main-onecolumn.pdf: main.bib $(MAINFILES) $(IMAGEPDFS)
 
 
 response_letter.pdf: response_letter.tex
-	pdflatex response_letter
+	pdflatex response_letter.tex
 
 cover_letter.pdf: cover_letter.tex
 	pdflatex cover_letter.tex
