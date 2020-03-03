@@ -80,7 +80,7 @@ albeit separately, without any joint interpolation.  We have
 approached this differently by performing prediction in the time
 domain and using this for joint interpolation on the time-freqeuncy
 grid. This helps build a framework for reducing the total bit
-bandwidth by a signficant amount while maintaining similar performance
+bandwidth by a significant amount while maintaining similar performance
 in terms of BER.  We have altered the text in the introduction to make
 this point more clear,  as follows:
 
@@ -331,19 +331,40 @@ follows:
 
 \textbf{5. In the manuscript, the time-frequency correlation is used for precoder tracking. Because it is mentioned in Section I that the precoder tracking have been discussed in [8] (based on temporal correlation) and [9] (based on frequency correlation), the difference among the proposed method and the methods in [8] and [9] should be explained and compared in the manuscript.}
 
-\textbf{Response:} Thanks for pointing this out.  First of all the
-interpolation is simple and accurate as compared to manifold based
-interpolation which uses complex interpolation methods in the manifold
-space. It is also easier to track the scalar parameters with fewer
-bits as compared to codebook based method which cannot track its
-parameters with such high accuracy. As mentioned in figure 2, the
-quantization error is much smaller in given's based parametrization
-which results in higher accuracy as compared to manifolds with similar
-number of bits.
+Thank you for the feedback. The interpolation approach that we have
+proposed is simple and ends up becoming more accurate over time when
+compared to the manifold based interpolation that uses complex
+interpolation methods in the manifold space. It is also easier to
+track the adaptation of the scalar parameters using few bits. As
+observed in Fig. 2, the quantization error obtained when using the
+parameter based approach taken in this manuscript is much smaller in
+that obtained using the conventional codebooks on the Stiefel
+manifold, as discussed in [2]. This results in higher accuracy as
+compared to manifolds with similar number of bits.
 
-Additions have been made in the conclusion section as follows `` \emph{With lesser quantization error compared to manifold based method, the
-errors in feedback are reduced. Moreover, they are further
-handled easily by using a simple 2d-interpolation over the scalar parameters.}''
+To emphasize these points, we have made the following addition:
+
+\emph{With smaller
+quantization error as compared to manifold based approaches, the
+feedback results in more accurate precoder tracking, along with simple
+2D-interpolation over the scalar parameters to optimize the precoders.}
+
+
+In addition, the temporal correlation based precoder tracking
+discussed in [8] and [9] have considered about precoder tracking in
+time and frequency respectively, albeit separately, without any joint
+interpolation.  We have approached this differently by performing
+prediction in the time domain and using this for joint interpolation
+on the time-freqeuncy grid. This helps build a framework for reducing
+the total bit bandwidth by a significant amount while maintaining
+similar performance in terms of BER.  We have altered the text in the
+introduction to make this point more clear, as follows:
+
+``\emph{In our work, we perform prediction in time domain, and use this for joint
+  interpolation on the time frequency grid.}''
+
+This is in addition to various changes in other sections of the paper
+that further emphasize the advantages of our approach.
 
 
 \textbf{6. The reference format is not consistent and there are several typos. The title of the manuscript is not in IEEE format.}
