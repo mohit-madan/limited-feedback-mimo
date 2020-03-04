@@ -55,7 +55,7 @@
 \def\bY{{\bf Y}}
 \def\bZ{{\bf Z}}
 
-
+\setlength{\textfloatsep}{0.7\baselineskip plus 0.2\baselineskip minus 0.5\baselineskip}
 \def\imwidth{0.65}
 %package list
 \IEEEoverridecommandlockouts
@@ -120,7 +120,6 @@
 
 
 %Authors List
-
  \author{\authorblockN{Mohit Madan, Agrim Gupta, Kumar Appaiah\\}
  \
  \authorblockA{Department of Electrical Engineering\\Indian Institute of Technology Bombay}
@@ -129,6 +128,7 @@
 % PhD Scheme of Ministry of Electronics \& Information Technology,
 % Government of India (implemented by the Digital India Corporation).
 % }}
+\vspace{-2.3\baselineskip}
 }
 \maketitle
 
@@ -403,19 +403,22 @@ After obtaining the $\beta$ values (using the single bit feedback) at
 the transmitter, we can construct the precoder at subcarrier indices
 $pk$ or $pk+q$, in keeping with the same notation as the previous
 section. To construct the rest of the subcarriers, we will use
-precoder parameters from both the past and future and time instances
-to do the interpolation (using backtracking to ensure causality).
-By future time instances it means that the precoder estimation is
-improved at a later time instant i.e. after receiving the feedback of the next set of
-subcarriers. In
-Fig.~\ref{fig:adpm-fig}, each parameter is interpolated using the
-neighbouring subcarriers using bilinear interpolation (equivalent to
-linear interpolation in two dimensions). These interpolated values are
-then used to reconstruct the precoding matrices all together by applying
-the reverse transformation of breaking the precoder into independent parameters as
-given in Equation~\ref{eq:decompose}. Thus,
-the approach here is able to exploit the time and frequency
-correlation jointly to enhance performance.
+precoder parameters from both the ``past'' and ``future'' and time
+instances to do the interpolation (using backtracking to ensure
+causality). By future time instances it means that the precoder
+estimation is improved at a later time instant i.e. after receiving
+the feedback of the next set of subcarriers. Note that the precoder
+used for transmission is causally obtained, while the ``future''
+correction of past precoders merely improves the prediction
+accuracy. In Fig.~\ref{fig:adpm-fig}, each parameter is interpolated
+using the neighbouring subcarriers using bilinear interpolation
+(equivalent to linear interpolation in two dimensions). These
+interpolated values are then used to reconstruct the precoding
+matrices all together by applying the reverse transformation of
+breaking the precoder into independent parameters as given in
+Equation~\ref{eq:decompose}. Thus, the approach here is able to
+exploit the time and frequency correlation jointly to enhance
+performance.
 
 One reason why a linear predictive quantization is preferred is
 because the underlying parameters can generally be thought to emerge
@@ -581,23 +584,22 @@ parameters.
 % The problem of values hopping between $\pi$ and $-\pi$ is also tackled by wrapping the values around which we can show works nicely. The only drawback is that while initializing the parameter, they go out of their actual range and therefore using a uniform quantizer over the prescribed range does not work. But since most of the values lie between the given range we can use most of the initialization bits quantizing the parameters uniformly between the [-$\pi$ , $\pi$] and using smaller amount of bits between the range outside that which could go up to $-3\pi$ and $3\pi$, i.e. we are covering 300% more range outside the given area and that works mostly fine for the rest of the values.
 
 % Using the idea of joint interpolation given in the other paper.
-
+\vspace{-1\baselineskip}
 \section{Conclusion}
 \label{section4}
 We have presented a predictive quantization based precoder
 reconstruction for MIMO-OFDM systems that employs scalar quantization
 based feedback of precoder parameters. Quantizing and adapting the
 Givens rotation and Householder transformation parameters of precoders
-minimizes receiver feedback to the transmitter while retaining
-effective precoder adaptation. Exploiting the temporal and frequency
+minimizes receiver feedback to the transmitter while permitting
+effective precoder adaptation. Exploiting temporal and frequency
 correlations jointly enhances performance significantly. Simulations
-reveal that the proposed approach provides faster convergence and
-smaller errors when compared to manifold based approaches. Therefore,
-our feedback approach with simple 2D-interpolation over the
-scalar parameters to optimize the precoders tracks precoders
-effectively.  Future work would involve tuning the adaptation rate of
-the scalar parameters and further reduction of quantization redundancy
-to reduce the feedback rates.
+reveal that the proposed approach converges faster and has smaller
+errors when compared to manifold based approaches. Our feedback
+approach, with simple 2D-interpolation over the scalar parameters,
+tracks precoders effectively. Future work would involve tuning the
+adaptation rates of scalar parameters and further reduction of
+redundancies to improve quantization.
 
 
 \vspace{-10pt}
