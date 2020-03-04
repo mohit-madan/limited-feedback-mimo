@@ -289,26 +289,29 @@ follows:
 ``\emph{If $n$ bits are allocated to quantize a parameter
 for the first time, the range of values that each parameter takes is
 divided into $2^n$ optimal intervals using Lloyd's
-quantization [17].}''\\
-
-In addition, Section III.C is also altered as follows to make it more
-clear:
-
-\emph{``By
-  future time instances it means that the precoder estimation is
-  improved at a later time instant i.e.  after receiving the feedback
-  of the next set of subcarriers.''}
+quantization [17].}''
 
 \textbf{3. As mentioned in Fig. 1 and Subsection III.C, the future
   precoder parameters are required to conduct the interpolation. How
   can we obtain the future precoder parameters?}
 
-\textbf{Response:} AGRIM TODO
+\textbf{Response:} We thank the reviewer for pointing this out this
+missing piece of information. We
+wish to clarify that the precoder used for transmission is used for
+transmission. However, the past precoder estimates are improved using
+the new information, and this provides slight improvement when
+performing prediction in the further steps. This was not stated
+clearly in the previous manuscript. We have now altered the text in the subsection III.C as follows:
 
-We have altered the text in the subsection III.C as follows:
-``By future time instances it means that the precoder estimation is improved
-at a later time instant i.e. after receiving the feedback of the next set of
-subcarriers.''
+\emph{To construct the rest of the subcarriers, we will use
+precoder parameters from both the ``past'' and ``future'' and time
+instances to do the interpolation (using backtracking to ensure
+causality). By future time instances it means that the precoder
+estimation is improved at a later time instant i.e. after receiving
+the feedback of the next set of subcarriers. Note that the precoder
+used for transmission is causally obtained, while the ``future''
+correction of past precoders merely improves the prediction
+accuracy.}
 
 \textbf{4. Only 10 channel realizations are used to evaluate the BER characteristics. Is it enough?}
 
