@@ -56,6 +56,7 @@
 \def\bZ{{\bf Z}}
 
 
+\def\imwidth{0.65}
 %package list
 \IEEEoverridecommandlockouts
 \let\labelindent\relax
@@ -367,8 +368,7 @@ is the step size, we define our adaptive quantizer as
   \end{cases}
 \end{equation}
 where $M$ is the scaling factor used during the positive and negative
-moves. We initialize $\Delta_1$ as $\Delta_1 = |x_{2}-\hat{x}_1|$. We
-note that this is performed separately for each of the quantized
+moves. We initialize $\Delta_1$ as $\Delta_1 = |x_{2}-\hat{x}_1|$. This is performed separately for each of the quantized
 parameters.
 
 To quantize the subcarriers efficiently and exploit the joint
@@ -435,7 +435,7 @@ section. In particular, we analyze the performance of the proposed
 quantization and interpolation method for time-varying MIMO-OFDM
 systems. The channel is simulated using the typical Jakes Model
 for the COST207 channel power delay
-profiles~\cite{molisch2006cost259,cost1989cost}. The BER achieved by
+profiles~\cite{molisch2006cost259}. The BER achieved by
 the proposed predictive quantization based precoder is compared
 against the ideal precoder for 100 channel evolutions in each run and
 averaged over 10 channel realizations (translating to averaging over $250,000$ bits). The error properties obtained by simulating transmission over these varying channels is sufficient to obtain good average performance properties. Simulations are performed for
@@ -473,8 +473,7 @@ Fig.~\ref{fig:adpm-fig}.
 This brings down the bit budget to an average of 5 bits for
 $\bf{\Theta}$ and 5 bits for $\bf{\Phi}$ over alternate feedback
 instances, thereby resulting in an average feedback budget of 5 bits,
-as opposed to the 6 bits of feedback used
-in~\cite{Gupt1905:Predictive}.
+as opposed to the 6 bits in~\cite{Gupt1905:Predictive}.
 
 To enable adaptive tracking of the channel parameters, we start with
 an initialization of the step size for each parameter, as discussed in
@@ -495,7 +494,7 @@ angles.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.66\columnwidth]{images/qerror.pdf}
+\includegraphics[width=\imwidth\columnwidth]{images/qerror.pdf}
 \caption{\label{fig:error_decay}Comparison of the $4\times 2$
   precoder quantization error vs. time for the proposed
   approach (labelled ``Cost207\_RA Scalar'') and direct Stiefel
@@ -505,7 +504,7 @@ angles.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.71\columnwidth]{images/1024final_withtime}
+\includegraphics[width=\imwidth\columnwidth]{images/1024final_withtime}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 1024
   subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
   for $f_dT_s = 3.41\times 10^{-6}$, corresponding to a velocity of 37.8 km/h.}
@@ -552,7 +551,7 @@ limits on the efficacy of the proposed method in tracking the channel
 parameters.
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.71\columnwidth]{images/64final_withtime}
+\includegraphics[width=\imwidth\columnwidth]{images/64final_withtime}
 \caption{BER vs. SNR for QPSK transmission over the $4\times 2$ 64
   subcarrier MIMO-OFDM system, with the ITU Cost207-RA channel profile
   for $f_dT_s = 1.56\times 10^{-5}$, corresponding to a velocity of 172.8 km/h.}
@@ -587,20 +586,18 @@ parameters.
 \label{section4}
 We have presented a predictive quantization based precoder
 reconstruction for MIMO-OFDM systems that employs scalar quantization
-based feedback of precoder parameters. By quantizing and adapting the
-Givens rotation and Householder transformation parameters of the
-precoder, the receiver feedback to the transmitter can be minimized
-while retaining effective precoder adaptation.  Exploiting the
-temporal and frequency correlations jointly enhances performance
-significantly. Simulations reveal that the proposed approach provides
-faster convergence and smaller errors when compared to approaches that
-involve direct quantization on manifold tangent spaces. With smaller
-quantization error as compared to manifold based approaches, the
-feedback results in more accurate precoder tracking, along with simple
-2D-interpolation over the scalar parameters to optimize the precoders.
-Future work would involve tuning the adaptation rate of the scalar
-parameters and further reduction of quantization redundancy to reduce
-the feedback rates.
+based feedback of precoder parameters. Quantizing and adapting the
+Givens rotation and Householder transformation parameters of precoders
+minimizes receiver feedback to the transmitter while retaining
+effective precoder adaptation. Exploiting the temporal and frequency
+correlations jointly enhances performance significantly. Simulations
+reveal that the proposed approach provides faster convergence and
+smaller errors when compared to manifold based approaches. Therefore,
+our feedback approach with simple 2D-interpolation over the
+scalar parameters to optimize the precoders tracks precoders
+effectively.  Future work would involve tuning the adaptation rate of
+the scalar parameters and further reduction of quantization redundancy
+to reduce the feedback rates.
 
 
 \vspace{-10pt}
