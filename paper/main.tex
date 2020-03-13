@@ -116,7 +116,7 @@
 %Here goes the title
 
 \title{Scalar Feedback based Joint Time-Frequency Precoder
-  interpolation for  MIMO-OFDM Systems}
+  Interpolation for  MIMO-OFDM Systems}
 
 
 %Authors List
@@ -192,12 +192,17 @@ Given that the channel matrix varies with both frequency and time, this feedback
 
 % It has been shown in Agrimcite that jointly exploiting the time and frequency correlation in MIMO-OFDM systems can significantly enhance performance and reduce the feedback burden. However, using a manifold based approach complicates quantized interpolation and prediction. The use of matrix codebooks and performing arithmetic on manifolds in the time-frequency grid is significantly more complicated than in the case of scalar parameters. The approach that we suggest in this paper exploits the fact that the independent parameterization breaks the problem into several smaller scalar quantization and tracking problems. It has been shown that such approaches yield good performance for temporal  cite8 and frequency cite9 domain prediction individually. In our work, we perform prediction in the time domain, and use this for joint interpolation on the time frequency grid. We show that this allows us to exploit the time and frequency coherence jointly. We go on to show that this yields much better performance than individual time and frequency domain prediction, without the complexity of manifold based codebooks.
 
-An underlying challenge in framing the predictive quantization and interpolation algorithms has been the high dimensional unitary structure of the SVD precoders. A large body of work utilizes the manifold geometry endowed by the unitary structure to frame such algorithms directly on the non-linear manifold ~\cite{mondal2007quantization,schwarz2013adaptive,5946308,6891198,Gupt1905:Predictive,pitaval2013codebooks}. On the other hand, there are numerous works which utilize scalar parametrization of the unitary precoders, given by Givens rotations and Householder transformations \cite{4114278,4556174,lou2013comparison}. While the manifold based methods offer a clean solution and have been shown to be very effective in reducing the feedback overhead, they are analytically terse and
+An underlying challenge in framing the predictive quantization and interpolation algorithms has been the high dimensional unitary structure of the SVD precoders. A large body of work utilizes the manifold geometry endowed by the unitary structure to frame such algorithms directly on the non-linear manifold ~\cite{schwarz2013adaptive,5946308,6891198,Gupt1905:Predictive,pitaval2013codebooks}. On the other hand, there are numerous works which utilize scalar parametrization of the unitary precoders, given by Givens rotations and Householder transformations \cite{4114278,4556174,lou2013comparison}. While the manifold based methods offer a clean solution and have been shown to be very effective in reducing the feedback overhead, they are analytically terse and
 involve operations over higher dimensional manifolds. The scalar parametrization algorithms enable usage of the traditional algorithms to predict, interpolate and quantize over vector spaces, and hence are analytically simpler.
 Such methods have also been implemented in 802.11 ac and ax standards
 \cite{lou2013comparison,ieee80211}. We are not aware of performance comparisons
 between these two bodies of work, thereby making it difficult to
-quantify from past work whether performance gains/losses can accrue by operating over scalar parametrization instead of manifolds. In this paper, we propose a joint time-frequency interpolation approach that builds upon the existing parametric quantization techniques. One of the key results of our work is that the proposed scalar parametrization method actually outperforms an equivalent manifold based technique \cite{Gupt1905:Predictive}, at the same time being analytically more tractable.
+quantify from past work whether performance gains/losses can accrue by operating over scalar parametrization instead of manifolds. In this paper, we propose a joint time-frequency interpolation approach that builds upon the existing parametric quantization techniques. 
+One of the key results of our work is that the proposed scalar parametrization method actually outperforms an equivalent manifold based technique \cite{Gupt1905:Predictive}, at the same time being analytically more tractable.
+With smaller quantization error as compared to manifold based approaches, the feedback
+results in more accurate precoder tracking, along with simple 2D-interpolation over the
+scalar parameters to optimize the precoders
+
 
 Parametrization for precoder feedback have utilized adaptive delta
 modulation effectively track precoding matrices both in the
@@ -308,7 +313,7 @@ captured in a vector referred to as
 $\bf{\Theta}$$_{i,t}$. We note that
 $\bf{\Phi}$$_{i,t}$ and $\bf{\Theta}$$_{i,t}$ represent the phase and
 rotation angles for the $i$-th subcarrier at time instant $t$, as
-represented in Fig.~\ref{fig:adpm-fig}. It is known~\cite{4114278}
+represented in Fig.~\ref{fig:adpm-fig}. It is known 
 that $\phi_{k,l} \in (-\pi, \pi]$ for all k and l's is uniformly
 distributed between the two extremes~\cite{4114278}, while
 $\theta_{k,l}$ is distributed as
@@ -401,11 +406,11 @@ in phase of magnitude close to $2\pi$ have been eliminated).
 \label{interp}
 After obtaining the $\beta$ values (using the single bit feedback) at
 the transmitter, we can construct the precoder at subcarrier indices
-$pk$ or $pk+q$, in keeping with the same notation as the previous
-section. To construct the rest of the subcarriers, we will use
-precoder parameters from both the ``past'' and ``future'' and time
+$pk$ or $pk+q$, keeping with the same notation as the previous
+section. To construct precoders for rest of the subcarriers, we will use
+precoder parameters from both the ``past'' and ``future'' time
 instances to do the interpolation (using backtracking to ensure
-causality). By future time instances it means that the precoder
+causality). When using future time instances, the implication is that the precoder
 estimation is improved at a later time instant i.e. after receiving
 the feedback of the next set of subcarriers. Note that the precoder
 used for transmission is causally obtained, while the ``future''

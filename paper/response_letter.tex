@@ -155,7 +155,8 @@ Thank you for this comment. We have fixed all instances of this error.
   method.}
 
 \textbf{Response:} We thank the reviewer for pointing out this
-error. We have altered the text to include this:
+error. We have reworded Section III to clarify the parameterization and quantization
+in a suitable order. In addition, we have altered the text to include this:
 
 \emph{The distribution of $\theta_{k,l}$ is used for
 quantizing $\bf{\Theta}$ during initialization to reduce the
@@ -290,6 +291,19 @@ follows:
 for the first time, the range of values that each parameter takes is
 divided into $2^n$ optimal intervals using Lloyd's
 quantization [17].}''
+
+In addition we have clarified the interpolation process by precisely stating
+how we are combining temporaly separated precoders as follows:
+ 
+\emph{To construct precoders for rest of the subcarriers, we will use
+precoder parameters from both the ``past'' and ``future'' time
+instances to do the interpolation (using backtracking to ensure
+causality). When using future time instances, the implication is that the precoder
+estimation is improved at a later time instant i.e. after receiving
+the feedback of the next set of subcarriers. Note that the precoder
+used for transmission is causally obtained, while the ``future''
+correction of past precoders merely improves the prediction
+accuracy.}
 
 \textbf{3. As mentioned in Fig. 1 and Subsection III.C, the future
   precoder parameters are required to conduct the interpolation. How
