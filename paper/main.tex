@@ -284,7 +284,7 @@ decomposition matrices)
 where $\bD_{k}$ is a diagonal matrix defined as
 $\bD_{k}\big(\phi_{k,k}, \ldots, \phi_{k,N_T } \big)$ =
 $\mbox{diag}\big( {\bf 1}_{k-1}, e^{j\phi_{k,k}},\ldots,
-e^{j\phi_{k,N_T }} \big)$ where  dimension $N_T \times N_T$. ${\bf 1}_{k-1}$ represents $k-1$ ones,
+e^{j\phi_{k,N_T }} \big)$ with  dimension $N_T \times N_T$. ${\bf 1}_{k-1}$ represents $k-1$ ones,
 and the $N_T \times N_R$ matrix $\tilde{\bI}$ =
 $\big[\bI_{N_R }, {\bf 0}_{N_R ,N_T -N_R}\big]^{T}$. Here,
 ${\bf 0}_{N_R ,N_T -N_R }$ is an $N_R\times (N_T - N_R)$ matrix all of
@@ -351,6 +351,8 @@ including 802.11ac~\cite{lou2013comparison}, although adaptive
 quantization and feedback are not discussed. Further
 sections show that the use of adaptive approaches can greatly enhance
 performance with only very minor modifications to the system.
+
+\vspace{-0.5\baselineskip}
 \subsection{Differential quantization and channel tracking}
 \label{quantiz}
 For channels that vary slowly with time, adaptive differential
@@ -402,6 +404,8 @@ the $\phi_{k,l}$ parameters, it must be noted they may change abruptly
 between $-\pi$ and $\pi$ due to jumps of $2\pi$. This is avoided by
 unwrapping the phases to facilitate continuous tracking (i.e., jumps
 in phase of magnitude close to $2\pi$ have been eliminated).
+
+\vspace{-1\baselineskip}
 \subsection{Joint Time Frequency Interpolation}
 \label{interp}
 After obtaining the $\beta$ values (using the single bit feedback) at
@@ -446,7 +450,11 @@ for the COST207 channel power delay
 profiles~\cite{molisch2006cost259}. The BER achieved by
 the proposed predictive quantization based precoder is compared
 against the ideal precoder for 100 channel evolutions in each run and
-averaged over 10 channel realizations (translating to averaging over $250,000$ bits). The error properties obtained by simulating transmission over these varying channels is sufficient to obtain good average performance properties. Simulations are performed for
+averaged over 10 channel realizations (translating to averaging over $125,000$ bits for 64-point DFT and
+$2\times 10^6$ bits for the 1024-point DFT case). 
+The error properties obtained by simulating transmission over these 
+varying channels is sufficient to obtain good average performance properties. 
+Simulations are performed for
 normalised Doppler values of $f_dT_s = 3.41\times 10^{-6}$ (corresponding
 to a velocity of 37.2 km/h for $f_c = 1$ GHz) with 1024 subcarriers, and with
 $f_dT_s = 1.56 \times 10^{-5}$ (velocity of 172.8 km/h) with 64
