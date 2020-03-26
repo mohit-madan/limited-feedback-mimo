@@ -147,7 +147,11 @@ in [2].}
 
 \textbf{Response:}
 
-Thank you for the feedback. The interpolation approach that we have
+Thank you for the feedback. 
+
+It has been recently shown that for asymmetric MIMO channels ($N_t\neq N_R$), precoders that achieve channel capacity via waterfilling reside on non-trivial manifolds like Stiefel and Flag manifolds (Cite Pitavals papers here), which are harder to analyze and characterize than the traditionally considered Grassmannian and Unitary manifolds. A careful study of the manifold methods presented to interpolate and predictively quantize reveals that they also can be interpreted as straightforward 2-D filters using manifold operations like lifting/retraction maps. However, most of the times these operations themselves are suboptimal, like [2] uses quasi-geodesics instead of true geodesics. This leads to a performance degradation. However, the interpolation/prediction methods presented in our manuscript doesn't suffer from these mathematical artefacts and hence outperforms the manifold based methods. To stress explicitly, although both the manifold and the Girvans' rotation parametrization method may be equivalent mathematically, the latter offers more tractability in applying algorithms over them, and gives an hint as to why the latter was also chosen in standards to perform quantization instead of the former.
+
+The interpolation approach that we have
 proposed is simple and ends up becoming more accurate over time when
 compared to the manifold based interpolation that uses complex
 interpolation methods in the manifold space. It is also easier to
@@ -314,7 +318,7 @@ divided into $2^n$ optimal intervals using Lloyd's
 quantization [16].}''
 
 In addition we have clarified the interpolation process by precisely stating
-how we are combining temporaly separated precoders as follows:
+how we are combining temporally separated precoders as follows:
  
 \emph{To construct precoders for rest of the subcarriers, we will use
 precoder parameters from both the ``past'' and ``future'' time
@@ -330,13 +334,11 @@ accuracy.}
   precoder parameters are required to conduct the interpolation. How
   can we obtain the future precoder parameters?}
 
-\textbf{Response:} We thank the reviewer for pointing this out this
-missing piece of information. We
-wish to clarify that the precoder used for transmission is used for
-transmission. However, the past precoder estimates are improved using
-the new information, and this provides slight improvement when
-performing prediction in the further steps. This was not stated
-clearly in the previous manuscript. We have now altered the text in the subsection III.C as follows:
+\textbf{Response:} 
+We thank the reviewer for raising this subtle point. We divide the problem we consider into two slightly uncoupled aspects. The receiver estimates the channel matrix and obtains the accurate unquantized precoders. First aspect of the problem considers effective quantization of the precoder by quantizing just the difference between the past and the current precoder, as is typically done in delta quantization approaches. For this aspect we don not use future parameters.
+
+Now, the receiver feeds back these quantized estimates back to the transmitter. The transmitter has to estimate the precoder at the non-fed back time-frequency points, for which it utilizes wait and decode principle to get future precoder data to efficiently interpolate over the previous time precoders. The window size used to get future parameters is low enough to be within the channel coherence time, to make this method physically feasible, however, we would like to highlight that this does add an extra delay to the system, at the expense of improved interpolation error.
+
 
 \emph{To construct the rest of the subcarriers, we will use
 precoder parameters from both the ``past'' and ``future'' and time
@@ -345,7 +347,7 @@ causality). By future time instances it means that the precoder
 estimation is improved at a later time instant i.e. after receiving
 the feedback of the next set of subcarriers. Note that the precoder
 used for transmission is causally obtained, while the ``future''
-correction of past precoders merely improves the prediction
+correction of past precoders merely improves the prediction (Do you mean interpolation here?)
 accuracy.}
 
 \textbf{4. Only 10 channel realizations are used to evaluate the BER characteristics. Is it enough?}
