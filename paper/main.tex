@@ -56,7 +56,7 @@
 \def\bZ{{\bf Z}}
 
 \setlength{\textfloatsep}{0.7\baselineskip plus 0.2\baselineskip minus 0.5\baselineskip}
-\def\imwidth{0.65}
+\def\imwidth{0.625}
 %package list
 \IEEEoverridecommandlockouts
 \let\labelindent\relax
@@ -197,7 +197,7 @@ involve operations over higher dimensional manifolds. The scalar parameterizatio
 Such methods have also been implemented in 802.11 ac and ax standards
 \cite{lou2013comparison,ieee80211}. We are not aware of performance comparisons
 between these two bodies of work, thereby making it difficult to
-quantify from past work whether performance gains/losses can accrue by operating over scalar parameterization instead of manifolds. In this paper, we propose a joint time-frequency interpolation approach that builds upon the existing parametric quantization techniques. 
+quantify from past work whether performance gains/losses can accrue by operating over scalar parameterization instead of manifolds. In this paper, we propose a joint time-frequency interpolation approach that builds upon the existing parametric quantization techniques.
 One of the key results of our work is that the proposed scalar parameterization method actually outperforms an equivalent manifold based technique \cite{Gupt1905:Predictive}, at the same time being analytically more tractable.
 With smaller quantization error as compared to manifold based approaches, the feedback
 results in more accurate precoder tracking, along with simple 2D-interpolation over the
@@ -313,7 +313,7 @@ captured in a vector referred to as
 $\bf{\Theta}$$_{i,t}$. We note that
 $\bf{\Phi}$$_{i,t}$ and $\bf{\Theta}$$_{i,t}$ represent the phase and
 rotation angles for the $i$-th subcarrier at time instant $t$, as
-represented in Fig.~\ref{fig:adpm-fig}. It is known 
+represented in Fig.~\ref{fig:adpm-fig}. It is known
 that $\phi_{k,l} \in (-\pi, \pi]$ for all k and l's is uniformly
 distributed between the two extremes~\cite{4114278}, while
 $\theta_{k,l}$ is distributed as
@@ -418,7 +418,7 @@ causality). When using future time instances, the implication is that the precod
 estimation is improved at a later time instant i.e. after receiving
 the feedback of the next set of subcarriers. Note that the precoder
 used for transmission is causally obtained, while the ``future''
-correction of past precoders merely improves the prediction
+correction of past precoders merely improves the interpolation
 accuracy. In Fig.~\ref{fig:adpm-fig}, each parameter is interpolated
 using the neighbouring subcarriers using bilinear interpolation
 (equivalent to linear interpolation in two dimensions). These
@@ -451,9 +451,9 @@ profiles~\cite{molisch2006cost259}. The BER achieved by
 the proposed predictive quantization based precoder is compared
 against the ideal precoder for 100 channel evolutions in each run and
 averaged over 10 channel realizations (translating to averaging over $125,000$ bits for 64-point DFT and
-$2\times 10^6$ bits for the 1024-point DFT case). 
-The error properties obtained by simulating transmission over these 
-varying channels is sufficient to obtain good average performance properties. 
+$2\times 10^6$ bits for the 1024-point DFT case).
+The error properties obtained by simulating transmission over these
+varying channels is sufficient to obtain good average performance properties.
 Simulations are performed for
 normalised Doppler values of $f_dT_s = 3.41\times 10^{-6}$ (corresponding
 to a velocity of 37.2 km/h for $f_c = 1$ GHz) with 1024 subcarriers, and with
@@ -497,16 +497,15 @@ Equation~\ref{delta_eqn}. The value of $M$ was chosen to be $1.4$, and
 can be adjusted appropriately to track the temporal evolution of
 parameters for different Doppler frequencies.
 
-Fig.~\ref{fig:error_decay} shows the rate at which error diminishes
-with time for the proposed approach and direct quantization on the
-Stiefel manifold as described in~\cite{Gupt1905:Predictive}. Since the
-adaptation of independent scalar parameters causes the error to decay
-rapidly, the error is lower and the convergence is faster, even though
-the starting error is higher in the case of the scalar quantization
-approach. The independence of the parameters enables fast
-convergence. The Stiefel manifold based approach uses nested codebooks
-that may be suboptimal when compared to the parameterization using
-angles.
+Fig.~\ref{fig:error_decay} shows the error decay rate with time for
+the proposed approach and direct quantization on the Stiefel manifold
+as described in~\cite{Gupt1905:Predictive}. Since the adaptation of
+independent scalar parameters causes the error to decay rapidly, the
+error is lower and the convergence is faster, even for larger starting
+errors in the scalar quantization approach. The independence of the
+parameters enables fast convergence. The Stiefel manifold based
+approach with nested codebooks may thus be suboptimal when compared to
+the parameterization using angles.
 
 \begin{figure}
 \begin{center}
