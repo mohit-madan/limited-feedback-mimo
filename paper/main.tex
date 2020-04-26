@@ -421,15 +421,17 @@ section.
 % used for transmission is causally obtained, while the ``future''
 % correction of past precoders merely improves the interpolation
 % accuracy. 
-In Fig.~\ref{fig:adpm-fig}, each parameter is interpolated
-using the neighbouring subcarriers using bilinear interpolation
-(equivalent to linear interpolation in two dimensions). These
-interpolated values are then used to reconstruct the precoding
-matrices all together by applying the reverse transformation of
-breaking the precoder into independent parameters as given in
-Equation~\ref{eq:decompose}. Inorder to improve the precoder estimates 
-and interpolation accuracy we walkback to improve the past estimates by interpolating
-upon the current estimates. Thus, the approach here is able to exploit the time and frequency correlation jointly to enhance performance.
+In Fig.~\ref{fig:adpm-fig}, each parameter is interpolated using the
+neighbouring subcarriers using bilinear interpolation (equivalent to
+linear interpolation in two dimensions). These interpolated values are
+then used to reconstruct the precoding matrices all together by
+applying the reverse transformation of breaking the precoder into
+independent parameters as given in Equation~\ref{eq:decompose}. To
+improve the precoder estimates and interpolation accuracy, we ``walk
+back'' to improve the past estimates by interpolating using current
+estimates (although the current estimates only use data
+causally). Thus, the approach here is able to exploit the time and
+frequency correlation jointly to enhance performance.
 % To construct the precoders for the rest of the subcarriers, we will
 % use the  parameters from the previously determined subcarriers.
 % 
