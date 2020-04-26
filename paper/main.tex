@@ -56,7 +56,7 @@
 \def\bZ{{\bf Z}}
 
 \setlength{\textfloatsep}{0.7\baselineskip plus 0.2\baselineskip minus 0.5\baselineskip}
-\def\imwidth{0.625}
+\def\imwidth{0.7}
 %package list
 \IEEEoverridecommandlockouts
 \let\labelindent\relax
@@ -352,7 +352,7 @@ quantization and feedback are not discussed. Further
 sections show that the use of adaptive approaches can greatly enhance
 performance with only very minor modifications to the system.
 
-\vspace{-0.5\baselineskip}
+% \vspace{-0.5\baselineskip}
 \subsection{Differential quantization and channel tracking}
 \label{quantiz}
 For channels that vary slowly with time, adaptive differential
@@ -405,29 +405,34 @@ between $-\pi$ and $\pi$ due to jumps of $2\pi$. This is avoided by
 unwrapping the phases to facilitate continuous tracking (i.e., jumps
 in phase of magnitude close to $2\pi$ have been eliminated).
 
-\vspace{-1\baselineskip}
+% \vspace{-1\baselineskip}
 \subsection{Joint Time Frequency Interpolation}
 \label{interp}
 After obtaining the $\beta$ values (using the single bit feedback) at
 the transmitter, we can construct the precoder at subcarrier indices
 $pk$ or $pk+q$, keeping with the same notation as the previous
-section. To construct precoders for the rest of the subcarriers, we will use
-precoder parameters from both the ``past'' and ``future'' time
-instances to do the interpolation (using backtracking to ensure
-causality). When using future time instances, the implication is that the precoder
-estimation is improved at a later time instant i.e. after receiving
-the feedback of the next set of subcarriers. Note that the precoder
-used for transmission is causally obtained, while the ``future''
-correction of past precoders merely improves the interpolation
-accuracy. In Fig.~\ref{fig:adpm-fig}, each parameter is interpolated
+section. 
+% To construct precoders for the rest of the subcarriers, we will use
+% precoder parameters from both the ``past'' and ``future'' time
+% instances to do the interpolation (using backtracking to ensure
+% causality). When using future time instances, the implication is that the precoder
+% estimation is improved at a later time instant i.e. after receiving
+% the feedback of the next set of subcarriers. Note that the precoder
+% used for transmission is causally obtained, while the ``future''
+% correction of past precoders merely improves the interpolation
+% accuracy. 
+In Fig.~\ref{fig:adpm-fig}, each parameter is interpolated
 using the neighbouring subcarriers using bilinear interpolation
 (equivalent to linear interpolation in two dimensions). These
 interpolated values are then used to reconstruct the precoding
 matrices all together by applying the reverse transformation of
 breaking the precoder into independent parameters as given in
-Equation~\ref{eq:decompose}. Thus, the approach here is able to
-exploit the time and frequency correlation jointly to enhance
-performance.
+Equation~\ref{eq:decompose}. Inorder to improve the precoder estimates 
+and interpolation accuracy we walkback to improve the past estimates by interpolating
+upon the current estimates. Thus, the approach here is able to exploit the time and frequency correlation jointly to enhance performance.
+% To construct the precoders for the rest of the subcarriers, we will
+% use the  parameters from the previously determined subcarriers.
+% 
 
 One reason why a linear predictive quantization is preferred is
 because the underlying parameters can generally be thought to emerge
@@ -596,7 +601,7 @@ parameters.
 % The problem of values hopping between $\pi$ and $-\pi$ is also tackled by wrapping the values around which we can show works nicely. The only drawback is that while initializing the parameter, they go out of their actual range and therefore using a uniform quantizer over the prescribed range does not work. But since most of the values lie between the given range we can use most of the initialization bits quantizing the parameters uniformly between the [-$\pi$ , $\pi$] and using smaller amount of bits between the range outside that which could go up to $-3\pi$ and $3\pi$, i.e. we are covering 300% more range outside the given area and that works mostly fine for the rest of the values.
 
 % Using the idea of joint interpolation given in the other paper.
-\vspace{-1\baselineskip}
+% \vspace{-1\baselineskip}
 \section{Conclusion}
 \label{section4}
 We have presented a predictive quantization based precoder
@@ -614,7 +619,7 @@ adaptation rates of scalar parameters and further reduction of
 redundancies to improve quantization.
 
 
-\vspace{-10pt}
+% \vspace{-10pt}
 % \section{Acknowledgment}
 
 % % \label {section6}
