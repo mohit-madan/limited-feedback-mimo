@@ -337,7 +337,7 @@ ${\bf{\Theta}}_{i,t}$ has length
 $N_{R}(2N_{T} - N_{R}-1)/2$.~\cite{4114278}
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.7\columnwidth]{images/new-adpm.pdf}
+\includegraphics[width=0.7\columnwidth]{images/new-adpm1.pdf}
 \caption{\label{fig:adpm-fig}Subcarriers that need to be
   quantized. We see that the subcarrier indicated by
   red arrows has a precoder whose parameters are determined jointly
@@ -422,13 +422,12 @@ section.
 % correction of past precoders merely improves the interpolation
 % accuracy. 
 In Fig.~\ref{fig:adpm-fig}, each parameter is interpolated
-using the neighbouring subcarriers using bilinear interpolation
+using the neighbouring subcarriers (red arrows) using bilinear interpolation
 (equivalent to linear interpolation in two dimensions). These
 interpolated values are then used to reconstruct the precoding
 matrices all together by applying the reverse transformation of
 breaking the precoder into independent parameters as given in
-Equation~\ref{eq:decompose}. Inorder to improve the precoder estimates 
-and interpolation accuracy we walkback to improve the past estimates by interpolating
+Equation~\ref{eq:decompose}. Inorder to improve the precoder estimates we walkback to improve the past estimates (black arrows) by interpolating
 upon the current estimates. Thus, the approach here is able to exploit the time and frequency correlation jointly to enhance performance.
 % To construct the precoders for the rest of the subcarriers, we will
 % use the  parameters from the previously determined subcarriers.

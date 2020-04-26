@@ -12,7 +12,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    sodipodi:docname="new-adpm.svg"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    id="svg385"
    version="1.1"
    viewBox="0 0 144.70008 83.357018"
@@ -22,15 +22,15 @@
      inkscape:guide-bbox="true"
      showguides="true"
      inkscape:window-maximized="1"
-     inkscape:window-y="0"
-     inkscape:window-x="0"
-     inkscape:window-height="709"
-     inkscape:window-width="1360"
+     inkscape:window-y="27"
+     inkscape:window-x="71"
+     inkscape:window-height="1025"
+     inkscape:window-width="1849"
      showgrid="false"
-     inkscape:current-layer="svg385"
+     inkscape:current-layer="layer1"
      inkscape:document-units="mm"
-     inkscape:cy="220.13518"
-     inkscape:cx="60.428343"
+     inkscape:cy="198.03809"
+     inkscape:cx="231.65514"
      inkscape:zoom="3.6203868"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -110,7 +110,7 @@
          inkscape:connector-curvature="0"
          id="path34228"
          d="M 5.77,0 -2.88,5 V -5 Z"
-         style="fill:#f11200;fill-opacity:1;fill-rule:evenodd;stroke:#f11200;stroke-width:1.00000003pt;stroke-opacity:1"
+         style="fill:#131317;fill-opacity:1;fill-rule:evenodd;stroke:#131317;stroke-width:1.00000003pt;stroke-opacity:1"
          transform="scale(0.4)" />
     </marker>
     <marker
@@ -990,7 +990,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -2683,7 +2683,7 @@
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="cc" />
   <path
-     style="fill:none;stroke:#f11200;stroke-width:0.52680379;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.0536075, 0.52680374;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker34230)"
+     style="fill:none;stroke:#131317;stroke-width:0.52680379;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.0536075, 0.52680373999999996;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker34230)"
      d="m 67.047507,37.538254 c -1.51,-2.67889 -1.11469,-5.29736 -0.76825,-5.72958"
      id="path20563-3"
      inkscape:connector-curvature="0"
