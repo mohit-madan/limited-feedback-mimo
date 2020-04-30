@@ -1,5 +1,5 @@
 #all: main.pdf
-all: main.pdf main-onecolumn.pdf cover_letter.pdf response_letter.pdf
+all: main.pdf main-onecolumn.pdf cover_letter.pdf response_letter.pdf response_letter_2.pdf
 
 MAINFILES := main.tex
 
@@ -21,6 +21,9 @@ main-onecolumn.pdf: main.bib $(MAINFILES) $(IMAGEPDFS)
 
 response_letter.pdf: response_letter.tex
 	pdflatex response_letter.tex
+
+response_letter_2.pdf: response_letter_2.tex
+	pdflatex response_letter_2.tex
 
 cover_letter.pdf: cover_letter.tex
 	pdflatex cover_letter.tex
@@ -46,4 +49,8 @@ cover_letter.pdf \
 response_letter.aux \
 response_letter.log \
 response_letter.out \
-response_letter.pdf
+response_letter.pdf \
+response_letter_2.aux \
+response_letter_2.log \
+response_letter_2.out \
+response_letter_2.pdf

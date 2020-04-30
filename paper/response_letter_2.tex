@@ -1,0 +1,100 @@
+\documentclass[12pt]{letter}
+\usepackage[left=1in,twoside=false]{geometry}
+\usepackage[cmex10]{amsmath}
+\usepackage{amssymb}
+\signature{Jinesh C Jacob}
+\address{From \\
+Mohit Madan\\
+Department of Electrical  Engineering\\
+Indian Institute of Technology Bombay, Mumbai\\
+India\\
+E-mail: mohit.madan@iitb.ac.in
+\date{\today}
+}
+
+\begin{document}
+\begin{letter}{To\\
+Prof. Xiao Li\\
+Editor\\
+IEEE Wireless Communications Letters}
+\vspace{0.5in}
+
+
+\opening{Dear Prof. Li,}
+
+Subject: \textbf{Revised submission of manuscript title ``Scalar
+  Feedback based Joint Time-Frequency Precoder interpolation for  MIMO-OFDM Systems'' (Paper Number: WCL2020-0511).}
+
+Authors: Mohit Madan, Agrim Gupta, Kumar Appaiah\\
+Email: mohit.madan@iitb.ac.in
+
+Thank you for arranging the prompt reviews of our original manuscript
+submitted to the IEEE Wireless Communications Letters, and providing
+us an opportunity to resubmit this manuscript with modifications
+addressing the issues raised during the reviews. I would like to thank
+the reviewers for a careful reading of the manuscript, as well as for
+the insightful points that they have raised regarding various
+technical aspects of the manuscript. Based on these reviews, we have
+made revisions to our submission to address the reviewers concerns. In
+particular, we have addressed the key issue raised by reviewer 2 on
+the aspect of improving past precoder estimates, and have clarified
+the persisting confusion. We hope that you will reconsider the
+manuscript for publication in the IEEE Wireless Communications
+Letters. Please find attached our comments and actions taken based on
+the reviews, along with a document indicative of all the changes made.
+
+Please do not hesitate to contact me if I may be of any assistance; I
+can be reached by e-mail at mohit.madan@iitb.ac.in. Thank you again
+for your consideration of this manuscript.
+
+
+Thank you.
+\vspace{0.3in}
+
+Sincerely,
+
+Mohit Madan
+
+
+
+\end{letter}
+
+\newpage
+
+
+\textbf{Reviewer 1}\\
+
+\textbf{My concerns have been addressed not very thoroughly, but
+  acceptably. The paper is not good at theorizing the issues at hands,
+  but nevertheless reports an important case
++of assembling existing techniques to achieve better performance than
+theory-driven approaches do.
+}
+
+We appreciate the reviewer's comments. We have strived to make things
+more clear with minor changes in the updated manuscript, while
+ensuring that we adhere to the page limit. We hope that these changes
+would present our idea better.
+
+\textbf{Reviewer 2}\\
+
+\textbf{It is still not clear how the transmitter can obtain the
+  future precoder parameters.
+  Could you use an example to explain it?}
+
+We appreciate the reviewer's concern. We feel that the word ``future''
+is incorrect, and have clarified in the manuscript that past estimates
+are improved as parameters come in. Here is an example.
+
+Consider the 10th OFDM frame. All precoder parameters are calculated
+using the parameters obtained at the 10th, 9th, 8th ... frames to fill
+in the missing precoders. While at this process, the information
+obtained during the 10th precoder can improve the precoder estimates
+for the 9th, 8th etc. precoders. Naturally, these ``past'' precoder
+parameters cannot be used directly for precoding, but the reduced
+error that they have can improve the prediction and interpolation for
+the precoders in the 11th frame. It is in this spirit that we ``walk
+back'' to improve past estimates so that their contribution to future
+predictions would possess less error. We have now clarified this in
+the manuscript as well.
+\end{document}
