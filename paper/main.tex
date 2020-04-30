@@ -56,7 +56,7 @@
 \def\bZ{{\bf Z}}
 
 \setlength{\textfloatsep}{0.7\baselineskip plus 0.2\baselineskip minus 0.5\baselineskip}
-\def\imwidth{0.68}
+\def\imwidth{0.62}
 %package list
 \IEEEoverridecommandlockouts
 \let\labelindent\relax
@@ -337,11 +337,12 @@ ${\bf{\Theta}}_{i,t}$ has length
 $N_{R}(2N_{T} - N_{R}-1)/2$.~\cite{4114278}
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.7\columnwidth]{images/new-adpm1.pdf}
+\includegraphics[width=0.68\columnwidth]{images/new-adpm1.pdf}
 \caption{\label{fig:adpm-fig}Subcarriers that need to be
-  quantized. We see that the subcarrier indicated by
-  red arrows has a precoder whose parameters are determined jointly
-  using the neighbouring parameters, both in time and frequency.}
+  quantized. Subcarriers indicated by red arrows have precoders whose
+  parameters are determined using the neighbouring parameters, both in
+  time and frequency. The black arrow indicates refinement of past
+  estimates.}
 \end{center}
 \end{figure}
 
@@ -427,12 +428,13 @@ neighbouring subcarriers using bilinear interpolation (equivalent to
 linear interpolation in two dimensions). These interpolated values are
 then used to reconstruct the precoding matrices all together by
 applying the reverse transformation of breaking the precoder into
-independent parameters as given in Equation~\ref{eq:decompose}. To
-improve the precoder estimates and interpolation accuracy, we ``walk
-back'' to improve the past estimates by interpolating using current
-estimates (although the current estimates only use data
-causally). Thus, the approach here is able to exploit the time and
-frequency correlation jointly to enhance performance.
+independent parameters as given in
+Equation~\ref{eq:decompose}. Precoder estimates are calculated using
+the current and past data, though the earlier precoder estimates
+arexsa improved by refining the past past estimates through
+interpolation with current estimates (indicated by the black arrow in
+Fig.~\ref{fig:adpm-fig}). Thus, the approach here is able to exploit
+the time and frequency correlation jointly to enhance performance.
 
 % To construct the precoders for the rest of the subcarriers, we will
 % use the  parameters from the previously determined subcarriers.
