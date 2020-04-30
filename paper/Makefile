@@ -3,12 +3,15 @@ all: main.pdf main-onecolumn.pdf cover_letter.pdf response_letter.pdf response_l
 
 MAINFILES := main.tex
 
-IMAGEFILES := images/new-adpm.svg
+IMAGEFILES := images/new-adpm.svg images/new-adpm1.svg
 
 IMAGEPDFS := $(IMAGEFILES:%.svg=%.pdf)
 
 images/new-adpm.pdf: images/new-adpm.svg
 	inkscape --export-pdf=images/new-adpm.pdf images/new-adpm.svg
+
+images/new-adpm1.pdf: images/new-adpm1.svg
+	inkscape --export-pdf=images/new-adpm1.pdf images/new-adpm1.svg
 
 main.pdf: main.bib $(MAINFILES) $(IMAGEPDFS)
 	pdflatex main.tex && bibtex main && pdflatex main && pdflatex main
