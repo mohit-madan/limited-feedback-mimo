@@ -337,12 +337,13 @@ ${\bf{\Theta}}_{i,t}$ has length
 $N_{R}(2N_{T} - N_{R}-1)/2$.~\cite{4114278}
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.68\columnwidth]{images/new-adpm1.pdf}
+\includegraphics[width=0.68\columnwidth]{images/new-adpm2.pdf}
 \caption{\label{fig:adpm-fig}Subcarriers that need to be
-  quantized. Subcarriers indicated by red arrows have precoders whose
-  parameters are determined using the neighbouring parameters, both in
-  time and frequency. The black arrow indicates refinement of past
-  estimates.}
+  quantized. Subcarriers indicated by red shaded cells have precoders 
+  whose parameters are determined using the neighbouring parameters
+  (shown via red arrows), both in time and frequency. The black arrow 
+  indicates refinement of past precoders as fresher estimates are made
+  available.}
 \end{center}
 \end{figure}
 
@@ -431,7 +432,7 @@ applying the reverse transformation of breaking the precoder into
 independent parameters as given in
 Equation~\ref{eq:decompose}. Precoder estimates are calculated using
 the current and past data, though the earlier precoder estimates
-arexsa improved by refining the past past estimates through
+are improved by refining the past past estimates through
 interpolation with current estimates (indicated by the black arrow in
 Fig.~\ref{fig:adpm-fig}). Thus, the approach here is able to exploit
 the time and frequency correlation jointly to enhance performance.
